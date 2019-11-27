@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>货物资料维护</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="jquery.js"></script>
+    <script>
+        function addGoods() {
+            $("#addCustomer").remove();
+            let insertHTML = `<div class="panel panel-default" id="addCustomer">
+
+                    <div class="panel-body">
+                    <h3>添加</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="goodsName">货品名字</label>
+                                <input type="text" class="form-control" id="goodsName">
+                            </div>
+                            <div class="form-group">
+                                <label for="number">编号</label>
+                                <input type="text" class="form-control" id="number">
+                            </div>
+                             <div class="form-group">
+                                <label for="stock">库存</label>
+                                <input type="text" class="form-control" id="stock">
+                            </div>
+                             <div class="form-group">
+                                <label for="inprice">进货价</label>
+                                <input type="text" class="form-control" id="inprice">
+                            </div>
+                             <div class="form-group">
+                                <label for="outprice">销售价</label>
+                                <input type="text" class="form-control" id="outprice">
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="insertAdd()">提交</button>
+                        </form>
+                    </div>
+                </div>`;
+            $("#addArea").append(insertHTML);
+        }
+    </script>
+    <script>
+        var id = 1;
+        function insertAdd(){
+            let insertHTML = `<tr id="${id}"><td>${$("#goodsName").val()}</td>
+<td>${$("#number").val()}</td>
+<td>${$("#stock").val()}</td>
+<td>${$("#inprice").val()}</td>
+<td>${$("#outprice").val()}</td>
+<td>
+            <button type="button" class="btn btn-primary btn-xs" onclick="change(id)">修改货品</button>
+            <button type="button" class="btn btn-primary btn-xs" onclick="$('#${id}').remove()">删除货品</button>
+        </td></tr>`;
+            id += 1;
+            $("#goods").append(insertHTML);
+            alert("已提交");
+        }
+    </script>
+    <script>
+        function change(id){
+            let insertHTML = `<div class="panel panel-default" id="addCustomer">
+
+                    <div class="panel-body">
+                    <h3>修改</h3>
+                        <form>
+                            <div class="form-group">
+                                <label for="goodsName">货品名字</label>
+                                <input type="text" class="form-control" id="goodsName" placeholder="">
+                            </div>
+                            <div class="form-group">
+                                <label for="number">编号</label>
+                                <input type="text" class="form-control" id="number">
+                            </div>
+                             <div class="form-group">
+                                <label for="stock">库存</label>
+                                <input type="text" class="form-control" id="stock">
+                            </div>
+                             <div class="form-group">
+                                <label for="inprice">进货价</label>
+                                <input type="text" class="form-control" id="inprice">
+                            </div>
+                             <div class="form-group">
+                                <label for="outprice">销售价</label>
+                                <input type="text" class="form-control" id="outprice">
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
+                        </form>
+                    </div>
+                </div>`;
+            $("#changeArea").append(insertHTML);
+        }
+    </script>
+    <script>
+        function changeOver(id) {
+            insertAdd();
+            let changeId = id;
+            $("#"+changeId).remove()
+        }
+    </script>
+</head>
+<div class="col-md-4" id="changeArea"></div>
+<div class="col-md-4">
+    <button type="button" class="btn btn-primary btn-lg" onclick = "addGoods()">增加货品</button>
+    <button type="button" class="btn btn-primary btn-lg" onclick="window.location.href='findGoods.html'">查找货品</button>
+    <table class="table table-hover">
+        <tr><th>货品名称</th><th>编号</th><th>库存</th><th>进货价</th><th>销售价</th><th>操作</th></tr>
+        <tbody id = "goods">
+        	<tr id="0"><td>加多宝</td><td>1</td><td>200</td><td>2</td><td>3</td><td>
+            	<button type="button" class="btn btn-primary btn-xs" onclick="change(0)">修改货品</button>
+            	<button type="button" class="btn btn-primary btn-xs" onclick="$('#0').remove()">删除货品</button>
+        	</td></tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-md-4" id="addArea"></div>
+</body>
+</html>

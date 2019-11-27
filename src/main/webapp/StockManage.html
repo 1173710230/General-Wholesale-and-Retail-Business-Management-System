@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>库存管理</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="jquery.js"></script>
+    <script>
+        function addGoods() {
+            alert("添加成功！");
+
+        }
+    </script>
+</head>
+<body>
+<div class="col-md-2"></div>
+<div class="col-md-4">
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <h3><span class="label label-default">进货</span></h3>
+            <form>
+                <div class="form-group">
+                    <label for="goodsName">进货货品</label>
+                    <input type="text" class="form-control" id="goodsName">
+                </div>
+                <div class="form-group">
+                    <label for="price">单价</label>
+                    <input type="text" class="form-control" id="price">
+                </div>
+                <div class="form-group">
+                    <label for="number">数量</label>
+                    <input type="text" class="form-control" id="number">
+                </div>
+                <button type="button" class="btn btn-default" onclick="alert('添加成功！')">提交</button>
+            </form>
+        </div>
+    </div>
+    <div class="panel panel-default">
+
+        <div class="panel-body">
+            <h3><span class="label label-default">库存盘点</span></h3>
+            <table class="table table-hover">
+                <tr><th>货品名称</th><th>数量</th></tr>
+                <tr><td>加多宝</td><td>2000</td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="col-md-4">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <h3><span class="label label-default">库存统计查询（使用库存名字或者价格）</span></h3>
+            <form>
+                <div class="form-group">
+                    <label for="name">库存名</label>
+                    <input type="text" class="form-control" id="name" placeholder="库存名">
+                </div>
+                <div class="form-group">
+                    <label for="goodsPrice">价格</label>
+                    <input type="text" class="form-control" id="goodsPrice" placeholder="价格">
+                </div>
+                <button type="submit" class="btn btn-default" onclick="alert('未找到相关货物！')">查询</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="col-md-2"></div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>苦户资料维护</title>
+    <script src="jquery.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <script>
+
+        function addCustomers() {
+            $("#addCustomer").remove();
+            let insertHTML = `<div class="panel panel-default" id="addCustomer">
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="goodsName1">客户名字</label>
+                                <input type="text" class="form-control" id="customerName1">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">联系方式</label>
+                                <input type="text" class="form-control" id="address">
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="addOver(1)">提交</button>
+                        </form>
+                    </div>
+                </div>`;
+            $("#addArea").append(insertHTML);
+        }
+    </script>
+    <script>
+        var id = 2;
+        function addOver(flag) {
+            let insertHTML = ``;
+            if(flag===1) {
+                insertHTML = `<tr id="${id}"><td>${$("#customerName1").val()}</td>
+<td>${$("#address").val()}</td><td></td><td>
+<button type="button" class="btn btn-primary btn-xs" onclick="change(id)">修改客户资料</button></td></tr>`;
+            } else {
+                insertHTML = `<tr id="${id}"><td>${$("#customerName2").val()}</td>
+<td>${$("#address2").val()}</td><td></td><td>
+<button type="button" class="btn btn-primary btn-xs" onclick="change(id)">修改客户资料</button></td></tr>`
+            }
+            id += 1;
+            $("#table").append(insertHTML)
+        }
+    </script>
+    <script>
+        function change(id) {
+            $("#addCustomer2").remove();
+            let insertHTML = `<div class="panel panel-default" id="addCustomer2">
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="goodsName1">客户名字</label>
+                                <input type="text" class="form-control" id="customerName2">
+                            </div>
+                            <div class="form-group">
+                                <label for="address">联系方式</label>
+                                <input type="text" class="form-control" id="address2">
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
+                        </form>
+                    </div>
+                </div>`;
+            $("#changeArea").append(insertHTML);
+        }
+    </script>
+    <script>
+        function changeOver(id) {
+            addOver(0);
+            $("#" + id).remove();
+            $("#addCustomer2").remove();
+        }
+    </script>
+</head>
+<body>
+    <div class="col-md-4" id="changeArea"></div>
+    <div class="col-md-4">
+        <div class="page-header">
+            <h1>客户信息管理</h1>
+        </div>
+        <button type="button" class="btn btn-primary btn" onclick="addCustomers()">增加客户</button>
+        <button type="button" class="btn btn-primary btn" onclick="window.location.href='findCustomer.html'">查找客户</button>
+        <table class="table table-hover" id="table">
+            <tr><th>客户姓名</th><th>联系方式</th><th>购买历史信息</th></tr>
+            <tr id="0"><td>张三</td><td>18883238833</td><td>
+                <table>
+                    <tr><td>信息1</td></tr>
+                    <tr><td>信息2</td></tr>
+                    <tr><td>信息3</td></tr>
+                    <tr><td>信息4</td></tr>
+                </table>
+            </td><td>
+                <button type="button" class="btn btn-primary btn-xs" onclick="change(0)">修改客户资料</button>
+            </td></tr>
+            <tr id="1"><td>李四</td><td>18883238833</td><td>
+                <table>
+                    <tr><td>信息1</td></tr>
+                    <tr><td>信息2</td></tr>
+                    <tr><td>信息3</td></tr>
+                    <tr><td>信息4</td></tr>
+                </table>
+            </td><td>
+                <button type="button" class="btn btn-primary btn-xs" onclick="change(1)">修改客户资料</button>
+            </td></tr>
+        </table>
+    </div>
+    <div class="col-md-4" id="addArea"></div>
+</body>
+</html>
