@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.sell.dao.ImportOrderMapper">
+
+    <insert id="insert" parameterType="com.hit.sell.domain.ImportOrder">
+        INSERT INTO import_order(in_id, unit_price, import_number, goods_id)
+        VALUES (#{inId}, #{unitPrice}, #{importNumber}, #{goodsId})
+    </insert>
+
+    <select id="searchNumbersByGoodsId" parameterType="Integer" resultType="Integer">
+        SELECT import_number
+        FROM import_order
+        WHERE import_order.goods_id = #{goodsId}
+    </select>
+</mapper>

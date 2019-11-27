@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.sell.dao.CustomerMapper">
+
+    <insert id="insertCustomer" parameterType="com.hit.sell.domain.Customer">
+        INSERT INTO customer(customer_id, customer_name, customer_tel)
+        VALUES (#{customerId}, #{customerName}, #{customerTel})
+    </insert>
+
+    <select id="getAllCustomers" resultMap="customers">
+        SELECT customer_id, customer_name, customer_tel
+        FROM customer
+    </select>
+
+    <select id="searchByCustomerName" parameterType="String" resultMap="customers">
+        SELECT customer_id, customer_name, customer_tel
+        FROM customer
+        WHERE customer.customer_name = #{name}
+    </select>
+
+    <select id="searchById" parameterType="Integer" resultType="com.hit.sell.domain.Customer">
+        SELECT customer_id customerId, customer_name customerName, customer_tel customerTel
+        FROM customer c
+        WHERE c.customer_id = #{id}
+    </select>
+
+    <update id="setNameById">
+        UPDATE customer
+        SET customer.customer_name = #{name}
+        WHERE customer.customer_id = #{id}
+    </update>
+
+    <update id="setTelById">
+        UPDATE customer
+        SET customer.customer_tel = #{tel}
+        WHERE customer.customer_id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM customer
+        WHERE customer.customer_id = #{id}
+    </delete>
+
+
+    <resultMap id="customers" type="com.hit.sell.domain.Customer">
+        <id column="customer_id" property="customerId"></id>
+        <result column="customer_name" property="customerName"></result>
+        <result column="customer_tel" property="customerTel"></result>
+    </resultMap>
+</mapper>

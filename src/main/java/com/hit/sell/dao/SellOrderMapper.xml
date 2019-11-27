@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hit.sell.dao.SellOrderMapper">
+    <insert id="insert" parameterType="com.hit.sell.domain.SellOrder">
+        INSERT INTO sell_order(out_id, sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
+        VALUES (#{outId}, #{sellTime}, #{orderStatus},  #{sellUnitPrice}, #{sellNumber}, #{remark}, #{goodsId})
+    </insert>
+
+    <select id="searchById" parameterType="Integer" resultType="com.hit.sell.domain.SellOrder">
+        SELECT out_id outId, sell_time sellTime, order_status orderStatus, sell_unit_price sellUnitPrice,
+            sell_number sellNumber, remark, goods_id goodsId
+        FROM sell_order
+        WHERE sell_order.out_id = #{id}
+    </select>
+
+    <update id="setStatusById">
+        UPDATE sell_order
+        SET sell_order.order_status = #{status}
+        WHERE  sell_order.out_id = #{id}
+    </update>
+
+    <update id="setPriceById">
+        UPDATE sell_order
+        SET sell_order.sell_unit_price = #{price}
+        WHERE sell_order.out_id = #{id}
+    </update>
+
+    <update id="setNumberById">
+        UPDATE sell_order
+        SET sell_order.sell_number = #{number}
+        WHERE sell_order.out_id = #{id}
+    </update>
+
+    <update id="setRemarkById">
+        UPDATE sell_order
+        SET sell_order.remark = #{remark}
+        WHERE sell_order.out_id = #{id}
+    </update>
+
+    <update id="setGoodsIdById">
+        UPDATE sell_order
+        SET sell_order.goods_id = #{goodsId}
+        WHERE sell_order.out_id = #{id}
+    </update>
+    <select id="searchByStatus" parameterType="Integer" resultMap="ordersWithSameStatus">
+        SELECT out_id, sell_time, order_status, sell_unit_price, sell_number, remark, goods_id
+        FROM sell_order
+        WHERE sell_order.order_status = #{status}
+    </select>
+
+    <delete id="deleteById" parameterType="Integer">
+        DELETE FROM sell_order
+        WHERE sell_order.out_id = #{id}
+    </delete>
+
+    <resultMap id="ordersWithSameStatus" type="com.hit.sell.domain.SellOrder">
+        <id column="out_id" property="outId"></id>
+        <result column="sell_time" property="sellTime"></result>
+        <result column="order_status" property="orderStatus"></result>
+        <result column="sell_unit_price" property="sellUnitPrice"></result>
+        <result column="sell_number" property="sellNumber"></result>
+        <result column="remark" property="remark"></result>
+        <result column="goods_id" property="goodsId"></result>
+    </resultMap>
+
+</mapper>
