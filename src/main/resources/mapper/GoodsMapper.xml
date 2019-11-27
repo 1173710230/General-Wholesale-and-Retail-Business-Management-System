@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.project.dao.GoodsMapper">
+
+    <resultMap id="goodMap" type="Goods">
+        <id column="goods_id" property="id"/>
+        <result column="goods_name" property="title"/>
+        <result column="specification" property="specification"/>
+        <!--        <result column="warehouse_id" property=""-->
+    </resultMap>
+
+    <insert id="addGoods" parameterType="Goods">
+        insert into goods (goods_id, goods_name, specification, warehouse_id)
+        values (#{id}, #{name}, #{specification}, 1);
+    </insert>
+
+
+    <delete id="deleteGoodsByid" parameterType="int">
+        delete
+        from goods
+        where goods_id = #{id}
+    </delete>
+
+    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
+        select *
+        from goods
+        <where>
+            <if test="id != null and id != 0">
+                goods_id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and goods_name = #{name}
+            </if>
+            <if test="specification != null and specification != ''">
+                and specification like #{specification};
+            </if>
+        </where>
+    </select>
+
+    <select id="getStockById">
+        select (sum(iod.import_number) - sum(sod.sell_number))
+        from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id
+    </select>
+
+    <update id="updateGoods" parameterType="Goods">
+        update goods
+        <set>
+            <if test="name != null and null != ''">
+                goods_name = #{name},
+            </if>
+            <if test="specification != null and specification != ''">
+                specification = #{specification},
+            </if>
+        </set>
+        where goods_id = #{id};
+    </update>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
