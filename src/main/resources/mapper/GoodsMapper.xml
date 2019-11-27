@@ -10,7 +10,7 @@
         <id column="goods_id" property="id"/>
         <result column="goods_name" property="title"/>
         <result column="specification" property="specification"/>
-        <!--        <result column="warehouse_id" property=""-->
+        <!--                <result column="warehouse_id" property=""-->
     </resultMap>
 
     <insert id="addGoods" parameterType="Goods">
@@ -26,24 +26,32 @@
     </delete>
 
     <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
-        select *
-        from goods
+        set @number = (
+            select (sum(iod.import_number) - sum(sod.sell_number))
+            from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id
+        );
+
+        select g.*, @number number
+        from goods g
         <where>
             <if test="id != null and id != 0">
-                goods_id = #{id}
+                g.goods_id = #{id}
             </if>
             <if test="name != null and name != ''">
-                and goods_name = #{name}
+                and g.goods_name = #{name}
             </if>
             <if test="specification != null and specification != ''">
-                and specification like #{specification};
+                and g.specification like #{specification};
             </if>
         </where>
     </select>
 
     <select id="getStockById">
         select (sum(iod.import_number) - sum(sod.sell_number))
-        from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id
+        from sell_order sod,
+             import_order iod
+        where sod.goods_id = #{id}
+          and iod.goods_id = sod.goods_id
     </select>
 
     <update id="updateGoods" parameterType="Goods">
