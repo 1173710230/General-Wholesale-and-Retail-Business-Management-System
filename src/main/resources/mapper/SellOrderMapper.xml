@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.project.dao.SellOrderMapper">
+
+    <resultMap id="sellOrderMap" type="SellOrder">
+        <id column="out_id" property="id"/>
+        <result column="sell_time" property="time"/>
+        <result column="order_status" property="status"/>
+        <result column="sell_unit_price" property="sellUnitPrice"/>
+        <result column="sell_number" property="goodsNumber"/>
+        <result column="remark" property="remark"/>
+        <!--        <association property="Goods" column="goods_id">-->
+        <!--            -->
+        <!--        </association>-->
+    </resultMap>
+
+    <insert id="addSellOrder" parameterType="SellOrder">
+        insert into sell_order (sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
+        values (#{time}, #{status}, #{isellUnitPrice}, #{goodsNumber}, #{remark}, #{goodsId});
+    </insert>
+
+    <update id="updateSellOrder" parameterType="SellOrder">
+        update sell_order
+        <set>
+            <if test="status != null">
+                order_status = #{status},
+            </if>
+            <if test="sellUnitPrice != null and sellUnitPrice != ''">
+                sell_unit_price = #{sellUnitPrice},
+            </if>
+            <if test="time != null and time != ''">
+                sell_time = #{time},
+            </if>
+            <if test="remark != null and remark != ''">
+                remark = #{remark},
+            </if>
+            <if test="goodsNumber != null and goodsNumber != 0">
+                sell_number = #{goodsNumber},
+            </if>
+            <!--            <if test="customerName != null and customerName != ''">-->
+            <!--                remark = #{customerName},-->
+            <!--            </if>-->
+        </set>
+        where out_id = #{id};
+    </update>
+
+    <delete id="deleteSellOrder" parameterType="int">
+        delete
+        from sell_order
+        where out_id = #{id};
+    </delete>
+
+    <select id="getSellOrderById" parameterType="int">
+        select *
+        from sell_order
+        where out_id = #{id};
+    </select>
+
+    <select id="querySellOrder" parameterType="SellOrder">
+        select * from sell_order
+        <where>
+            <if test="status != null">
+                status = #{status}
+            </if>
+            <if test="goodsNumber != null">
+                and sell_number = #{goodsNumber}
+            </if>
+            <if test="sellUnitPrice != null">
+                and sell_unit_price = #{sellUnitPrice}
+            </if>
+            <if test="remark != null and remark != ''">
+                and remark like #{remark}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

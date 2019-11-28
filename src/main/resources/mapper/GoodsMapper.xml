@@ -57,7 +57,7 @@
     <update id="updateGoods" parameterType="Goods">
         update goods
         <set>
-            <if test="name != null and null != ''">
+            <if test="name != null and name != ''">
                 goods_name = #{name},
             </if>
             <if test="specification != null and specification != ''">
