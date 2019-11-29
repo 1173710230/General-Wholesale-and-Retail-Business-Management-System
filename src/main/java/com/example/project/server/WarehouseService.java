@@ -24,9 +24,9 @@ public interface WarehouseService {
 
 
     /**
-     * 添加新商品
+     * 商品入库
      *
      */
-    boolean addNewGoods(int checkgoodsId, int goodsnumber, String goodsName, String spec, int warehouseId);
+    boolean addGoodsToWareHouse(int checkGoodsId, double goodsNumber, int warehouseId);
 
 }

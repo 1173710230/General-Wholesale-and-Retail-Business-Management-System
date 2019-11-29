@@ -3,6 +3,7 @@ package com.example.project.server;
 import com.example.project.dao.*;
 import com.example.project.domain.Goods;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,9 +48,16 @@ public class WarehouseServiceImpl implements WarehouseService{
     }
 
     @Override
-    public boolean addNewGoods(int checkgoodsId, int goodsnumber, String goodsName, String spec, int warehouseId) {
-
-
-        return false;
+    public boolean addGoodsToWareHouse(int checkGoodsId, double goodsNumber, int warehouseId){
+        Goods goods = new Goods();
+        goods.setGoodsId(checkGoodsId);
+        goods.setGoodsNumber(goodsNumber);
+        goods.setWarehouseId(warehouseId);
+        try {
+            wareHouseMapper.addGoodsToWarehouse(goods);
+            return true;
+        } catch (DataAccessException ex) {
+            return false;
+        }
     }
 }

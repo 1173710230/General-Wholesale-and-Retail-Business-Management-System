@@ -12,14 +12,14 @@ public interface GoodsService {
      * 获取所有仓库中货物
      *
      */
-    List<Goods> getallWirehouseGoods();
+    List<Goods> getAllWarehouseGoods();
 
 
     /**
      * 根据id将删除一个Goods与所有仓库的关系
      *
      */
-    boolean deleteGoodsById(int Goods_id);
+    boolean deleteGoodsById(int GoodsId);
 
     /**
      * 根据id将x修改为一个Goods

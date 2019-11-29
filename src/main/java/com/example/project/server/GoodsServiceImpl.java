@@ -35,15 +35,19 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public List<Goods> getallWirehouseGoods() {
-
-        return null;
+    public List<Goods> getAllWarehouseGoods() {
+        Goods goods = new Goods();
+        return goodsMapper.queryGoodsInStock(goods);
     }
 
     @Override
-    public boolean deleteGoodsById(int Goods_id) {
-
-        return false;
+    public boolean deleteGoodsById(int goodsId) {
+        try {
+            goodsMapper.deleteGoodsById(goodsId);
+            return true;
+        } catch (DataAccessException ex) {
+            return false;
+        }
     }
 
     @Override
