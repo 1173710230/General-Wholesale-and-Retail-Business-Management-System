@@ -11,16 +11,14 @@ public class Customer {
     private int id;
     private String name;
     private String tel;
-    private List<SellOrder> historyOrder;
-    private static int times = 1;
+    private List<Integer> historysellorder;
 
     //ToDo constructor
-    public Customer(String name, String tel, List<SellOrder> historyOrder) {
-        this.id = times;
+    public Customer(int id, String name, String tel, List<Integer> historysellorder) {
+        this.id = id;
         this.name = name;
         this.tel = tel;
-        this.historyOrder = historyOrder;
-        times++;
+        this.historysellorder = historysellorder;
     }
 
     /**
@@ -65,20 +63,12 @@ public class Customer {
         this.tel = tel;
     }
 
-    public List<SellOrder> getHistoryOrder() {
-        return historyOrder;
+    public List<Integer> getHistorysellorder() {
+        return historysellorder;
     }
 
-    public void setHistoryOrder(List<SellOrder> historyOrder) {
-        this.historyOrder = historyOrder;
-    }
-
-    public static int getTimes() {
-        return times;
-    }
-
-    public static void setTimes(int times) {
-        Customer.times = times;
+    public void setHistorysellorder(List<Integer> historysellorder) {
+        this.historysellorder = historysellorder;
     }
 
     @Override

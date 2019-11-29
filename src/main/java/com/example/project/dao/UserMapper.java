@@ -7,10 +7,10 @@ public interface UserMapper {
 
     public void insertUser(User user);
 
-    public void setNameByUserId(@Param("userId") String userId, @Param("name") String name);
+    public void setNameByUserId(@Param("userId") int userId, @Param("name") String name);
 
-    public void setPasswordByUserId(@Param("userId") String userId, @Param("password") String password);
+    public void setPasswordByUserId(@Param("userId") int userId, @Param("password") String password);
 
-    public User searchUserByUserId(String userId);
+    public User searchUserByUserId(int userId);
 
 }

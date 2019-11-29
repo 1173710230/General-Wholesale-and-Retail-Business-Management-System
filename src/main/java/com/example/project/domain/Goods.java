@@ -9,17 +9,19 @@ public class Goods {
     private String name;
     private int number;
     public String specification;
-    private static int times = 1;
+    private int warehouse_id;
 
     //ToDo constructor
-    public Goods(String name, int number, String specification) {
-        this.id = times;
+    public Goods(int id, String name, int number, String specification, int warehouse_id) {
+        this.id = id;
         this.name = name;
         this.number = number;
         this.specification = specification;
-        times++;
+        this.warehouse_id = warehouse_id;
     }
 
+    public Goods() {
+    }
 
     // public warehouse 1;
     //public inputOrder 1;
@@ -34,15 +36,6 @@ public class Goods {
        return true;
     }
 
-    /**
-     * @param newnumber change number
-     * @return change successfully true
-     */
-    public boolean modifyNumber(int newnumber) {
-        this.number = newnumber;
-        return true;
-    }
-
 
     // 按id比较goods
     @Override
@@ -53,9 +46,21 @@ public class Goods {
         return id == goods.id;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, number, specification);
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+
+    public int getWarehouse_id() {
+        return warehouse_id;
+    }
+
+    public void setWarehouse_id(int warehouse_id) {
+        this.warehouse_id = warehouse_id;
     }
 
     public int getId() {
@@ -64,10 +69,6 @@ public class Goods {
 
     public String getName() {
         return name;
-    }
-
-    public int getNumber() {
-        return number;
     }
 
     public String getSpecification() {
@@ -82,20 +83,8 @@ public class Goods {
         this.name = name;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
     public void setSpecification(String specification) {
         this.specification = specification;
-    }
-
-    public static int getTimes() {
-        return times;
-    }
-
-    public static void setTimes(int times) {
-        Goods.times = times;
     }
 
     @Override
@@ -103,8 +92,8 @@ public class Goods {
         return "Goods{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", number=" + number +
                 ", specification='" + specification + '\'' +
+                ", warehouse_id=" + warehouse_id +
                 '}';
     }
 }

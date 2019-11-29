@@ -14,11 +14,11 @@ public interface CustomerMapper {
 
     List<Customer> searchByCustomerName(String name);
 
-    Customer searchById(Integer id);
+    Customer searchById(int id);
 
-    void setNameById(@Param("id") Integer id, @Param("name") String name);
+    void setNameById(@Param("id") int id, @Param("name") String name);
 
-    void setTelById(@Param("id") Integer id, @Param("tel") String tel);
+    void setTelById(@Param("id") int id, @Param("tel") String tel);
 
-    void deleteById(Integer id);
+    void deleteById(int id);
 }

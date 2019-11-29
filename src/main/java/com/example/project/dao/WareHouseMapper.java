@@ -8,7 +8,7 @@ import java.util.List;
 public interface WareHouseMapper {
     public List<Warehouse> getAllWareHouse();
 
-    public String searchNameById(Integer id);
+    public String searchNameById(int id);
 
     public void insert(Warehouse wareHouse);
 

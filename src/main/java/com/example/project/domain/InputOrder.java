@@ -9,25 +9,22 @@ import java.util.Objects;
 public class InputOrder {
 
     private int id;
-    private Goods goods;
     private int goodsNumber;
     private double inputUnitPrice;
-    private double totalPrice;
+    private int goods_id;
     private Date time;
     private String remark;
-    private static int times = 1;
 
     //ToDo constructor
-    public InputOrder(Goods goods, int goodsNumber, double inputUnitPrice, double totalPrice, Date time, String remark) {
-        this.id = times;
-        this.goods = goods;
+    public InputOrder(int id, int goodsNumber, double inputUnitPrice, int goods_id, Date time, String remark) {
+        this.id = id;
         this.goodsNumber = goodsNumber;
         this.inputUnitPrice = inputUnitPrice;
-        this.totalPrice = totalPrice;
+        this.goods_id = goods_id;
         this.time = time;
         this.remark = remark;
-        times++;
     }
+
 
     //public goods 1;
 
@@ -43,9 +40,6 @@ public class InputOrder {
         return true;
     }
 
-    public Goods getGoods() {
-        return goods;
-    }
 
     public int getGoodsNumber() {
         return goodsNumber;
@@ -53,10 +47,6 @@ public class InputOrder {
 
     public double getInputUnitPrice() {
         return inputUnitPrice;
-    }
-
-    public double getTotalPrice() {
-        return totalPrice;
     }
 
     public Date getTime() {
@@ -75,20 +65,12 @@ public class InputOrder {
         this.id = id;
     }
 
-    public void setGoods(Goods goods) {
-        this.goods = goods;
-    }
-
     public void setGoodsNumber(int goodsNumber) {
         this.goodsNumber = goodsNumber;
     }
 
     public void setInputUnitPrice(double inputUnitPrice) {
         this.inputUnitPrice = inputUnitPrice;
-    }
-
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
     }
 
     public void setTime(Date time) {
@@ -99,40 +81,17 @@ public class InputOrder {
         this.remark = remark;
     }
 
-    public static int getTimes() {
-        return times;
-    }
-
-    public static void setTimes(int times) {
-        InputOrder.times = times;
-    }
-
-    /**
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "inputOrder{" +
-                "id=" + id +
-                ", goods=" + goods +
-                ", goodsNumber=" + goodsNumber +
-                ", inputUnitPrice=" + inputUnitPrice +
-                ", totalPrice=" + totalPrice +
-                ", time=" + time +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InputOrder that = (InputOrder) o;
-        return id == that.id ;
+        return id == that.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, goods, goodsNumber, inputUnitPrice, totalPrice, time, remark);
+        return Objects.hash(id, goodsNumber, inputUnitPrice, goods_id, time, remark);
     }
 }

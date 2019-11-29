@@ -10,17 +10,14 @@ public class User {
     private int id;
     private String name;
     private String passward;
-    private static int times = 1;
 
 
     //public data 1;
-
-
-    public User(String name, String passward) {
-        this.id = times;
+    //ToDO COnstructor
+    public User(int id, String name, String passward) {
+        this.id = id;
         this.name = name;
         this.passward = passward;
-        times++;
     }
 
     /**

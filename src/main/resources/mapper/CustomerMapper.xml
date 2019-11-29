@@ -7,7 +7,7 @@
 
     <insert id="insertCustomer" parameterType="Customer">
         INSERT INTO customer(customer_id, customer_name, customer_tel)
-        VALUES (#{customerId}, #{customerName}, #{customerTel})
+        VALUES (#{id}, #{name}, #{tel})
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">
@@ -21,8 +21,8 @@
         WHERE customer.customer_name = #{name}
     </select>
 
-    <select id="searchById" parameterType="Integer" resultType="Customer">
-        SELECT customer_id customerId, customer_name customerName, customer_tel customerTel
+    <select id="searchById" parameterType="int" resultType="Customer">
+        SELECT customer_id , customer_name , customer_tel
         FROM customer c
         WHERE c.customer_id = #{id}
     </select>
@@ -39,7 +39,7 @@
         WHERE customer.customer_id = #{id}
     </update>
 
-    <delete id="deleteById" parameterType="Integer">
+    <delete id="deleteById" parameterType="int">
         DELETE
         FROM customer
         WHERE customer.customer_id = #{id}
@@ -47,8 +47,8 @@
 
 
     <resultMap id="customers" type="Customer">
-        <id column="customer_id" property="customerId"/>
-        <result column="customer_name" property="customerName"/>
-        <result column="customer_tel" property="customerTel"/>
+        <id column="customer_id" property="id"/>
+        <result column="customer_name" property="name"/>
+        <result column="customer_tel" property="tel"/>
     </resultMap>
 </mapper>

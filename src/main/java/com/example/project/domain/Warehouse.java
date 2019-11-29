@@ -12,16 +12,13 @@ public class Warehouse {
 
     private int id;
     private String name;
-    private List<Goods> goods;
-    private static int times = 1;
 
     //ToDo constructor
-    public Warehouse(String name, List<Goods> goods) {
-        this.id = 0;
+    public Warehouse(int id, String name) {
+        this.id = id;
         this.name = name;
-        this.goods = goods;
-        times++;
     }
+
 
     // public data 1;
 
@@ -94,22 +91,6 @@ public class Warehouse {
         this.name = name;
     }
 
-    public List<Goods> getGoods() {
-        return goods;
-    }
-
-    public void setGoods(List<Goods> goods) {
-        this.goods = goods;
-    }
-
-    public static int getTimes() {
-        return times;
-    }
-
-    public static void setTimes(int times) {
-        Warehouse.times = times;
-    }
-
     public int getId() {
         return id;
     }
@@ -136,7 +117,6 @@ public class Warehouse {
         return "Warehouse{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", goods=" + goods +
                 '}';
     }
 }
