@@ -1,6 +1,8 @@
 package com.example.project.server;
 
+import com.example.project.dao.GoodsMapper;
 import com.example.project.dao.SellOrderMapper;
+import com.example.project.domain.Goods;
 import com.example.project.domain.SellOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -14,8 +16,12 @@ public class SellOrderServiceImpl implements SellOrderService{
 
     private final SellOrderMapper sellOrderMapper;
 
-    public SellOrderServiceImpl(SellOrderMapper sellOrderMapper) {
+    private final GoodsMapper goodsMapper;
+
+    @Autowired
+    public SellOrderServiceImpl(SellOrderMapper sellOrderMapper, GoodsMapper goodsMapper) {
         this.sellOrderMapper = sellOrderMapper;
+        this.goodsMapper = goodsMapper;
     }
 
     @Override
@@ -53,10 +59,25 @@ public class SellOrderServiceImpl implements SellOrderService{
 
     @Override
     public boolean checkOrder(int sellOrderId) {
-        return changeStatus(sellOrderId, 2);
+        SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
+        Integer goodsId = order.getSellGoodsId();
+        Goods goods = new Goods();
+        goods.setGoodsId(goodsId);
+
+        List<Goods> goodsList = goodsMapper.queryGoods(goods);
+        if (goodsList.size() > 0) {
+            if (goodsList.get(0).getGoodsNumber() > 0) {
+                // 这时候可以确定库存 > 0
+                return changeStatus(sellOrderId, 2);
+            } else {
+                // 没库存了，返回false
+                return false;
+            }
+        } else {
+            // 没有这个销售单ID，正常情况下应该不会走到这里
+            return false;
+        }
     }
-
-
 
     @Override
     public boolean paySellOrder(int sellOrderId) {
