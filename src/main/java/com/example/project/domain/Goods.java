@@ -1,99 +1,90 @@
 package com.example.project.domain;
 
+import java.util.List;
 import java.util.Objects;
 
 
 public class Goods {
 
-    private int id;
-    private String name;
-    private int number;
-    public String specification;
-    private int warehouse_id;
+    private Integer goodsId;
+    private String goodsName;
+    private String goodsSpecification;
+    private List<Warehouse> warehouses;
+    private List<Integer> goodsNumber;
 
     //ToDo constructor
-    public Goods(int id, String name, int number, String specification, int warehouse_id) {
-        this.id = id;
-        this.name = name;
-        this.number = number;
-        this.specification = specification;
-        this.warehouse_id = warehouse_id;
+    public Goods(Integer goodsId, String goodsName, String goodsSpecification, List<Warehouse> warehouses, List<Integer> goodsNumber) {
+        this.goodsId = goodsId;
+        this.goodsName = goodsName;
+        this.goodsSpecification = goodsSpecification;
+        this.warehouses = warehouses;
+        this.goodsNumber = goodsNumber;
     }
 
     public Goods() {
     }
 
-    // public warehouse 1;
-    //public inputOrder 1;
-    //public sellOrder 1;
-
-    /**
-     * @param newname change name
-     * @return change successfully true
-     */
-    public boolean modifyName(String newname) {
-       this.name = newname;
-       return true;
+    public Integer getGoodsId() {
+        return goodsId;
     }
 
+    public void setGoodsId(Integer goodsId) {
+        this.goodsId = goodsId;
+    }
 
-    // 按id比较goods
+    public String getGoodsName() {
+        return goodsName;
+    }
+
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
+    }
+
+    public String getGoodsSpecification() {
+        return goodsSpecification;
+    }
+
+    public void setGoodsSpecification(String goodsSpecification) {
+        this.goodsSpecification = goodsSpecification;
+    }
+
+    public List<Warehouse> getWarehouses() {
+        return warehouses;
+    }
+
+    public void setWarehouses(List<Warehouse> warehouses) {
+        this.warehouses = warehouses;
+    }
+
+    public List<Integer> getGoodsNumber() {
+        return goodsNumber;
+    }
+
+    public void setGoodsNumber(List<Integer> goodsNumber) {
+        this.goodsNumber = goodsNumber;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Goods goods = (Goods) o;
-        return id == goods.id;
+        return Objects.equals(goodsId, goods.goodsId);
     }
 
-
-    public int getNumber() {
-        return number;
-    }
-
-    public void setNumber(int number) {
-        this.number = number;
-    }
-
-    public int getWarehouse_id() {
-        return warehouse_id;
-    }
-
-    public void setWarehouse_id(int warehouse_id) {
-        this.warehouse_id = warehouse_id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSpecification() {
-        return specification;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSpecification(String specification) {
-        this.specification = specification;
+    @Override
+    public int hashCode() {
+        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouses, goodsNumber);
     }
 
     @Override
     public String toString() {
         return "Goods{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", specification='" + specification + '\'' +
-                ", warehouse_id=" + warehouse_id +
+                "goodsId=" + goodsId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsSpecification='" + goodsSpecification + '\'' +
+                ", warehouses=" + warehouses +
+                ", goodsNumber=" + goodsNumber +
                 '}';
     }
 }

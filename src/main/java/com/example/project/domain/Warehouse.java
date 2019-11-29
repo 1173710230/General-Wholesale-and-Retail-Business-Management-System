@@ -4,99 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * 
- */
 public class Warehouse {
 
 
-    private int id;
-    private String name;
+    private Integer warehouseId;
+    private String warehouseName;
+    private List<Goods> warehouseGoods;
 
     //ToDo constructor
-    public Warehouse(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Warehouse() {
     }
 
-
-    // public data 1;
-
-    /**
-     * @param goods 要添加的商品
-     * @return 重复为false
-     */
-    public boolean addGoods(Goods goods) {
-        if(this.goods.contains(goods)){
-            return false;
-        }
-        this.goods.add(goods);
-        return true;
+    public Warehouse(Integer warehouseId, String warehouseName, List<Goods> warehouseGoods) {
+        this.warehouseId = warehouseId;
+        this.warehouseName = warehouseName;
+        this.warehouseGoods = warehouseGoods;
     }
 
-    /**
-     * @param goodsId 要查询的货物id
-     * @return 查到返回查到的货物信息，没查到返回空
-     */
-    public Goods queryGoodsById(int goodsId) {
-        for(int i =0; i<goods.size();i++){
-            if(goods.get(i).getId() == goodsId)
-                return goods.get(i);
-        }
-        return null;
+    public Integer getWarehouseId() {
+        return warehouseId;
     }
 
-    /**
-     * @param goodsName 要查询货物的名字
-     * @return
-     */
-    public List<Goods> queryGoodsByName(String goodsName) {
-        List<Goods> tempgoods = new ArrayList<>();
-        for(int i =0; i<goods.size();i++){
-            if(goods.get(i).getName().equals(goodsName))
-                tempgoods.add(goods.get(i));
-        }
-        return tempgoods;
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
     }
 
-    /**
-     * @param lowerPrice 查询最低价格
-     * @param highPrice 查询最高价格
-     * @return 找到在此区间的goods
-     */
-    public List<Goods> queryGoodsByPrice(double lowerPrice, double highPrice) {
-        // TODO deleted
-        return null;
+    public String getWarehouseName() {
+        return warehouseName;
     }
 
-    /**
-     * @param goodsid 要删除货品的id
-     * @return 陈宫删除返回对，否则为错
-     */
-    public boolean deleteGoods(int goodsid) {
-        for(int i =0 ; i<goods.size(); i++){
-              if(goods.get(i).getId() == goodsid){
-                  goods.remove(i);
-                  return true;
-              }
-        }
-        return false;
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
     }
 
-    public String getName() {
-        return name;
+    public List<Goods> getWarehouseGoods() {
+        return warehouseGoods;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public void setWarehouseGoods(List<Goods> warehouseGoods) {
+        this.warehouseGoods = warehouseGoods;
     }
 
     @Override
@@ -104,19 +50,22 @@ public class Warehouse {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Warehouse warehouse = (Warehouse) o;
-        return id == warehouse.id;
+        return Objects.equals(warehouseId, warehouse.warehouseId) &&
+                Objects.equals(warehouseName, warehouse.warehouseName) &&
+                Objects.equals(warehouseGoods, warehouse.warehouseGoods);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(warehouseId, warehouseName, warehouseGoods);
     }
 
     @Override
     public String toString() {
         return "Warehouse{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "warehouseId=" + warehouseId +
+                ", warehouseName='" + warehouseName + '\'' +
+                ", warehouseGoods=" + warehouseGoods +
                 '}';
     }
 }

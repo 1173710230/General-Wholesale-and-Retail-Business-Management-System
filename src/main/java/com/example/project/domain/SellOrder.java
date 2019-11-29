@@ -6,149 +6,94 @@ import java.util.Objects;
 
 public class SellOrder {
 
-    private int id;
-    private int goodsNumber;//卖掉的数量
-    private double sellUnitPrice;
-    private int status = 0;
+    private Integer sellOrderId;
+    private Integer SellNumber;//卖掉的数量
+    private Double sellUnitPrice;
+    private Integer sellStatus = 0;
     // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
-    private Date time;
-    private String remark;
-    private int goodsId;
-    private int customerId;
+    private Date sellTime;
+    private String sellOrderRemark;
+    private Integer sellGoodsId;
+    private Integer customerId;
 
 
     //ToDo constructor
-    public SellOrder(int id, int goodsNumber, double sellUnitPrice, int status, Date time, String remark, int goodsId, int customerId) {
-        this.id = id;
-        this.goodsNumber = goodsNumber;
+    public SellOrder() {
+    }
+
+    public SellOrder(Integer sellOrderId, Integer sellNumber, Double sellUnitPrice, Integer sellStatus, Date sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
+        this.sellOrderId = sellOrderId;
+        SellNumber = sellNumber;
         this.sellUnitPrice = sellUnitPrice;
-        this.status = status;
-        this.time = time;
-        this.remark = remark;
-        this.goodsId = goodsId;
+        this.sellStatus = sellStatus;
+        this.sellTime = sellTime;
+        this.sellOrderRemark = sellOrderRemark;
+        this.sellGoodsId = sellGoodsId;
         this.customerId = customerId;
     }
 
-    /**
-     * 只有未提交的订单才可以修改
-     * @param newGoods_id
-     * @return
-     */
-    public boolean modifyGoods(int newGoods_id) {
-        if(this.status == 0) {
-            this.goodsId = newGoods_id;
-            return true;
-        }
-        return false;
+    public Integer getSellOrderId() {
+        return sellOrderId;
     }
 
-    /**
-     * 只有未提交的订单才可以修改
-     *
-     * @param newGoodsNumber 
-     * @return
-     */
-    public boolean modifyGoodsNumber(int newGoodsNumber) {
-        if(this.status == 0) {
-            this.goodsNumber = newGoodsNumber;
-            return true;
-        }
-        return false;
+    public void setSellOrderId(Integer sellOrderId) {
+        this.sellOrderId = sellOrderId;
     }
 
-    /**
-     * 只有未提交的订单才可以修改
-     * @param sellPrice 
-     * @return
-     */
-    public boolean modifySellPrice(double sellPrice) {
-        if(this.status == 0) {
-            this.sellUnitPrice = sellPrice;
-            return true;
-        }
-        return false;
+    public Integer getSellNumber() {
+        return SellNumber;
     }
 
-
-    /**
-     * 只有未提交的订单才可以修改
-     * @param remake 
-     * @return
-     */
-    public boolean modifyRemake(String remake) {
-        if(this.status == 0) {
-            this.remark = remake;
-            return true;
-        }
-        return false;
+    public void setSellNumber(Integer sellNumber) {
+        SellNumber = sellNumber;
     }
 
-    /**
-     * 将订单状态有未提交改为待审核
-     * @return
-     */
-    public boolean saveOrder() {
-        if(this.status == 0){
-            this.status = 1;
-            return true;
-        }
-        return false;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getGoodsNumber() {
-        return goodsNumber;
-    }
-
-    public void setGoodsNumber(int goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
-
-    public double getSellUnitPrice() {
+    public Double getSellUnitPrice() {
         return sellUnitPrice;
     }
 
-    public void setSellUnitPrice(double sellUnitPrice) {
+    public void setSellUnitPrice(Double sellUnitPrice) {
         this.sellUnitPrice = sellUnitPrice;
     }
 
-    public int getStatus() {
-        return status;
+    public Integer getSellStatus() {
+        return sellStatus;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setSellStatus(Integer sellStatus) {
+        this.sellStatus = sellStatus;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getSellTime() {
+        return sellTime;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setSellTime(Date sellTime) {
+        this.sellTime = sellTime;
     }
 
-    public String getRemark() {
-        return remark;
+    public String getSellOrderRemark() {
+        return sellOrderRemark;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setSellOrderRemark(String sellOrderRemark) {
+        this.sellOrderRemark = sellOrderRemark;
     }
 
-    public int getGoodsId() {
-        return goodsId;
+    public Integer getSellGoodsId() {
+        return sellGoodsId;
     }
 
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
+    public void setSellGoodsId(Integer sellGoodsId) {
+        this.sellGoodsId = sellGoodsId;
+    }
+
+    public Integer getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     @Override
@@ -156,24 +101,32 @@ public class SellOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SellOrder sellOrder = (SellOrder) o;
-        return id == sellOrder.id;
+        return Objects.equals(sellOrderId, sellOrder.sellOrderId) &&
+                Objects.equals(SellNumber, sellOrder.SellNumber) &&
+                Objects.equals(sellUnitPrice, sellOrder.sellUnitPrice) &&
+                Objects.equals(sellStatus, sellOrder.sellStatus) &&
+                Objects.equals(sellTime, sellOrder.sellTime) &&
+                Objects.equals(sellOrderRemark, sellOrder.sellOrderRemark) &&
+                Objects.equals(sellGoodsId, sellOrder.sellGoodsId) &&
+                Objects.equals(customerId, sellOrder.customerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(sellOrderId, SellNumber, sellUnitPrice, sellStatus, sellTime, sellOrderRemark, sellGoodsId, customerId);
     }
 
     @Override
     public String toString() {
         return "SellOrder{" +
-                "id=" + id +
-                ", goodsNumber=" + goodsNumber +
+                "sellOrderId=" + sellOrderId +
+                ", SellNumber=" + SellNumber +
                 ", sellUnitPrice=" + sellUnitPrice +
-                ", status=" + status +
-                ", time=" + time +
-                ", remark='" + remark + '\'' +
-                ", goods_id=" + goodsId +
+                ", sellStatus=" + sellStatus +
+                ", sellTime=" + sellTime +
+                ", sellOrderRemark='" + sellOrderRemark + '\'' +
+                ", sellGoodsId=" + sellGoodsId +
+                ", customerId=" + customerId +
                 '}';
     }
 }

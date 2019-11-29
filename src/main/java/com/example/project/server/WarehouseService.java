@@ -12,6 +12,6 @@ public interface WarehouseService {
 
     List<Goods> queryGoodsByName(String name);
 
-    boolean addNewGoods(int GoodsId, int GoodsSum);
+    boolean addNewGoods(int checkgoodsId, int goodsnumber, String goodsName, String spec, int warehouseId);
 
 }

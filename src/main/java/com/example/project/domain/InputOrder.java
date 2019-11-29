@@ -8,90 +8,96 @@ import java.util.Objects;
  */
 public class InputOrder {
 
-    private int id;
-    private int goodsNumber;
-    private double inputUnitPrice;
-    private int goods_id;
-    private Date time;
-    private String remark;
+    private Integer inputOrderId;
+    private Integer inputGoodsNumber;
+    private Double inputUnitPrice;
+    private Integer inputGoodsId;
+    private Date inputTime;
+    private String inputOrderRemark;
 
     //ToDo constructor
-    public InputOrder(int id, int goodsNumber, double inputUnitPrice, int goods_id, Date time, String remark) {
-        this.id = id;
-        this.goodsNumber = goodsNumber;
+    public InputOrder() {
+    }
+
+    public InputOrder(Integer inputOrderId, Integer inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, Date inputTime, String inputOrderRemark) {
+        this.inputOrderId = inputOrderId;
+        this.inputGoodsNumber = inputGoodsNumber;
         this.inputUnitPrice = inputUnitPrice;
-        this.goods_id = goods_id;
-        this.time = time;
-        this.remark = remark;
+        this.inputGoodsId = inputGoodsId;
+        this.inputTime = inputTime;
+        this.inputOrderRemark = inputOrderRemark;
     }
 
-
-    //public goods 1;
-
-    //public data 1;
-
-
-    /**
-     * @param remake Change remake
-     * @return change successfully ,true
-     */
-    public boolean modifyRemake(String remake) {
-        this.remark = remake;
-        return true;
+    public Integer getInputOrderId() {
+        return inputOrderId;
     }
 
-
-    public int getGoodsNumber() {
-        return goodsNumber;
+    public void setInputOrderId(Integer inputOrderId) {
+        this.inputOrderId = inputOrderId;
     }
 
-    public double getInputUnitPrice() {
+    public Integer getInputGoodsNumber() {
+        return inputGoodsNumber;
+    }
+
+    public void setInputGoodsNumber(Integer inputGoodsNumber) {
+        this.inputGoodsNumber = inputGoodsNumber;
+    }
+
+    public Double getInputUnitPrice() {
         return inputUnitPrice;
     }
 
-    public Date getTime() {
-        return time;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setGoodsNumber(int goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
-
-    public void setInputUnitPrice(double inputUnitPrice) {
+    public void setInputUnitPrice(Double inputUnitPrice) {
         this.inputUnitPrice = inputUnitPrice;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public Integer getInputGoodsId() {
+        return inputGoodsId;
     }
 
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setInputGoodsId(Integer inputGoodsId) {
+        this.inputGoodsId = inputGoodsId;
     }
 
+    public Date getInputTime() {
+        return inputTime;
+    }
+
+    public void setInputTime(Date inputTime) {
+        this.inputTime = inputTime;
+    }
+
+    public String getInputOrderRemark() {
+        return inputOrderRemark;
+    }
+
+    public void setInputOrderRemark(String inputOrderRemark) {
+        this.inputOrderRemark = inputOrderRemark;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InputOrder that = (InputOrder) o;
-        return id == that.id;
+        return Objects.equals(inputOrderId, that.inputOrderId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, goodsNumber, inputUnitPrice, goods_id, time, remark);
+        return Objects.hash(inputOrderId, inputGoodsNumber, inputUnitPrice, inputGoodsId, inputTime, inputOrderRemark);
+    }
+
+    @Override
+    public String toString() {
+        return "InputOrder{" +
+                "inputOrderId=" + inputOrderId +
+                ", inputGoodsNumber=" + inputGoodsNumber +
+                ", inputUnitPrice=" + inputUnitPrice +
+                ", inputGoodsId=" + inputGoodsId +
+                ", inputTime=" + inputTime +
+                ", inputOrderRemark='" + inputOrderRemark + '\'' +
+                '}';
     }
 }
