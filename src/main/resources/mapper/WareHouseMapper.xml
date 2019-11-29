@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.project.dao.WareHouseMapper">
+
+    <select id="getAllWareHouse" resultMap="warehouse">
+        SELECT *
+        FROM warehouse
+    </select>
+
+    <select id="searchNameById" parameterType="Integer" resultType="String">
+        SELECT name
+        FROM warehouse
+        WHERE warehouse.wh_id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="com.example.project.domain.Warehouse">
+        INSERT INTO warehouse(wh_id, name)
+        VALUES (#{whId}, #{name})
+    </insert>
+
+    <resultMap id="warehouse" type="com.example.project.domain.Warehouse">
+        <id column="wh_id" property="whId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+</mapper>

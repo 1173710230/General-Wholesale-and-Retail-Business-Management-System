@@ -19,8 +19,12 @@
     </resultMap>
 
     <insert id="addSellOrder" parameterType="SellOrder">
+        # 插入数据到销售单表
         insert into sell_order (sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
         values (#{time}, #{status}, #{isellUnitPrice}, #{goodsNumber}, #{remark}, #{goodsId});
+        # 插入关系
+        insert into sell_customer_relation (customer_id, sell_order_id)
+        values (#{customerId}, last_insert_id());
     </insert>
 
     <update id="updateSellOrder" parameterType="SellOrder">
