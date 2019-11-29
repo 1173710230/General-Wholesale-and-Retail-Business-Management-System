@@ -9,7 +9,7 @@ public class Goods {
     private String name;
     private int number;
     public String specification;
-    private int warehouse_id;
+    private int warehouseId;
 
     //ToDo constructor
     public Goods(int id, String name, int number, String specification, int warehouse_id) {
@@ -17,7 +17,7 @@ public class Goods {
         this.name = name;
         this.number = number;
         this.specification = specification;
-        this.warehouse_id = warehouse_id;
+        this.warehouseId = warehouse_id;
     }
 
     public Goods() {
@@ -56,11 +56,11 @@ public class Goods {
     }
 
     public int getWarehouse_id() {
-        return warehouse_id;
+        return warehouseId;
     }
 
     public void setWarehouse_id(int warehouse_id) {
-        this.warehouse_id = warehouse_id;
+        this.warehouseId = warehouse_id;
     }
 
     public int getId() {
@@ -93,7 +93,7 @@ public class Goods {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", specification='" + specification + '\'' +
-                ", warehouse_id=" + warehouse_id +
+                ", warehouse_id=" + warehouseId +
                 '}';
     }
 }
