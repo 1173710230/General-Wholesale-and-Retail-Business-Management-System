@@ -14,8 +14,8 @@
     </resultMap>
 
     <insert id="addGoods" parameterType="Goods">
-        insert into goods (goods_id, goods_name, specification)
-        values (#{id}, #{name}, #{specification});
+        insert into goods (goods_name, specification)
+        values (#{name}, #{specification});
     </insert>
 
 
@@ -25,17 +25,15 @@
         where goods_id = #{id}
     </delete>
 
-    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
-        set @number = (
-            select (sum(iod.import_number) - sum(sod.sell_number))
-            from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id
-        );
 
-        select g.*, @number number
-        from goods g
+    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
+        select g.*, sum(gwr.number) number
+        from goods g,
+        goods_warehouse_relation gwr
         <where>
+            gwr.goods_id = g.good_id
             <if test="id != null and id != 0">
-                g.goods_id = #{id}
+                and g.goods_id = #{id}
             </if>
             <if test="name != null and name != ''">
                 and g.goods_name = #{name}
@@ -44,7 +42,30 @@
                 and g.specification like #{specification};
             </if>
         </where>
+        group by g.goods_id;
     </select>
+
+    <!--    进货-销售计算库存的方式-->
+    <!--    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">-->
+    <!--        set @number = (-->
+    <!--            select (sum(iod.import_number) - sum(sod.sell_number))-->
+    <!--            from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id-->
+    <!--        );-->
+
+    <!--        select g.*, @number number-->
+    <!--        from goods g-->
+    <!--        <where>-->
+    <!--            <if test="id != null and id != 0">-->
+    <!--                g.goods_id = #{id}-->
+    <!--            </if>-->
+    <!--            <if test="name != null and name != ''">-->
+    <!--                and g.goods_name = #{name}-->
+    <!--            </if>-->
+    <!--            <if test="specification != null and specification != ''">-->
+    <!--                and g.specification like #{specification};-->
+    <!--            </if>-->
+    <!--        </where>-->
+    <!--    </select>-->
 
     <select id="getStockById">
         select (sum(iod.import_number) - sum(sod.sell_number))
