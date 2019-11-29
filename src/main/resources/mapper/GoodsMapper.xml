@@ -25,13 +25,13 @@
         where goods_id = #{id}
     </delete>
 
-
     <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
         select g.*, sum(gwr.number) number
         from goods g,
         goods_warehouse_relation gwr
         <where>
-            gwr.goods_id = g.good_id
+            <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1-->
+            gwr.goods_id = g.good_id and gwr.warehouse_id = 1
             <if test="id != null and id != 0">
                 and g.goods_id = #{id}
             </if>
@@ -88,6 +88,13 @@
         where goods_id = #{id};
     </update>
 
+    <!--    现在因为只有一个仓库，所以默认仓库ID为1-->
+    <update id="changeStock">
+        update goods_warehouse_relation
+        set number = #{newNumber}
+        where goods_id = #{goodId}
+          and warehouse_id = 1;
+    </update>
 
 </mapper>
 
