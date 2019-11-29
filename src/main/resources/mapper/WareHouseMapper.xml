@@ -10,7 +10,7 @@
         FROM warehouse
     </select>
 
-    <select id="searchNameById" parameterType="Integer" resultType="String">
+    <select id="searchNameById" parameterType="int" resultType="String">
         SELECT name
         FROM warehouse
         WHERE warehouse.wh_id = #{id}

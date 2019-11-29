@@ -14,17 +14,19 @@ public class SellOrder {
     private Date time;
     private String remark;
     private int goodsId;
+    private int customerId;
 
 
     //ToDo constructor
-    public SellOrder(int id, int goodsNumber, double sellUnitPrice, int status, Date time, String remark, int goods_id) {
+    public SellOrder(int id, int goodsNumber, double sellUnitPrice, int status, Date time, String remark, int goodsId, int customerId) {
         this.id = id;
         this.goodsNumber = goodsNumber;
         this.sellUnitPrice = sellUnitPrice;
         this.status = status;
         this.time = time;
         this.remark = remark;
-        this.goodsId = goods_id;
+        this.goodsId = goodsId;
+        this.customerId = customerId;
     }
 
     /**
