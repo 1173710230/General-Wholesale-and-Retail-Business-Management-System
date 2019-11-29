@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.project.dao.ImportOrderMapper">
 
-    <insert id="insert" parameterType="com.example.project.domain.ImportOrder">
+    <insert id="insert" parameterType="com.example.project.domain.InputOrder">
         INSERT INTO import_order(in_id, unit_price, import_number, goods_id)
         VALUES (#{inId}, #{unitPrice}, #{importNumber}, #{goodsId})
     </insert>

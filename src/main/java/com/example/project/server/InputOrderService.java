@@ -7,5 +7,10 @@ import java.util.Date;
 @Service
 public interface InputOrderService {
 
+
+    /**
+     * 添加一个进货单
+     *
+     */
     boolean addNewInputOrder( int inputOrderId, int goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark);
 }

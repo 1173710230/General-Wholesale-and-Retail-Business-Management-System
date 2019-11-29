@@ -16,13 +16,13 @@ public interface GoodsService {
 
 
     /**
-     * 根据id将删除一个Goods
+     * 根据id将删除一个Goods与所有仓库的关系
      *
      */
     boolean deleteGoodsById(int Goods_id);
 
     /**
-     * 根据id将x修改一个Goods
+     * 根据id将x修改为一个Goods
      *
      */
     boolean modifyGoodsById(int Goods_id);
