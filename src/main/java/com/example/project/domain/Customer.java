@@ -3,72 +3,55 @@ package com.example.project.domain;
 import java.util.List;
 import java.util.Objects;
 
-/**
- * 
- */
 public class Customer {
 
-    private int id;
-    private String name;
-    private String tel;
-    private List<Integer> historysellorder;
+    private Integer customerId;
+    private String customerName;
+    private String customerTel;
+    private List<Integer> historySellOrderId;
 
     //ToDo constructor
-    public Customer(int id, String name, String tel, List<Integer> historysellorder) {
-        this.id = id;
-        this.name = name;
-        this.tel = tel;
-        this.historysellorder = historysellorder;
+    public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId) {
+        this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerTel = customerTel;
+        this.historySellOrderId = historySellOrderId;
     }
 
-    /**
-     * @param OrderId 
-     * @return
-     */
-    public boolean addOrder(int OrderId) {
-        // TODO deleted
-        return false;
+    public Customer(){
+
     }
 
-    /**
-     * @param newTel 
-     * @return
-     */
-    public boolean modifyTel(String newTel) {
-        this.tel = newTel;
-        return true;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public int getId() {
-        return id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public String getName() {
-        return name;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getCustomerTel() {
+        return customerTel;
     }
 
-    public String getTel() {
-        return tel;
+    public void setCustomerTel(String customerTel) {
+        this.customerTel = customerTel;
     }
 
-    public void setTel(String tel) {
-        this.tel = tel;
+    public List<Integer> getHistorySellOrderId() {
+        return historySellOrderId;
     }
 
-    public List<Integer> getHistorysellorder() {
-        return historysellorder;
-    }
-
-    public void setHistorysellorder(List<Integer> historysellorder) {
-        this.historysellorder = historysellorder;
+    public void setHistorySellOrderId(List<Integer> historySellOrderId) {
+        this.historySellOrderId = historySellOrderId;
     }
 
     @Override
@@ -76,11 +59,21 @@ public class Customer {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return id == customer.id;
+        return Objects.equals(customerId, customer.customerId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(customerId, customerName, customerTel, historySellOrderId);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "customerId=" + customerId +
+                ", customerName='" + customerName + '\'' +
+                ", customerTel='" + customerTel + '\'' +
+                ", historySellOrderId=" + historySellOrderId +
+                '}';
     }
 }
