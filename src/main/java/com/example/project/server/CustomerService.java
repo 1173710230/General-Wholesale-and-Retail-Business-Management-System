@@ -14,7 +14,7 @@ public interface CustomerService {
 
     boolean deleteCustomer(int customerId);
 
-    boolean modifyCustomer(String name, String tel);
+    boolean modifyCustomer(int customerId, String name, String tel);
 
     List<Customer> queryCustomerByName(String name);
 }
