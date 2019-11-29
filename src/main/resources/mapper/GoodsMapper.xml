@@ -23,7 +23,7 @@
 
     <delete id="deleteGoodsByid" parameterType="int">
         delete
-        from goods
+        from goods_warehouse_relation
         where goods_id = #{id}
     </delete>
 
