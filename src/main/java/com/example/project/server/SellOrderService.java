@@ -9,22 +9,20 @@ import java.util.List;
 @Service
 public interface SellOrderService {
 
-    boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellsum, int customerId);
+    boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId);
 
     boolean modifySellOrder(SellOrder sellOrder);
 
     boolean deleteSellOrder(int sellOrderId);
 
-    List<SellOrder> getuncheckedSellOrder();
+    List<SellOrder> getUncheckedSellOrder();
 
     boolean checkOrder(int sellOrderId);
 
-    boolean receiptSellOrder(int sellOrderId);
+    boolean paySellOrder(int sellOrderId);
 
     boolean refundSellOrder(int sellOrderId);
 
-    List<SellOrder> getuncheckedOrder();
-
-    List<SellOrder> getunreceiptedOrder();
+    List<SellOrder> getUnpaidOrder();
 
 }
