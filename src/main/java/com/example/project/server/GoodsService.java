@@ -25,7 +25,7 @@ public interface GoodsService {
      * 根据id将x修改为一个Goods
      *
      */
-    boolean modifyGoodsById(int Goods_id);
+    boolean modifyGoodsById(int goodsId, String goodsName, String spec);
 
     /**
      * 按名字查询货物
