@@ -25,4 +25,11 @@
         <id column="wh_id" property="whId"/>
         <result column="name" property="name"/>
     </resultMap>
+
+    <insert id="addGoodsToWarehouse">
+        insert into goods_warehouse_relation (goods_id, warehouse_id, number)
+        values (#{goodsId}, #{warehouseId}, #{goodsNumber});
+    </insert>
+
+
 </mapper>
