@@ -9,15 +9,14 @@ public class Goods {
     private Integer goodsId;
     private String goodsName;
     private String goodsSpecification;
-    private List<Warehouse> warehouses;
-    private List<Integer> goodsNumber;
+    private Integer warehouseId;
+    private Double goodsNumber;
 
-    //ToDo constructor
-    public Goods(Integer goodsId, String goodsName, String goodsSpecification, List<Warehouse> warehouses, List<Integer> goodsNumber) {
+    public Goods(Integer goodsId, String goodsName, String goodsSpecification, Integer warehouseId, Double goodsNumber) {
         this.goodsId = goodsId;
         this.goodsName = goodsName;
         this.goodsSpecification = goodsSpecification;
-        this.warehouses = warehouses;
+        this.warehouseId = warehouseId;
         this.goodsNumber = goodsNumber;
     }
 
@@ -48,43 +47,44 @@ public class Goods {
         this.goodsSpecification = goodsSpecification;
     }
 
-    public List<Warehouse> getWarehouses() {
-        return warehouses;
-    }
-
-    public void setWarehouses(List<Warehouse> warehouses) {
-        this.warehouses = warehouses;
-    }
-
-    public List<Integer> getGoodsNumber() {
-        return goodsNumber;
-    }
-
-    public void setGoodsNumber(List<Integer> goodsNumber) {
-        this.goodsNumber = goodsNumber;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Goods goods = (Goods) o;
-        return Objects.equals(goodsId, goods.goodsId);
+
+        if (!goodsId.equals(goods.goodsId)) return false;
+        if (!goodsName.equals(goods.goodsName)) return false;
+        if (goodsSpecification != null ? !goodsSpecification.equals(goods.goodsSpecification) : goods.goodsSpecification != null)
+            return false;
+        if (warehouseId != null ? !warehouseId.equals(goods.warehouseId) : goods.warehouseId != null) return false;
+        return goodsNumber != null ? goodsNumber.equals(goods.goodsNumber) : goods.goodsNumber == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouses, goodsNumber);
+        int result = goodsId.hashCode();
+        result = 31 * result + goodsName.hashCode();
+        result = 31 * result + (goodsSpecification != null ? goodsSpecification.hashCode() : 0);
+        result = 31 * result + (warehouseId != null ? warehouseId.hashCode() : 0);
+        result = 31 * result + (goodsNumber != null ? goodsNumber.hashCode() : 0);
+        return result;
     }
 
-    @Override
-    public String toString() {
-        return "Goods{" +
-                "goodsId=" + goodsId +
-                ", goodsName='" + goodsName + '\'' +
-                ", goodsSpecification='" + goodsSpecification + '\'' +
-                ", warehouses=" + warehouses +
-                ", goodsNumber=" + goodsNumber +
-                '}';
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
+    public Double getGoodsNumber() {
+        return goodsNumber;
+    }
+
+    public void setGoodsNumber(Double goodsNumber) {
+        this.goodsNumber = goodsNumber;
     }
 }
