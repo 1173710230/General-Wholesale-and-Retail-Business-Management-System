@@ -64,4 +64,16 @@ public interface GoodsMapper {
      */
     void changeStock(@Param("good_id") int goodId, @Param("newNumber") double newNumber);
 
+    /**
+     * 根据goods的非空属性查找完整信息。
+     *
+     * 注意！这里查询出来的商品信息中，number是总库存，不是单个仓库中的库存！并且warehouseId为空值！
+     *
+     * @param goods 一个没有现实意义的goods对象，根据这个对象中非空的属性查找，
+     *              例如想查找货物名称为"苹果"的货物，
+     *              只需要将name设置为苹果，其他为null或者空
+     * @return 一个列表，是按照上述条件查找出来的结果
+     */
+    List<Goods> queryGoodsInStock(Goods goods);
+
 }

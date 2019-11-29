@@ -6,10 +6,12 @@
 
 <mapper namespace="com.example.project.dao.GoodsMapper">
 
-    <resultMap id="goodMap" type="Goods">
+    <resultMap id="goodsMap" type="Goods">
         <id column="goods_id" property="id"/>
         <result column="goods_name" property="name"/>
         <result column="specification" property="specification"/>
+        <result column="number" property="goodNumber"/>
+        <association property="warehouseId" column="warehouse_id"/>
         <!--                <result column="warehouse_id" property=""-->
     </resultMap>
 
@@ -21,17 +23,36 @@
 
     <delete id="deleteGoodsByid" parameterType="int">
         delete
-        from goods
+        from goods_warehouse_relation
         where goods_id = #{id}
     </delete>
 
-    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">
+    <select id="queryGoods" parameterType="Goods" resultMap="goodsMap">
+        select g.*, gwr.number number, gwr.warehouse_id
+        from goods g,
+        goods_warehouse_relation gwr
+        <where>
+            <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1，未来直接把andxxx=1删掉即可-->
+            gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
+            <if test="id != null and id != 0">
+                and g.goods_id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and g.goods_name = #{name}
+            </if>
+            <if test="specification != null and specification != ''">
+                and g.specification like #{specification};
+            </if>
+        </where>
+    </select>
+
+    <select id="queryGoodsInStock" parameterType="Goods" resultMap="goodsMap">
         select g.*, sum(gwr.number) number
         from goods g,
         goods_warehouse_relation gwr
         <where>
             <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1-->
-            gwr.goods_id = g.good_id and gwr.warehouse_id = 1
+            gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
             <if test="id != null and id != 0">
                 and g.goods_id = #{id}
             </if>
@@ -46,7 +67,7 @@
     </select>
 
     <!--    进货-销售计算库存的方式-->
-    <!--    <select id="queryGoods" parameterType="Goods" resultMap="goodMap">-->
+    <!--    <select id="queryGoods" parameterType="Goods" resultMap="goodsMap">-->
     <!--        set @number = (-->
     <!--            select (sum(iod.import_number) - sum(sod.sell_number))-->
     <!--            from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id-->
