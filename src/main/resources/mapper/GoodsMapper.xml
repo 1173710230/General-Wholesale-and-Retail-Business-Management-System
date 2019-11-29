@@ -46,7 +46,7 @@
         </where>
     </select>
 
-    <select id="queryGoodNumber" parameterType="Goods" resultMap="goodsMap">
+    <select id="queryGoodsInStock" parameterType="Goods" resultMap="goodsMap">
         select g.*, sum(gwr.number) number
         from goods g,
         goods_warehouse_relation gwr
