@@ -23,7 +23,6 @@ public class ImportOrderController {
 
   /**
    * 增加一个新进货单
-   * @param inputOrderId 等会要删 TODO：
    * @param goodsNumber 商品的数量
    * @param inputUnitPrice 商品的单价
    * @param goodsId 货物的id
@@ -32,9 +31,9 @@ public class ImportOrderController {
    */
   @RequestMapping("/addNewImportOrder")
   @ResponseBody
-  public boolean addNewImportOrder(int inputOrderId, int goodsNumber, double inputUnitPrice, int goodsId, String remark){
+  public boolean addNewImportOrder( int goodsNumber, double inputUnitPrice, int goodsId, String remark){
     //时间的格式要求？？？不清楚
-    return inputOrderService.addNewInputOrder(inputOrderId, goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
+    return inputOrderService.addNewInputOrder( goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
   }
 
 }

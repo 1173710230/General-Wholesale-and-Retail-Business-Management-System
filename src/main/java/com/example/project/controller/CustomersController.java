@@ -67,8 +67,8 @@ public class CustomersController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
-  public List<Customer> update(String name, String tel){
-    customerService.modifyCustomer(name, tel);
+  public List<Customer> update(int customerId, String name, String tel){
+    customerService.modifyCustomer(customerId, name, tel);
     return customerService.getallCustomers();
   }
 

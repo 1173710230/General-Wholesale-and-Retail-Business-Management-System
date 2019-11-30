@@ -72,7 +72,7 @@ public class SellOrderController {
   @RequestMapping("/getAllSellOrderUnderCheck")
   @ResponseBody
   public List<SellOrder> allSellOrderUnderCheck(){
-    return sellOrderService.getuncheckedSellOrder();
+    return sellOrderService.getUncheckedSellOrder();
   }
 
   /**
@@ -82,28 +82,27 @@ public class SellOrderController {
   @RequestMapping("/getUnreceiptedOrder")
   @ResponseBody
   public List<SellOrder> getUnreceiptedOrder(){
-    return sellOrderService.getunreceiptedOrder();
+    return sellOrderService.getUnpaidOrder();
   }
 
-  /**
-   * 得到所有的已付款为退款的订单
-   * @return 返回所有的未付款的订单
-   */
-  @RequestMapping("/getRefundSellOrder")
-  @ResponseBody
-  public List<SellOrder> getRefundSellOrder(){
-    return sellOrderService.getunrefundOrder();
-  }
+//  /**
+//   * 得到所有的已付款为退款的订单
+//   * @return 返回所有的未付款的订单
+//   */
+//  @RequestMapping("/getRefundSellOrder")
+//  @ResponseBody
+//  public List<SellOrder> getRefundSellOrder(){
+//    return sellOrderService.get();
+//  }
 
   /**
    * 审核一个销售单是否通过审核
    * @param sellOrderId 需要审核的销售单
-   * @param opinion 是否同意，true是通过审核，false未通过审核
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public void checkOrder(int sellOrderId, boolean opinion){
-    sellOrderService.checkOrder(sellOrderId, opinion);
+  public void checkOrder(int sellOrderId){
+    sellOrderService.checkOrder(sellOrderId);
   }
 
   /**
@@ -114,7 +113,7 @@ public class SellOrderController {
   @RequestMapping("/receipt")
   @ResponseBody
   public boolean receiptSellOrder(int sellOrderId){
-    return sellOrderService.receiptSellOrder(sellOrderId);
+    return sellOrderService.paySellOrder(sellOrderId);
   }
 
   /**

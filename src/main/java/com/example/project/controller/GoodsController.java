@@ -70,8 +70,8 @@ public class GoodsController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
-  public List<Goods> update(int id){
-    goodsService.modifyGoodsById(id);
+  public List<Goods> update(int id, String goodsName, String spec){
+    goodsService.modifyGoodsById(id, goodsName, spec);
     return goodsService.getallWirehouseGoods();
   }
 
