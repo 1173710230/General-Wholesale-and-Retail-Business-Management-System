@@ -68,8 +68,9 @@ public class WarehouseServiceImpl implements WarehouseService{
             Goods goods1 = new Goods();
             // 查询一遍
             goods1.setGoodsId(checkGoodsId);
-            if(goodsMapper.queryGoods(goods).contains(goods1))
+            if (goodsMapper.queryGoods(goods).contains(goods1)) {
                 return false;
+            }
             Goods goods2 = new Goods();
             goods2.setGoodsName(goodsName);
             goods2.setGoodsSpecification(spec);
@@ -78,6 +79,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             goodsMapper.addGoodsAndNumber(goods2);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

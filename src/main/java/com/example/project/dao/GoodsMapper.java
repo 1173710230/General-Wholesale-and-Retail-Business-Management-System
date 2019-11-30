@@ -18,7 +18,7 @@ public interface GoodsMapper {
      *
      * @param newGoods 货物对象，将这个对象中不为空的属性存入数据库
      */
-    void addGoods(Goods newGoods);
+    int addGoods(Goods newGoods);
 
     /**
      * 添加货物和数量。
@@ -27,7 +27,7 @@ public interface GoodsMapper {
      *
      * @param newGoods 带添加的货物
      */
-    void addGoodsAndNumber(Goods newGoods);
+    void addNumber(Goods newGoods);
 
     /**
      * 根据货物ID删除一个货物，如果这个ID不存在将不会有任何影响。

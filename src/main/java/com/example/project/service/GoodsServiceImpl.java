@@ -37,7 +37,7 @@ public class GoodsServiceImpl implements GoodsService{
     @Override
     public List<Goods> getAllWarehouseGoods() {
         Goods goods = new Goods();
-        return goodsMapper.queryGoodsInStock(goods);
+        return goodsMapper.queryGoods(goods);
     }
 
     @Override

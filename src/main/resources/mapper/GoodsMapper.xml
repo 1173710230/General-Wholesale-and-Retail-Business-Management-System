@@ -18,15 +18,15 @@
     <insert id="addGoods" parameterType="Goods">
         insert into goods (goods_name, specification)
         values (#{goodsName}, #{goodsSpecification});
+        <selectKey order="AFTER" resultType="int">
+            select last_insert_id();
+        </selectKey>
     </insert>
 
-    <insert id="addGoodsAndNumber" parameterType="Goods">
-        insert into goods (goods_name, specification)
-        values (#{goodsName}, #{goodsSpecification});
+    <insert id="addNumber" parameterType="Goods">
         insert into goods_warehouse_relation (goods_id, warehouse_id, number)
-        values (last_insert_id(), #{warehouse_id}, #{goodsNumber})
+        values (last_insert_id(), #{warehouseId}, #{goodsNumber});
     </insert>
-
 
     <delete id="deleteGoodsByid" parameterType="int">
         delete
