@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class SellOrderServiceImpl implements SellOrderService{
+public class SellOrderServiceImpl implements SellOrderService {
 
     private final SellOrderMapper sellOrderMapper;
 
@@ -69,27 +69,39 @@ public class SellOrderServiceImpl implements SellOrderService{
     @Override
     public boolean checkOrder(int sellOrderId, boolean opinion) {
         SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
-        Integer goodsId = order.getSellGoodsId();
-        Goods goods = new Goods();
-        goods.setGoodsId(goodsId);
+        assert order != null;   // 这个销售单必然存在，不然就是出错的
+        // 如果opinion是false，不管库存够不够，都是审核不通过的
         if (!opinion) {
-            List<Goods> goodsList = goodsMapper.queryGoods(goods);
-            changeStatus(sellOrderId, 3);
-            return goodsList.get(0).getGoodsNumber() > 0;
-        }
-        List<Goods> goodsList = goodsMapper.queryGoods(goods);
-        if (goodsList.size() > 0) {
-            if (goodsList.get(0).getGoodsNumber() > 0) {
-                // 这时候可以确定库存 > 0
+            return changeStatus(sellOrderId, 3);    // 这里审核不通过
+        } else {
+            // 用户点击了通过审核
+            // 获得销售单填写的销量
+            double sellNumber = order.getSellNumber().doubleValue();
 
-                return changeStatus(sellOrderId, 2);
+            // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
+            Integer goodsId = order.getSellGoodsId();
+            Goods goods = new Goods();
+            goods.setGoodsId(goodsId);
+            // V1.0 查询出来的是仓库1的库存
+            List<Goods> goodsList = goodsMapper.queryGoods(goods);
+            if (goodsList != null && goodsList.size() > 0) {
+                // 查询到了这个货物的信息
+                Goods result = goodsList.get(0);
+                double stock = result.getGoodsNumber(); // 库存
+                if (stock >= sellNumber) {
+                    // 数量足够
+                    // 减少库存
+                    goodsMapper.reduceNumber(goodsId, sellNumber);
+                    // 更改销售单状态
+                    return changeStatus(sellOrderId, 2);
+                } else  {
+                    // 数量不够，不允许审核通过
+                    return false;
+                }
             } else {
-                // 没库存了，返回false
+                // 没有这个货物的ID，正常情况下应该不会走到这里
                 return false;
             }
-        } else {
-            // 没有这个销售单ID，正常情况下应该不会走到这里
-            return false;
         }
     }
 
@@ -117,11 +129,13 @@ public class SellOrderServiceImpl implements SellOrderService{
         return sellOrderMapper.querySellOrder(uncheckedOrder);
     }
     /*----------------------------------------------------------*/
+
     /**
      * 修改状态，因为经常用所以就加了一个这个方便些。
-     * @param orderId   待修改的ID
-     * @param status    新的状态
-     * @return  成功true，否则false
+     *
+     * @param orderId 待修改的ID
+     * @param status  新的状态
+     * @return 成功true，否则false
      */
     private boolean changeStatus(int orderId, int status) {
         try {
