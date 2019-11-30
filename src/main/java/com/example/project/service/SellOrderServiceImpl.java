@@ -1,4 +1,4 @@
-package com.example.project.server;
+package com.example.project.service;
 
 import com.example.project.dao.GoodsMapper;
 import com.example.project.dao.SellOrderMapper;

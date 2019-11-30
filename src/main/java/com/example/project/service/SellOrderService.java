@@ -1,4 +1,4 @@
-package com.example.project.server;
+package com.example.project.service;
 
 import com.example.project.domain.SellOrder;
 import org.springframework.stereotype.Service;

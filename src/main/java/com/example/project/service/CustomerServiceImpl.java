@@ -1,7 +1,8 @@
-package com.example.project.server;
+package com.example.project.service;
 
 import com.example.project.dao.CustomerMapper;
 import com.example.project.domain.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerMapper customerMapper;
 
+    @Autowired
     public CustomerServiceImpl(CustomerMapper customerMapper){
         this.customerMapper = customerMapper;
     }
