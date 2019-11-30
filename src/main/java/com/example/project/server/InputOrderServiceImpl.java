@@ -24,7 +24,7 @@ public class InputOrderServiceImpl implements InputOrderService{
         inputOrder.setInputGoodsNumber(goodsNumber);
         inputOrder.setInputGoodsId(goodsId);
         inputOrder.setInputOrderRemark(remark);
-        inputOrder.setInputTime(time);
+        inputOrder.setInputTime(time.toLocaleString());
         inputOrder.setInputUnitPrice(inputUnitPrice);
         importOrderMapper.insert(inputOrder);
         return true;

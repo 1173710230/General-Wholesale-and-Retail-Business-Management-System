@@ -11,7 +11,7 @@ public class SellOrder {
     private Double sellUnitPrice;
     private Integer sellStatus = 0;
     // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
-    private Date sellTime;
+    private String sellTime;
     private String sellOrderRemark;
     private Integer sellGoodsId;
     private Integer customerId;
@@ -21,7 +21,7 @@ public class SellOrder {
     public SellOrder() {
     }
 
-    public SellOrder(Integer sellOrderId, Integer sellNumber, Double sellUnitPrice, Integer sellStatus, Date sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
+    public SellOrder(Integer sellOrderId, Integer sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
         this.sellOrderId = sellOrderId;
         SellNumber = sellNumber;
         this.sellUnitPrice = sellUnitPrice;
@@ -64,11 +64,11 @@ public class SellOrder {
         this.sellStatus = sellStatus;
     }
 
-    public Date getSellTime() {
+    public String getSellTime() {
         return sellTime;
     }
 
-    public void setSellTime(Date sellTime) {
+    public void setSellTime(String sellTime) {
         this.sellTime = sellTime;
     }
 

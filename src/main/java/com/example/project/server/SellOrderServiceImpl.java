@@ -25,8 +25,17 @@ public class SellOrderServiceImpl implements SellOrderService{
     }
 
     @Override
-    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId) {
-        return false;
+    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId, String remark) {
+        SellOrder sellOrder = new SellOrder();
+        sellOrder.setSellGoodsId(goodsId);
+        sellOrder.setSellTime(date.toLocaleString());
+        sellOrder.setSellUnitPrice(sellUnitPrice);
+        sellOrder.setSellStatus(0);
+        sellOrder.setCustomerId(customerId);
+        sellOrder.setSellOrderRemark("");
+        sellOrder.setSellNumber(sellSum);
+        sellOrderMapper.addSellOrder(sellOrder);
+        return true;
     }
 
     @Override

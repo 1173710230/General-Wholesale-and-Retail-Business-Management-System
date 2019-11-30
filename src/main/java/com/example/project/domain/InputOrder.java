@@ -12,20 +12,45 @@ public class InputOrder {
     private Integer inputGoodsNumber;
     private Double inputUnitPrice;
     private Integer inputGoodsId;
-    private Date inputTime;
+    private String inputTime;
     private String inputOrderRemark;
 
     //ToDo constructor
     public InputOrder() {
     }
 
-    public InputOrder(Integer inputOrderId, Integer inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, Date inputTime, String inputOrderRemark) {
+    public InputOrder(Integer inputOrderId, Integer inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, String inputTime, String inputOrderRemark) {
         this.inputOrderId = inputOrderId;
         this.inputGoodsNumber = inputGoodsNumber;
         this.inputUnitPrice = inputUnitPrice;
         this.inputGoodsId = inputGoodsId;
         this.inputTime = inputTime;
         this.inputOrderRemark = inputOrderRemark;
+    }
+
+    @Override
+    public String toString() {
+        return "InputOrder{" +
+                "inputOrderId=" + inputOrderId +
+                ", inputGoodsNumber=" + inputGoodsNumber +
+                ", inputUnitPrice=" + inputUnitPrice +
+                ", inputGoodsId=" + inputGoodsId +
+                ", inputTime='" + inputTime + '\'' +
+                ", inputOrderRemark='" + inputOrderRemark + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InputOrder that = (InputOrder) o;
+        return Objects.equals(inputOrderId, that.inputOrderId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(inputOrderId, inputGoodsNumber, inputUnitPrice, inputGoodsId, inputTime, inputOrderRemark);
     }
 
     public Integer getInputOrderId() {
@@ -60,11 +85,11 @@ public class InputOrder {
         this.inputGoodsId = inputGoodsId;
     }
 
-    public Date getInputTime() {
+    public String getInputTime() {
         return inputTime;
     }
 
-    public void setInputTime(Date inputTime) {
+    public void setInputTime(String inputTime) {
         this.inputTime = inputTime;
     }
 
@@ -74,30 +99,5 @@ public class InputOrder {
 
     public void setInputOrderRemark(String inputOrderRemark) {
         this.inputOrderRemark = inputOrderRemark;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        InputOrder that = (InputOrder) o;
-        return Objects.equals(inputOrderId, that.inputOrderId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(inputOrderId, inputGoodsNumber, inputUnitPrice, inputGoodsId, inputTime, inputOrderRemark);
-    }
-
-    @Override
-    public String toString() {
-        return "InputOrder{" +
-                "inputOrderId=" + inputOrderId +
-                ", inputGoodsNumber=" + inputGoodsNumber +
-                ", inputUnitPrice=" + inputUnitPrice +
-                ", inputGoodsId=" + inputGoodsId +
-                ", inputTime=" + inputTime +
-                ", inputOrderRemark='" + inputOrderRemark + '\'' +
-                '}';
     }
 }
