@@ -71,12 +71,19 @@ public class WarehouseServiceImpl implements WarehouseService{
             if (goodsMapper.queryGoods(goods).contains(goods1)) {
                 return false;
             }
+            // 添加到Goods数据库
             Goods goods2 = new Goods();
             goods2.setGoodsName(goodsName);
             goods2.setGoodsSpecification(spec);
             goods2.setWarehouseId(warehouseId);
             goods2.setGoodsSpecification(spec);
-            goodsMapper.addGoodsAndNumber(goods2);
+            int gid = goodsMapper.addGoods(goods2);
+            // 添加到货物仓库关系
+            Goods goods3 = new Goods();
+            goods3.setGoodsId(gid);
+            goods3.setWarehouseId(warehouseId);
+            goods3.setGoodsNumber((double) goodsNumber);
+            wareHouseMapper.addGoodsToWarehouse(goods3);
             return true;
         } catch (DataAccessException ex) {
             ex.printStackTrace();
