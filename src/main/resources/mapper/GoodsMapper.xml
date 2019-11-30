@@ -23,7 +23,7 @@
         </selectKey>
     </insert>
 
-    <insert id="addNumber" parameterType="Goods">
+    <insert id="addGoodsWarehouseRelation" parameterType="Goods">
         insert into goods_warehouse_relation (goods_id, warehouse_id, number)
         values (last_insert_id(), #{warehouseId}, #{goodsNumber});
     </insert>

@@ -7,8 +7,9 @@ import java.util.List;
 
 @Mapper
 public interface ImportOrderMapper {
-    public void insert(InputOrder inputOrder);
+    void insert(InputOrder inputOrder);
 
-    public List<Integer> searchNumbersByGoodsId(Integer goodsId);
+    List<Integer> searchNumbersByGoodsId(Integer goodsId);
+
 
 }

@@ -15,4 +15,7 @@
         FROM import_order
         WHERE import_order.goods_id = #{goodsId}
     </select>
+
+
+
 </mapper>
