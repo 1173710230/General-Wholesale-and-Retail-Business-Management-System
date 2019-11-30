@@ -109,6 +109,12 @@ public class SellOrderServiceImpl implements SellOrderService{
         return sellOrderMapper.querySellOrder(uncheckedOrder);
     }
 
+    @Override
+    public List<SellOrder> getUnRefundOrder() {
+        SellOrder uncheckedOrder = new SellOrder();
+        uncheckedOrder.setSellStatus(4);
+        return sellOrderMapper.querySellOrder(uncheckedOrder);
+    }
     /*----------------------------------------------------------*/
     /**
      * 修改状态，因为经常用所以就加了一个这个方便些。

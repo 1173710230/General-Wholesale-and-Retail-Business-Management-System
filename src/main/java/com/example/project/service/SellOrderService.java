@@ -60,9 +60,15 @@ public interface SellOrderService {
 
 
     /**
-     * 获取未付款的订单
+     * 获取未付款（审核成功）的订单
      *
      */
     List<SellOrder> getUnpaidOrder();
+
+    /**
+     * 获取已付款未退款的订单
+     *
+     */
+     List<SellOrder> getUnRefundOrder();
 
 }
