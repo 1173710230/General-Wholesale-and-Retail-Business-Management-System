@@ -87,8 +87,8 @@ public class SellOrderController {
   }
 
   /**
-   * 得到所有的已付款为退款的订单
-   * @return 返回所有的未付款的订单
+   * 得到所有的已付款未退款的订单
+   * @return 返回所有的已付款的订单
    */
   @RequestMapping("/getRefundSellOrder")
   @ResponseBody

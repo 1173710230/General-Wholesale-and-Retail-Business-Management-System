@@ -10,7 +10,7 @@
         function query(name){
             $.ajax({
                 type: "GET",
-                url: "/customer/queryExamById",
+                url: "/customer/queryCustomerByName",
                 dataType: "json",
                 data:{name: name},
                 success:function (list) {

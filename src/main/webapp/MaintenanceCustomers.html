@@ -20,7 +20,7 @@
                                 <label for="address">联系方式</label>
                                 <input type="text" class="form-control" id="address">
                             </div>
-                            <button class="btn btn-default" type="button" onclick="addOver(1)">提交</button>
+                            <button class="btn btn-default" type="button" onclick="addOver()">提交</button>
                         </form>
                     </div>
                 </div>`;
@@ -57,11 +57,11 @@
                         <form>
                             <div class="form-group">
                                 <label for="goodsName1">客户名字</label>
-                                <input type="text" class="form-control" id="customerName2" placeholder="${$('name' + id)}">
+                                <input type="text" class="form-control" id="customerName2" placeholder="${$('name' + id).val()}">
                             </div>
                             <div class="form-group">
                                 <label for="address">联系方式</label>
-                                <input type="text" class="form-control" id="address2" placeholder="${$('tel' + id)}">
+                                <input type="text" class="form-control" id="address2" placeholder="${$('tel' + id).val()}">
                             </div>
                             <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
                         </form>
@@ -95,7 +95,7 @@
     <script>
         $.ajax({
             type: "GET",
-            url: "/customer/allcustomers",
+            url: "/customer/allCustomers",
             dataType:"json",
             success: function (list) {
                 for(var i = 0; i < list.length; i++){

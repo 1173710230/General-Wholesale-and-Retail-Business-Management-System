@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>审核</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="jquery.js"></script>
+<!--    取得未审核的订单-->
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/sellOrder/getAllSellOrderUnderCheck",
+            dataType:"json",
+            success: function (list) {
+                for(var i = 0; i < list.length; i++){
+                    var id = list.get(i).sellOrderId;
+                    var goodsId = list.get(i).sellGoodsId;
+                    var price = list.get(i).sellUnitPrice;
+                    var number = list.get(i).SellNumber;
+                    var customerId = list.get(i).customerId;
+                    var remark = list.get(i).sellOrderRemark;
+                    var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
+<td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
+<td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${true})">通过</button></td>
+<td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${false})">不通过</button></td></tr>`;
+                    $("#unexamined").append(insert);
+                }
+            },
+            error: function () {
+                alert("获取失败！");
+            }
+        })
+    </script>
+<!--    取得未付款的订单-->
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/sellOrder/getUnreceiptedOrder",
+            dataType:"json",
+            success: function (list) {
+                for(var i = 0; i < list.length; i++){
+                    var id = list.get(i).sellOrderId;
+                    var goodsId = list.get(i).sellGoodsId;
+                    var price = list.get(i).sellUnitPrice;
+                    var number = list.get(i).SellNumber;
+                    var customerId = list.get(i).customerId;
+                    var remark = list.get(i).sellOrderRemark;
+                    var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
+<td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
+<td><button class="btn btn-xs btn-primary" onclick="pay(${id})">付款</button></td></tr>`;
+                    $("#unpaid").append(insert);
+                }
+            },
+            error: function () {
+                alert("获取失败！");
+            }
+        })
+    </script>
+<!--    取得已付款的订单-->
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/sellOrder/getRefundSellOrder",
+            dataType:"json",
+            success: function (list) {
+                for(var i = 0; i < list.length; i++){
+                    var id = list.get(i).sellOrderId;
+                    var goodsId = list.get(i).sellGoodsId;
+                    var price = list.get(i).sellUnitPrice;
+                    var number = list.get(i).SellNumber;
+                    var customerId = list.get(i).customerId;
+                    var remark = list.get(i).sellOrderRemark;
+                    var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
+<td><button class="btn btn-xs btn-primary" onclick="refund(${id})">退款</button></td></tr>`;
+                    $("#paid").append(insert);
+                }
+            },
+            error: function () {
+                alert("获取失败！");
+            }
+        })
+    </script>
+<!--   删除订单-->
+    <script>
+        function deleteOrder(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/delete",
+                dataType: "json",
+                data: {id: id},
+                success: function (list) {
+                    alert("删除成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("删除失败！");
+                }
+            })
+        }
+    </script>
+<!--    审核-->
+    <script>
+        function examine(id, boolean) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/checkOrder",
+                dataType: "json",
+                data: {sellOrderId: id, opinion: boolean},
+                success: function () {
+                    alert("审核成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("审核失败！");
+                }
+            })
+        }
+    </script>
+<!--    付款-->
+    <script>
+        function pay(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/receipt",
+                dataType: "json",
+                data: {sellOrderId: id},
+                success: function () {
+                    alert("付款成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("付款失败！");
+                }
+            })
+        }
+    </script>
+<!--    退款-->
+    <script>
+        function refund(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/refund",
+                dataType: "json",
+                data: {sellOrderId: id},
+                success: function () {
+                    alert("退款成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("退款失败！");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<h1>销售业务管理</h1>
+<div class="col-md-4">
+    <p>未审核订单</p>
+    <table class="table table-hover" id="unexamined">
+        <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
+
+    </table>
+
+</div>
+<div class="col-md-4">
+    <p>已审核未付款订单</p>
+    <table class="table table-hover" id="unpaid">
+        <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
+
+    </table>
+</div>
+<div class="col-md-4">
+    <p>已付款订单</p>
+    <table class="table table-hover" id="paid">
+        <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
+    </table>
+</div>
+</body>
+</html>
