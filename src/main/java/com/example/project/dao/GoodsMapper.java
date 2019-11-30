@@ -66,12 +66,12 @@ public interface GoodsMapper {
     int getStockById(int id);
 
     /**
-     * 修改库存。
+     * 直接修改库存。
      *
-     * @param goodId    要修改库存的货物ID
+     * @param goodsId    要修改库存的货物ID
      * @param newNumber 新的数量
      */
-    void changeStock(@Param("good_id") int goodId, @Param("newNumber") double newNumber);
+    void changeStock(@Param("goodsId") int goodsId, @Param("newNumber") double newNumber);
 
     /**
      * 根据goods的非空属性查找完整信息。
@@ -84,5 +84,21 @@ public interface GoodsMapper {
      * @return 一个列表，是按照上述条件查找出来的结果
      */
     List<Goods> queryGoodsInStock(Goods goods);
+
+    /**
+     * 增加库存。
+     *
+     * @param goodsId   货物ID
+     * @param addNumber 增加数量
+     */
+    void addNumber(@Param("goodsId") int goodsId, @Param("addNumber") double addNumber);
+
+    /**
+     * 减少库存。
+     *
+     * @param goodsId      货物ID
+     * @param reduceNumber 减少数量
+     */
+    void reduceNumber(@Param("goodsId") int goodsId, @Param("reduceNumber") double reduceNumber);
 
 }

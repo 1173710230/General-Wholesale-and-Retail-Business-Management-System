@@ -77,7 +77,8 @@ public class WarehouseServiceImpl implements WarehouseService{
             goods2.setGoodsSpecification(spec);
             goods2.setWarehouseId(warehouseId);
             goods2.setGoodsSpecification(spec);
-            int gid = goodsMapper.addGoods(goods2);
+            goodsMapper.addGoods(goods2);
+            int gid = goods2.getGoodsId();
             // 添加到货物仓库关系
             Goods goods3 = new Goods();
             goods3.setGoodsId(gid);

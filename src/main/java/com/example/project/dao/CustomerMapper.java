@@ -16,9 +16,9 @@ public interface CustomerMapper {
 
     Customer searchById(int id);
 
-    void setNameById(@Param("id") int id, @Param("name") String name);
+    void setNameById(@Param("customerId") int customerId, @Param("customerName") String customerName);
 
-    void setTelById(@Param("id") int id, @Param("tel") String tel);
+    void setTelById(@Param("customerId") int customerId, @Param("customerTel") String customerTel);
 
     void deleteById(int id);
 }

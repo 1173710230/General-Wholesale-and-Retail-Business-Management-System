@@ -18,7 +18,7 @@
     <insert id="addGoods" parameterType="Goods">
         insert into goods (goods_name, specification)
         values (#{goodsName}, #{goodsSpecification});
-        <selectKey order="AFTER" resultType="int">
+        <selectKey order="AFTER" resultType="int" keyProperty="goodsId">
             select last_insert_id();
         </selectKey>
     </insert>
@@ -28,7 +28,7 @@
         values (last_insert_id(), #{warehouseId}, #{goodsNumber});
     </insert>
 
-    <delete id="deleteGoodsByid" parameterType="int">
+    <delete id="deleteGoodsById" parameterType="int">
         delete
         from goods_warehouse_relation
         where goods_id = #{goodsId}
@@ -120,9 +120,26 @@
     <update id="changeStock">
         update goods_warehouse_relation
         set number = #{newNumber}
-        where goods_id = #{goodId}
+        where goods_id = #{goodsId}
           and warehouse_id = 1;
     </update>
+
+    <!--    因现在只有一个仓库，所以仓库ID默认为1-->
+    <update id="addNumber">
+        update goods_warehouse_relation
+        set number = number + #{addNumber}
+        where goods_id = #{goodsId}
+          and warehouse_id = 1;
+    </update>
+
+    <!--    因现在只有一个仓库，所以仓库ID默认为1-->
+    <update id="reduceNumber">
+        update goods_warehouse_relation
+        set number = number - #{reduceNumber}
+        where goods_id = #{goodsId}
+          and warehouse_id = 1
+    </update>
+
 
 </mapper>
 
