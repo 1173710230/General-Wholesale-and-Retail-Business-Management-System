@@ -58,12 +58,16 @@ public class SellOrderServiceImpl implements SellOrderService{
     }
 
     @Override
-    public boolean checkOrder(int sellOrderId) {
+    public boolean checkOrder(int sellOrderId, boolean opinion) {
         SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
         Integer goodsId = order.getSellGoodsId();
         Goods goods = new Goods();
         goods.setGoodsId(goodsId);
-
+        if (!opinion) {
+            List<Goods> goodsList = goodsMapper.queryGoods(goods);
+            changeStatus(sellOrderId, 3);
+            return goodsList.get(0).getGoodsNumber() > 0;
+        }
         List<Goods> goodsList = goodsMapper.queryGoods(goods);
         if (goodsList.size() > 0) {
             if (goodsList.get(0).getGoodsNumber() > 0) {

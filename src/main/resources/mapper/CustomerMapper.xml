@@ -7,7 +7,7 @@
 
     <insert id="insertCustomer" parameterType="Customer">
         INSERT INTO customer(customer_name, customer_tel)
-        VALUES #{name}, #{tel})
+        VALUES (#{name}, #{tel})
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">

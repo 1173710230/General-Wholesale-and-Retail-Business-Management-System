@@ -42,7 +42,7 @@ public interface SellOrderService {
      * 审核销售单
      *
      */
-    boolean checkOrder(int sellOrderId);
+    boolean checkOrder(int sellOrderId, boolean opinion);
 
 
     /**
