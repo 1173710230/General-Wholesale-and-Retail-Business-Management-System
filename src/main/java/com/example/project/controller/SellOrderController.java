@@ -86,19 +86,20 @@ public class SellOrderController {
     return sellOrderService.getUnpaidOrder();
   }
 
-//  /**
-//   * 得到所有的已付款为退款的订单
-//   * @return 返回所有的未付款的订单
-//   */
-//  @RequestMapping("/getRefundSellOrder")
-//  @ResponseBody
-//  public List<SellOrder> getRefundSellOrder(){
-//    return sellOrderService.get();
-//  }
+  /**
+   * 得到所有的已付款为退款的订单
+   * @return 返回所有的未付款的订单
+   */
+  @RequestMapping("/getRefundSellOrder")
+  @ResponseBody
+  public List<SellOrder> getRefundSellOrder(){
+    return sellOrderService.getUnRefundOrder();
+  }
 
   /**
    * 审核一个销售单是否通过审核
    * @param sellOrderId 需要审核的销售单
+   * @param opinion 审核通过传入true，反之，传入false
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
