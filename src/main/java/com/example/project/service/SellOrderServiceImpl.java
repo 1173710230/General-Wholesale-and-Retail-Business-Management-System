@@ -81,6 +81,7 @@ public class SellOrderServiceImpl implements SellOrderService{
         if (goodsList.size() > 0) {
             if (goodsList.get(0).getGoodsNumber() > 0) {
                 // 这时候可以确定库存 > 0
+
                 return changeStatus(sellOrderId, 2);
             } else {
                 // 没库存了，返回false
