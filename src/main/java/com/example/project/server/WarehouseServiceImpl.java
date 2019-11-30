@@ -62,7 +62,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     }
 
     @Override
-    boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
+    public boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
         try {
             Goods goods = new Goods();
             Goods goods1 = new Goods();
@@ -75,7 +75,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             goods2.setGoodsSpecification(spec);
             goods2.setWarehouseId(warehouseId);
             goods2.setGoodsSpecification(spec);
-
+            goodsMapper.addGoodsAndNumber(goods2);
             return true;
         } catch (DataAccessException ex) {
             return false;
