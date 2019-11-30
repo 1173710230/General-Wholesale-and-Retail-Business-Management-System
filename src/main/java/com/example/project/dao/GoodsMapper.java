@@ -91,7 +91,7 @@ public interface GoodsMapper {
      * @param goodsId   货物ID
      * @param addNumber 增加数量
      */
-    void addGoodsWarehouseRelation(@Param("goodsId") int goodsId, @Param("addNumber") double addNumber);
+    void addNumber(@Param("goodsId") int goodsId, @Param("addNumber") double addNumber);
 
     /**
      * 减少库存。
