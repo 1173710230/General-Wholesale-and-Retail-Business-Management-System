@@ -1,4 +1,4 @@
-package com.example.project.server;
+package com.example.project.service;
 
 import com.example.project.dao.GoodsMapper;
 import com.example.project.dao.SellOrderMapper;
@@ -25,8 +25,17 @@ public class SellOrderServiceImpl implements SellOrderService{
     }
 
     @Override
-    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId) {
-        return false;
+    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId, String remark) {
+        SellOrder sellOrder = new SellOrder();
+        sellOrder.setSellGoodsId(goodsId);
+        sellOrder.setSellTime(date.toLocaleString());
+        sellOrder.setSellUnitPrice(sellUnitPrice);
+        sellOrder.setSellStatus(0);
+        sellOrder.setCustomerId(customerId);
+        sellOrder.setSellOrderRemark("");
+        sellOrder.setSellNumber(sellSum);
+        sellOrderMapper.addSellOrder(sellOrder);
+        return true;
     }
 
     @Override
@@ -100,6 +109,12 @@ public class SellOrderServiceImpl implements SellOrderService{
         return sellOrderMapper.querySellOrder(uncheckedOrder);
     }
 
+    @Override
+    public List<SellOrder> getUnRefundOrder() {
+        SellOrder uncheckedOrder = new SellOrder();
+        uncheckedOrder.setSellStatus(4);
+        return sellOrderMapper.querySellOrder(uncheckedOrder);
+    }
     /*----------------------------------------------------------*/
     /**
      * 修改状态，因为经常用所以就加了一个这个方便些。

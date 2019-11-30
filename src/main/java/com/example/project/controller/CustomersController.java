@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.domain.Customer ;
-import com.example.project.server.CustomerService;
+import com.example.project.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class CustomersController {
    *
    * @return 所用用户的Customers
    */
-  @RequestMapping("/allcustomers")
+  @RequestMapping("/allCustomers")
   @ResponseBody
   public List<Customer> getAllCustomers(){
     return customerService.getallCustomers();
@@ -48,7 +48,7 @@ public class CustomersController {
   }
 
   /**
-   * 删除一个客户，由于前段删除时提供id（这个id理论上是一定存在的，不会出现删除一个不存在的id）
+   * 删除一个客户，由于前端删除时提供id（这个id理论上是一定存在的，不会出现删除一个不存在的id）
    * @param customerId 需要删除的顾客的id
    * @return 当前的客户的列表
    */
@@ -77,7 +77,7 @@ public class CustomersController {
    * @param name 顾客名字
    * @return 按照名字查找到的用户列表
    */
-  @RequestMapping("/queryExamById")
+  @RequestMapping("/queryCustomerByName")
   @ResponseBody
   public List<Customer> queryCustomerByName(String name){
     return customerService.queryCustomerByName(name);
