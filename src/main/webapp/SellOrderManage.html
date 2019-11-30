@@ -13,12 +13,12 @@
             dataType:"json",
             success: function (list) {
                 for(var i = 0; i < list.length; i++){
-                    var id = list.get(i).sellOrderId;
-                    var goodsId = list.get(i).sellGoodsId;
-                    var price = list.get(i).sellUnitPrice;
-                    var number = list.get(i).SellNumber;
-                    var customerId = list.get(i).customerId;
-                    var remark = list.get(i).sellOrderRemark;
+                    var id = list[i].sellOrderId;
+                    var goodsId = list[i].sellGoodsId;
+                    var price = list[i].sellUnitPrice;
+                    var number = list[i].SellNumber;
+                    var customerId = list[i].customerId;
+                    var remark = list[i].sellOrderRemark;
                     var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
 <td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${true})">通过</button></td>
@@ -39,12 +39,12 @@
             dataType:"json",
             success: function (list) {
                 for(var i = 0; i < list.length; i++){
-                    var id = list.get(i).sellOrderId;
-                    var goodsId = list.get(i).sellGoodsId;
-                    var price = list.get(i).sellUnitPrice;
-                    var number = list.get(i).SellNumber;
-                    var customerId = list.get(i).customerId;
-                    var remark = list.get(i).sellOrderRemark;
+                    var id = list[i].sellOrderId;
+                    var goodsId = list[i].sellGoodsId;
+                    var price = list[i].sellUnitPrice;
+                    var number = list[i].SellNumber;
+                    var customerId = list[i].customerId;
+                    var remark = list[i].sellOrderRemark;
                     var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
 <td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="pay(${id})">付款</button></td></tr>`;
@@ -63,17 +63,20 @@
             url: "/sellOrder/getRefundSellOrder",
             dataType:"json",
             success: function (list) {
-                for(var i = 0; i < list.length; i++){
-                    var id = list.get(i).sellOrderId;
-                    var goodsId = list.get(i).sellGoodsId;
-                    var price = list.get(i).sellUnitPrice;
-                    var number = list.get(i).SellNumber;
-                    var customerId = list.get(i).customerId;
-                    var remark = list.get(i).sellOrderRemark;
-                    var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
+                if (!list) {
+                    for(var i = 0; i < list.length; i++){
+                        var id = list[i].sellOrderId;
+                        var goodsId = list[i].sellGoodsId;
+                        var price = list[i].sellUnitPrice;
+                        var number = list[i].SellNumber;
+                        var customerId = list[i].customerId;
+                        var remark = list[i].sellOrderRemark;
+                        var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
 <td><button class="btn btn-xs btn-primary" onclick="refund(${id})">退款</button></td></tr>`;
-                    $("#paid").append(insert);
+                        $("#paid").append(insert);
+                    }
                 }
+
             },
             error: function () {
                 alert("获取失败！");
