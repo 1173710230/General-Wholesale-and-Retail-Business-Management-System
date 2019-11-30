@@ -35,7 +35,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     }
 
     @Override
-    public List<Goods> getGoodsfromallWarehouse() {
+    public List<Goods> getGoodsFromAllWarehouse() {
         Goods goods = new Goods();
         return goodsMapper.queryGoods(goods);
     }
@@ -55,6 +55,27 @@ public class WarehouseServiceImpl implements WarehouseService{
         goods.setWarehouseId(warehouseId);
         try {
             wareHouseMapper.addGoodsToWarehouse(goods);
+            return true;
+        } catch (DataAccessException ex) {
+            return false;
+        }
+    }
+
+    @Override
+    boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
+        try {
+            Goods goods = new Goods();
+            Goods goods1 = new Goods();
+            // 查询一遍
+            goods1.setGoodsId(checkGoodsId);
+            if(goodsMapper.queryGoods(goods).contains(goods1))
+                return false;
+            Goods goods2 = new Goods();
+            goods2.setGoodsName(goodsName);
+            goods2.setGoodsSpecification(spec);
+            goods2.setWarehouseId(warehouseId);
+            goods2.setGoodsSpecification(spec);
+
             return true;
         } catch (DataAccessException ex) {
             return false;

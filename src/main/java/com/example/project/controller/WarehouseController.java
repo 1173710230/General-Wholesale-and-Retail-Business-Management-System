@@ -30,7 +30,7 @@ public class WarehouseController {
   @RequestMapping(value = "/getAllGoods", method = RequestMethod.GET)
   @ResponseBody
   public List<Goods> getGoodsFromAllWarehouse(){
-    return warehouseService.getGoodsfromallWarehouse();
+    return warehouseService.getGoodsFromAllWarehouse();
   }
 
   /**

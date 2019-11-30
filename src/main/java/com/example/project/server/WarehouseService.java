@@ -13,7 +13,7 @@ public interface WarehouseService {
      * 获取所有仓库中货物
      *
      */
-    List<Goods> getGoodsfromallWarehouse();
+    List<Goods> getGoodsFromAllWarehouse();
 
 
     /**
@@ -28,5 +28,11 @@ public interface WarehouseService {
      *
      */
     boolean addGoodsToWareHouse(int checkGoodsId, double goodsNumber, int warehouseId);
+
+    /**
+     * 按名字查询货物
+     *
+     */
+    boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId);
 
 }

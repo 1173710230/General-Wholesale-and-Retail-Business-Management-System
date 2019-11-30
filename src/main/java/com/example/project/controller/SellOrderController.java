@@ -101,8 +101,8 @@ public class SellOrderController {
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public void checkOrder(int sellOrderId){
-    sellOrderService.checkOrder(sellOrderId);
+  public void checkOrder(int sellOrderId, boolean opinion){
+    sellOrderService.checkOrder(sellOrderId, opinion);
   }
 
   /**

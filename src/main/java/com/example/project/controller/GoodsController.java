@@ -32,7 +32,7 @@ public class GoodsController {
   @RequestMapping("/allGoods")
   @ResponseBody
   public List<Goods> getAllGoods(){
-    return goodsService.getallWirehouseGoods();
+    return goodsService.getAllWarehouseGoods();
   }
 
   /**
@@ -48,7 +48,7 @@ public class GoodsController {
   @ResponseBody
   public List<Goods> addGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
     warehouseService.addNewGoods(checkGoodsId, goodsNumber, goodsName, spec, warehouseId);
-    return goodsService.getallWirehouseGoods();
+    return goodsService.getAllWarehouseGoods();
   }
 
   /**
@@ -60,7 +60,7 @@ public class GoodsController {
   @ResponseBody
   public List<Goods> deleteGoods(int id){
     goodsService.deleteGoodsById(id);
-    return goodsService.getallWirehouseGoods();
+    return goodsService.getAllWarehouseGoods();
   }
 
   /**
@@ -72,7 +72,7 @@ public class GoodsController {
   @ResponseBody
   public List<Goods> update(int id, String goodsName, String spec){
     goodsService.modifyGoodsById(id, goodsName, spec);
-    return goodsService.getallWirehouseGoods();
+    return goodsService.getAllWarehouseGoods();
   }
 
   /**
