@@ -51,25 +51,13 @@ public class Goods {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Goods goods = (Goods) o;
-
-        if (!goodsId.equals(goods.goodsId)) return false;
-        if (!goodsName.equals(goods.goodsName)) return false;
-        if (goodsSpecification != null ? !goodsSpecification.equals(goods.goodsSpecification) : goods.goodsSpecification != null)
-            return false;
-        if (warehouseId != null ? !warehouseId.equals(goods.warehouseId) : goods.warehouseId != null) return false;
-        return goodsNumber != null ? goodsNumber.equals(goods.goodsNumber) : goods.goodsNumber == null;
+        return Objects.equals(goodsId.intValue(), goods.goodsId.intValue());
     }
 
     @Override
     public int hashCode() {
-        int result = goodsId.hashCode();
-        result = 31 * result + goodsName.hashCode();
-        result = 31 * result + (goodsSpecification != null ? goodsSpecification.hashCode() : 0);
-        result = 31 * result + (warehouseId != null ? warehouseId.hashCode() : 0);
-        result = 31 * result + (goodsNumber != null ? goodsNumber.hashCode() : 0);
-        return result;
+        return Objects.hash(goodsId);
     }
 
     public Integer getWarehouseId() {

@@ -20,6 +20,13 @@
         values (#{name}, #{specification});
     </insert>
 
+    <insert id="addGoodsAndNumber" parameterType="Goods">
+        insert into goods (goods_name, specification)
+        values (#{name}, #{specification});
+        insert into goods_warehouse_relation (goods_id, warehouse_id, number)
+        values (last_insert_id(), #{warehouse_id}, #{goodsNumber})
+    </insert>
+
 
     <delete id="deleteGoodsByid" parameterType="int">
         delete
