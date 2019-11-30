@@ -7,12 +7,13 @@
 <mapper namespace="com.example.project.dao.SellOrderMapper">
 
     <resultMap id="sellOrderMap" type="SellOrder">
-        <id column="out_id" property="id"/>
-        <result column="sell_time" property="time"/>
-        <result column="order_status" property="status"/>
+        <id column="out_id" property="sellOrderId"/>
+        <result column="sell_time" property="sellTime"/>
+        <result column="order_status" property="sellStatus"/>
         <result column="sell_unit_price" property="sellUnitPrice"/>
-        <result column="sell_number" property="goodsNumber"/>
-        <result column="remark" property="remark"/>
+        <result column="sell_number" property="SellNumber"/>
+        <result column="remark" property="sellOrderRemark"/>
+        <result column="customer_id" property="customerId"/>
         <!--        <association property="Goods" column="goods_id">-->
         <!--            -->
         <!--        </association>-->
@@ -21,7 +22,7 @@
     <insert id="addSellOrder" parameterType="SellOrder">
         # 插入数据到销售单表
         insert into sell_order (sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
-        values (#{time}, #{status}, #{isellUnitPrice}, #{goodsNumber}, #{remark}, #{goodsId});
+        values (#{sellTime}, #{sellStatus}, #{sellUnitPrice}, #{SellNumber}, #{sellOrderRemark}, #{goodsId});
         # 插入关系
         insert into sell_customer_relation (customer_id, sell_order_id)
         values (#{customerId}, last_insert_id());
@@ -30,8 +31,8 @@
     <update id="updateSellOrder" parameterType="SellOrder">
         update sell_order
         <set>
-            <if test="status != null">
-                order_status = #{status},
+            <if test="sellStatus != null">
+                order_status = #{sellStatus},
             </if>
             <if test="sellUnitPrice != null and sellUnitPrice != ''">
                 sell_unit_price = #{sellUnitPrice},
@@ -39,11 +40,11 @@
             <if test="time != null and time != ''">
                 sell_time = #{time},
             </if>
-            <if test="remark != null and remark != ''">
-                remark = #{remark},
+            <if test="sellOrderRemark != null and sellOrderRemark != ''">
+                remark = #{sellOrderRemark},
             </if>
-            <if test="goodsNumber != null and goodsNumber != 0">
-                sell_number = #{goodsNumber},
+            <if test="SellNumber != null and SellNumber != 0">
+                sell_number = #{SellNumber},
             </if>
             <!--            <if test="customerName != null and customerName != ''">-->
             <!--                remark = #{customerName},-->
@@ -55,29 +56,29 @@
     <delete id="deleteSellOrder" parameterType="int">
         delete
         from sell_order
-        where out_id = #{id};
+        where out_id = #{sellOrderId};
     </delete>
 
     <select id="getSellOrderById" parameterType="int">
         select *
         from sell_order
-        where out_id = #{id};
+        where out_id = #{sellOrderId};
     </select>
 
-    <select id="querySellOrder" parameterType="SellOrder">
+    <select id="querySellOrder" parameterType="SellOrder" resultMap="sellOrderMap">
         select * from sell_order
         <where>
-            <if test="status != null">
-                status = #{status}
+            <if test="sellStatus != null">
+                order_status = #{sellStatus}
             </if>
-            <if test="goodsNumber != null">
-                and sell_number = #{goodsNumber}
+            <if test="SellNumber != null">
+                and sell_number = #{SellNumber}
             </if>
             <if test="sellUnitPrice != null">
                 and sell_unit_price = #{sellUnitPrice}
             </if>
-            <if test="remark != null and remark != ''">
-                and remark like #{remark}
+            <if test="sellOrderRemark != null and sellOrderRemark != ''">
+                and remark like #{sellOrderRemark}
             </if>
         </where>
     </select>

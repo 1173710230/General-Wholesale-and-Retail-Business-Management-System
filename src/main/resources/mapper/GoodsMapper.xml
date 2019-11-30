@@ -7,22 +7,22 @@
 <mapper namespace="com.example.project.dao.GoodsMapper">
 
     <resultMap id="goodsMap" type="Goods">
-        <id column="goods_id" property="id"/>
-        <result column="goods_name" property="name"/>
-        <result column="specification" property="specification"/>
-        <result column="number" property="goodNumber"/>
+        <id column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="specification" property="goodsSpecification"/>
+        <result column="number" property="goodsNumber"/>
         <association property="warehouseId" column="warehouse_id"/>
         <!--                <result column="warehouse_id" property=""-->
     </resultMap>
 
     <insert id="addGoods" parameterType="Goods">
         insert into goods (goods_name, specification)
-        values (#{name}, #{specification});
+        values (#{goodsName}, #{goodsSpecification});
     </insert>
 
     <insert id="addGoodsAndNumber" parameterType="Goods">
         insert into goods (goods_name, specification)
-        values (#{name}, #{specification});
+        values (#{goodsName}, #{goodsSpecification});
         insert into goods_warehouse_relation (goods_id, warehouse_id, number)
         values (last_insert_id(), #{warehouse_id}, #{goodsNumber})
     </insert>
@@ -31,7 +31,7 @@
     <delete id="deleteGoodsByid" parameterType="int">
         delete
         from goods_warehouse_relation
-        where goods_id = #{id}
+        where goods_id = #{goodsId}
     </delete>
 
     <select id="queryGoods" parameterType="Goods" resultMap="goodsMap">
@@ -41,14 +41,14 @@
         <where>
             <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1，未来直接把andxxx=1删掉即可-->
             gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
-            <if test="id != null and id != 0">
-                and g.goods_id = #{id}
+            <if test="goodsId != null and goodsId != 0">
+                and g.goods_id = #{goodsId}
             </if>
-            <if test="name != null and name != ''">
-                and g.goods_name = #{name}
+            <if test="goodsName != null and goodsName != ''">
+                and g.goods_name = #{goodsName}
             </if>
-            <if test="specification != null and specification != ''">
-                and g.specification like #{specification};
+            <if test="goodsSpecification != null and goodsSpecification != ''">
+                and g.specification like #{goodsSpecification};
             </if>
         </where>
     </select>
@@ -60,14 +60,14 @@
         <where>
             <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1-->
             gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
-            <if test="id != null and id != 0">
-                and g.goods_id = #{id}
+            <if test="goodsId != null and goodsId != 0">
+                and g.goods_id = #{goodsId}
             </if>
-            <if test="name != null and name != ''">
-                and g.goods_name = #{name}
+            <if test="goodsName != null and goodsName != ''">
+                and g.goods_name = #{goodsName}
             </if>
-            <if test="specification != null and specification != ''">
-                and g.specification like #{specification};
+            <if test="goodsSpecification != null and goodsSpecification != ''">
+                and g.specification like #{goodsSpecification};
             </if>
         </where>
         group by g.goods_id;
@@ -77,20 +77,20 @@
     <!--    <select id="queryGoods" parameterType="Goods" resultMap="goodsMap">-->
     <!--        set @number = (-->
     <!--            select (sum(iod.import_number) - sum(sod.sell_number))-->
-    <!--            from sell_order sod, import_order iod where sod.goods_id = #{id} and iod.goods_id = sod.goods_id-->
+    <!--            from sell_order sod, import_order iod where sod.goods_id = #{goodsId} and iod.goods_id = sod.goods_id-->
     <!--        );-->
 
     <!--        select g.*, @number number-->
     <!--        from goods g-->
     <!--        <where>-->
-    <!--            <if test="id != null and id != 0">-->
-    <!--                g.goods_id = #{id}-->
+    <!--            <if test="goodsId != null and goodsId != 0">-->
+    <!--                g.goods_id = #{goodsId}-->
     <!--            </if>-->
-    <!--            <if test="name != null and name != ''">-->
-    <!--                and g.goods_name = #{name}-->
+    <!--            <if test="goodsName != null and goodsName != ''">-->
+    <!--                and g.goods_name = #{goodsName}-->
     <!--            </if>-->
-    <!--            <if test="specification != null and specification != ''">-->
-    <!--                and g.specification like #{specification};-->
+    <!--            <if test="goodsSpecification != null and goodsSpecification != ''">-->
+    <!--                and g.specification like #{goodsSpecification};-->
     <!--            </if>-->
     <!--        </where>-->
     <!--    </select>-->
@@ -99,21 +99,21 @@
         select (sum(iod.import_number) - sum(sod.sell_number))
         from sell_order sod,
              import_order iod
-        where sod.goods_id = #{id}
+        where sod.goods_id = #{goodsId}
           and iod.goods_id = sod.goods_id
     </select>
 
     <update id="updateGoods" parameterType="Goods">
         update goods
         <set>
-            <if test="name != null and name != ''">
-                goods_name = #{name},
+            <if test="goodsName != null and goodsName != ''">
+                goods_name = #{goodsName},
             </if>
-            <if test="specification != null and specification != ''">
-                specification = #{specification},
+            <if test="goodsSpecification != null and goodsSpecification != ''">
+                specification = #{goodsSpecification},
             </if>
         </set>
-        where goods_id = #{id};
+        where goods_id = #{goodsId};
     </update>
 
     <!--    现在因为只有一个仓库，所以默认仓库ID为1-->

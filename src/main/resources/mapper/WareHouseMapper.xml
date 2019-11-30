@@ -5,26 +5,26 @@
 
 <mapper namespace="com.example.project.dao.WareHouseMapper">
 
+    <resultMap id="warehouse" type="Warehouse">
+        <id column="wh_id" property="warehouseId"/>
+        <result column="name" property="name"/>
+    </resultMap>
+
     <select id="getAllWareHouse" resultMap="warehouse">
         SELECT *
         FROM warehouse
     </select>
 
-    <select id="searchNameById" parameterType="int" resultType="String">
+    <select id="searchNameById" parameterType="Integer" resultType="String">
         SELECT name
         FROM warehouse
-        WHERE warehouse.wh_id = #{id}
+        WHERE warehouse.wh_id = #{warehouseId}
     </select>
 
     <insert id="insert" parameterType="com.example.project.domain.Warehouse">
         INSERT INTO warehouse(wh_id, name)
-        VALUES (#{whId}, #{name})
+        VALUES (#{warehouseId}, #{name})
     </insert>
-
-    <resultMap id="warehouse" type="com.example.project.domain.Warehouse">
-        <id column="wh_id" property="whId"/>
-        <result column="name" property="name"/>
-    </resultMap>
 
     <insert id="addGoodsToWarehouse" parameterType="Goods">
         insert into goods_warehouse_relation (goods_id, warehouse_id, number)

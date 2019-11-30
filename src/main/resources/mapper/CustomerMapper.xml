@@ -6,14 +6,14 @@
 <mapper namespace="com.example.project.dao.CustomerMapper">
 
     <resultMap id="customers" type="Customer">
-        <id column="customer_id" property="id"/>
-        <result column="customer_name" property="name"/>
-        <result column="customer_tel" property="tel"/>
+        <id column="customer_id" property="customerId"/>
+        <result column="customer_name" property="customerName"/>
+        <result column="customer_tel" property="customerTel"/>
     </resultMap>
 
     <insert id="insertCustomer" parameterType="Customer">
         INSERT INTO customer(customer_name, customer_tel)
-        VALUES (#{name}, #{tel})
+        VALUES (#{customerName}, #{customerTel})
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">
@@ -24,30 +24,30 @@
     <select id="searchByCustomerName" parameterType="String" resultMap="customers">
         SELECT customer_id, customer_name, customer_tel
         FROM customer
-        WHERE customer.customer_name = #{name}
+        WHERE customer.customer_name = #{customerName}
     </select>
 
     <select id="searchById" parameterType="int" resultType="Customer">
         SELECT customer_id , customer_name , customer_tel
         FROM customer c
-        WHERE c.customer_id = #{id}
+        WHERE c.customer_id = #{customerId}
     </select>
 
     <update id="setNameById">
         UPDATE customer
-        SET customer.customer_name = #{name}
-        WHERE customer.customer_id = #{id}
+        SET customer.customer_name = #{customerName}
+        WHERE customer.customer_id = #{customerId}
     </update>
 
     <update id="setTelById">
         UPDATE customer
-        SET customer.customer_tel = #{tel}
-        WHERE customer.customer_id = #{id}
+        SET customer.customer_tel = #{customerTel}
+        WHERE customer.customer_id = #{customerId}
     </update>
 
     <delete id="deleteById" parameterType="Integer">
         DELETE
         FROM customer
-        WHERE customer.customer_id = #{id}
+        WHERE customer.customer_id = #{customerTel}
     </delete>
 </mapper>
