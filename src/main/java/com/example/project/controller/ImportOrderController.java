@@ -1,6 +1,6 @@
 package com.example.project.controller;
 
-import com.example.project.server.InputOrderService;
+import com.example.project.service.InputOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

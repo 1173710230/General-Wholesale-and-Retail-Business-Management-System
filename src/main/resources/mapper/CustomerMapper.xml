@@ -5,6 +5,12 @@
 
 <mapper namespace="com.example.project.dao.CustomerMapper">
 
+    <resultMap id="customers" type="Customer">
+        <id column="customer_id" property="id"/>
+        <result column="customer_name" property="name"/>
+        <result column="customer_tel" property="tel"/>
+    </resultMap>
+
     <insert id="insertCustomer" parameterType="Customer">
         INSERT INTO customer(customer_name, customer_tel)
         VALUES (#{name}, #{tel})
@@ -39,16 +45,9 @@
         WHERE customer.customer_id = #{id}
     </update>
 
-    <delete id="deleteById" parameterType="int">
+    <delete id="deleteById" parameterType="Integer">
         DELETE
         FROM customer
         WHERE customer.customer_id = #{id}
     </delete>
-
-
-    <resultMap id="customers" type="Customer">
-        <id column="customer_id" property="id"/>
-        <result column="customer_name" property="name"/>
-        <result column="customer_tel" property="tel"/>
-    </resultMap>
 </mapper>

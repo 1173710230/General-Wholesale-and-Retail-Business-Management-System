@@ -1,8 +1,10 @@
 package com.example.project.dao;
 
 import com.example.project.domain.User;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+@Mapper
 public interface UserMapper {
 
     public void insertUser(User user);

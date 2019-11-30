@@ -1,7 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.domain.Goods;
-import com.example.project.server.WarehouseService;
+import com.example.project.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
