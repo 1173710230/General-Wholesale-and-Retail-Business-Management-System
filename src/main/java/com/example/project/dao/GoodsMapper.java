@@ -21,6 +21,14 @@ public interface GoodsMapper {
     void addGoods(Goods newGoods);
 
     /**
+     * 添加货物和数量。
+     * 调用此方法时确保是新的货物！
+     *
+     * @param newGoods 带添加的货物
+     */
+    void addGoodsAndNumber(Goods newGoods);
+
+    /**
      * 根据货物ID删除一个货物，如果这个ID不存在将不会有任何影响。
      *
      * @param goodId 货物ID
@@ -66,7 +74,7 @@ public interface GoodsMapper {
 
     /**
      * 根据goods的非空属性查找完整信息。
-     *
+     * <p>
      * 注意！这里查询出来的商品信息中，number是总库存，不是单个仓库中的库存！并且warehouseId为空值！
      *
      * @param goods 一个没有现实意义的goods对象，根据这个对象中非空的属性查找，
