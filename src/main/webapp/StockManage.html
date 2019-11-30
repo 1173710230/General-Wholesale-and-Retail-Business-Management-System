@@ -59,7 +59,7 @@
                 url : "/warehouseController/queryGoodsByName",
                 data: {name: name},
                 success: function (list) {
-                    if (!list){
+                    if (list !== null){
                         for(var i = 0; i < list.length; i++){
                             var id = list[i].goodsId;
                             var name = list[i].goodsName;

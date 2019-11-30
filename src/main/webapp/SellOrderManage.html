@@ -63,7 +63,7 @@
             url: "/sellOrder/getRefundSellOrder",
             dataType:"json",
             success: function (list) {
-                if (!list) {
+                if (list !== null) {
                     for(var i = 0; i < list.length; i++){
                         var id = list[i].sellOrderId;
                         var goodsId = list[i].sellGoodsId;

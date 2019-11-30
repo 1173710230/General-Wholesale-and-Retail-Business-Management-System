@@ -129,7 +129,7 @@
             url: "/goods/allGoods",
             dataType:"json",
             success: function (list) {
-                if (!list) {
+                if (list !== null) {
                     for(var i = 0; i < list.length; i++){
                         var id = list[i].goodsId;
                         var name = list[i].goodsName;
