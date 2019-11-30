@@ -21,8 +21,9 @@ public class GoodsController {
   private WarehouseService warehouseService;
 
   @Autowired
-  public GoodsController(GoodsService goodsService) {
+  public GoodsController(GoodsService goodsService, WarehouseService warehouseService) {
     this.goodsService = goodsService;
+    this.warehouseService = warehouseService;
   }
 
   /**
@@ -64,7 +65,7 @@ public class GoodsController {
   }
 
   /**
-   * 修改一个商品的信息, 还要改 TODO：未完成
+   * 修改一个商品的信息, 还要改
    * @param id 要修改的商品id
    * @return 返回
    */

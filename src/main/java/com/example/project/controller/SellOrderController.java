@@ -31,11 +31,12 @@ public class SellOrderController {
    * @param sellUnitPrice 商品的单价
    * @param sellsum 总售价
    * @param customerId 顾客的id
+   * @param remark 备注
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public void addSellOrder(int goodsId, double sellUnitPrice, int sellsum, int customerId){
-    sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, sellsum, customerId);
+  public void addSellOrder(int goodsId, double sellUnitPrice, int sellsum, int customerId, String remark){
+    sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, sellsum, customerId, remark);
   }
 
   /**
@@ -62,7 +63,7 @@ public class SellOrderController {
   public boolean update(int goodsNumber, double sellUnitPrice, String remark, int goodsId, int customerId){
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，下层不使用id和状态进行修改，只考虑其他属性
     return  sellOrderService.modifySellOrder(new SellOrder(-1, goodsNumber, sellUnitPrice, -1,
-        new Date(System.currentTimeMillis()), remark, goodsId, customerId));
+        new Date(System.currentTimeMillis()).toLocaleString(), remark, goodsId, customerId));
   }
 
   /**

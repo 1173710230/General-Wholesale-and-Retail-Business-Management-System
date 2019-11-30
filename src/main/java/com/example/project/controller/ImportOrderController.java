@@ -32,7 +32,6 @@ public class ImportOrderController {
   @RequestMapping("/addNewImportOrder")
   @ResponseBody
   public boolean addNewImportOrder( int goodsNumber, double inputUnitPrice, int goodsId, String remark){
-    //时间的格式要求？？？不清楚
     return inputOrderService.addNewInputOrder( goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
   }
 
