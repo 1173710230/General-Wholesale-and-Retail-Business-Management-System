@@ -27,7 +27,7 @@ public class ImportOrderController {
    * @param inputUnitPrice 商品的单价
    * @param goodsId 货物的id
    * @param remark 备注
-   * @return 增加成功返回true，反正返回false
+   * @return 增加成功返回true，反之返回false
    */
   @RequestMapping("/addNewImportOrder")
   @ResponseBody

@@ -64,9 +64,9 @@ public class GoodsController {
   }
 
   /**
-   * 修改一个商品的信息, 还要改
+   * 修改一个商品的信息
    * @param id 要修改的商品id
-   * @return 返回
+   * @return 返回当前的所有商品
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
