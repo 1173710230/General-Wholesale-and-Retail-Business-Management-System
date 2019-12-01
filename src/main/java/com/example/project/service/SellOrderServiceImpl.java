@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,10 @@ public class SellOrderServiceImpl implements SellOrderService {
     public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId, String remark) {
         SellOrder sellOrder = new SellOrder();
         sellOrder.setSellGoodsId(goodsId);
-        sellOrder.setSellTime(date.toLocaleString());
+        //sellOrder.setSellTime(new SimpleDateFormat().format(date));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sellOrder.setSellTime(format.format(date));
         sellOrder.setSellUnitPrice(sellUnitPrice);
         sellOrder.setSellStatus(1);
         sellOrder.setCustomerId(customerId);
@@ -60,6 +64,9 @@ public class SellOrderServiceImpl implements SellOrderService {
     public boolean deleteSellOrder(int sellOrderId) {
         try {
             // 删除此id的订货单
+            SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
+            if(order.getSellStatus() == 2 || order.getSellStatus() == 4)
+                goodsMapper.addNumber(order.getSellGoodsId(),order.getSellNumber());
             sellOrderMapper.deleteSellOrder(sellOrderId);
             return true;
         } catch (DataAccessException ex) {
@@ -124,6 +131,8 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public boolean refundSellOrder(int sellOrderId) {
+        SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
+        goodsMapper.addNumber(order.getSellGoodsId(),order.getSellNumber());
         return changeStatus(sellOrderId, 5);
     }
 
