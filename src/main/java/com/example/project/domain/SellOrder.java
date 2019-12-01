@@ -23,7 +23,7 @@ public class SellOrder {
 
     public SellOrder(Integer sellOrderId, Integer sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
         this.sellOrderId = sellOrderId;
-        SellNumber = sellNumber;
+        this.SellNumber = sellNumber;
         this.sellUnitPrice = sellUnitPrice;
         this.sellStatus = sellStatus;
         this.sellTime = sellTime;

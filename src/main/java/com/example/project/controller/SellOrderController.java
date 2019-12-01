@@ -73,6 +73,7 @@ public class SellOrderController {
   @RequestMapping("/getAllSellOrderUnderCheck")
   @ResponseBody
   public List<SellOrder> allSellOrderUnderCheck(){
+    System.out.println(sellOrderService.getUncheckedSellOrder().get(0).toString());
     return sellOrderService.getUncheckedSellOrder();
   }
 

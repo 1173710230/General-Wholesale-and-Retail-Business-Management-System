@@ -113,8 +113,8 @@
                             insert += `</table></td>`
                         }
 
-                        insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改客户资料</button></td>
-<td><button type="button" class="btn btn-primary btn-xs" onclick="delete(${id})">删除用户</button></td></tr>`;
+                        insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改资料</button>
+<button type="button" class="btn btn-primary btn-xs" onclick="deleteCustomer(${id})">删除用户</button></td></tr>`;
                         $("#table").append(insert);
                     }
 
@@ -154,7 +154,7 @@
         <button type="button" class="btn btn-primary btn" onclick="addCustomers()">增加客户</button>
         <button type="button" class="btn btn-primary btn" onclick="window.location.href='findCustomer.html'">查找客户</button>
         <table class="table table-hover" id="table">
-            <tr><th>客户姓名</th><th>联系方式</th><th>购买历史信息</th></tr>
+            <tr><th>客户姓名</th><th>联系方式</th><th>购买历史信息</th><th>操作</th></tr>
 
         </table>
     </div>
