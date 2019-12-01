@@ -11,9 +11,16 @@ public interface SellOrderMapper {
     /**
      * 增加一个销售单。
      *
-     * @param sellOrder 新增加的销售单对象
+     * @param sellOrder 新增加的销售单对象，这个sellOrder对象不需要有ID
      */
     void addSellOrder(SellOrder sellOrder);
+
+    /**
+     * 添加顾客和销售单的关系。
+     *
+     * @param sellOrder 将其中的顾客ID和销售单ID作为关系添加
+     */
+    void addSellOrderCustomerRelation(SellOrder sellOrder);
 
     /**
      * 根据传入的对象修改销售单。

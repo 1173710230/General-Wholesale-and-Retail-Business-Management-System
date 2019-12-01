@@ -24,9 +24,15 @@
         # 插入数据到销售单表
         insert into sell_order (sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
         values (#{sellTime}, #{sellStatus}, #{sellUnitPrice}, #{SellNumber}, #{sellOrderRemark}, #{sellGoodsId});
+        <selectKey keyProperty="sellOrderId">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="addSellOrderCustomerRelation" parameterType="SellOrder">
         # 插入关系
         insert into sell_customer_relation (customer_id, sell_order_id)
-        values (#{customerId}, last_insert_id());
+        values (#{customerId}, #{sellOrderId});
     </insert>
 
     <update id="updateSellOrder" parameterType="SellOrder">
@@ -67,10 +73,11 @@
     </select>
 
     <select id="querySellOrder" parameterType="SellOrder" resultMap="sellOrderMap">
-        select * from sell_order
+        select so.*, sur.customer_id from sell_order so, sell_customer_relation sur
         <where>
+            sur.sell_order_id = so.out_id
             <if test="sellStatus != null">
-                order_status = #{sellStatus}
+                and order_status = #{sellStatus}
             </if>
             <if test="SellNumber != null">
                 and sell_number = #{SellNumber}
