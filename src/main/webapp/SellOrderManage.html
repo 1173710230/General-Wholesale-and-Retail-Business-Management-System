@@ -22,7 +22,9 @@
                         var remark = list[i].sellOrderRemark;
                         var insert = `<tr><td>${id}</td><td id="${'goodsId' + id}">${goodsId}</td><td id="${'price' + id}">${price}</td>
 <td id="${'number' + id}">${number}</td><td id="${'customerId'}">${customerId}</td><td id="${'remark' + id}">${remark}</td>
-<td><table><td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
+<td><table>
+<td><button class="btn btn-xs btn-primary" onclick="changeOrder(${id})">修改订单</button></td>
+<td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${true})">通过</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${false})">不通过</button></td></table></td></tr>`;
                         $("#unexamined").append(insert);
@@ -128,7 +130,7 @@
                     var remark = list[i].sellOrderRemark;
                     var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td><td>
 <table>
-<td><button class="btn btn-xs btn-primary" onclick="changeOrder(${id})">修改订单</button></td>
+
 <td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="pay(${id})">付款</button></td>
 </table>
