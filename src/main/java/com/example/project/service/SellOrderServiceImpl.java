@@ -32,9 +32,13 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrder.setSellUnitPrice(sellUnitPrice);
         sellOrder.setSellStatus(0);
         sellOrder.setCustomerId(customerId);
-        sellOrder.setSellOrderRemark("");
+        sellOrder.setSellOrderRemark(remark);
         sellOrder.setSellNumber(sellSum);
         sellOrderMapper.addSellOrder(sellOrder);
+        SellOrder sellOrder1 = new SellOrder();
+        sellOrder1.setSellOrderId(sellOrder.getSellOrderId());
+        sellOrder1.setCustomerId(customerId);
+        sellOrderMapper.addSellOrderCustomerRelation(sellOrder1);
         return true;
     }
 
