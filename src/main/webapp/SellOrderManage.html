@@ -20,7 +20,6 @@
                         var number = list[i].sellNumber;
                         var customerId = list[i].customerId;
                         var remark = list[i].sellOrderRemark;
-                        alert(number);
                         var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td>
 <td><table><td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${true})">通过</button></td>
