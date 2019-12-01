@@ -31,7 +31,7 @@ public class InputOrderServiceImpl implements InputOrderService{
         this.goodsMapper = goodsMapper;
     }
     @Override
-    public boolean addNewInputOrder(int goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark) {
+    public boolean addNewInputOrder(double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark) {
         InputOrder inputOrder = new InputOrder();
         inputOrder.setInputGoodsNumber(goodsNumber);
         inputOrder.setInputGoodsId(goodsId);

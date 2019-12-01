@@ -1,13 +1,12 @@
 package com.example.project.domain;
 
-import java.util.Date;
 import java.util.Objects;
 
 
 public class SellOrder {
 
     private Integer sellOrderId;
-    private Integer SellNumber;//卖掉的数量
+    private Double sellNumber;//卖掉的数量
     private Double sellUnitPrice;
     private Integer sellStatus = 0;
     // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
@@ -20,9 +19,9 @@ public class SellOrder {
     public SellOrder() {
     }
 
-    public SellOrder(Integer sellOrderId, Integer sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
+    public SellOrder(Integer sellOrderId, Double sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
         this.sellOrderId = sellOrderId;
-        this.SellNumber = sellNumber;
+        this.sellNumber = sellNumber;
         this.sellUnitPrice = sellUnitPrice;
         this.sellStatus = sellStatus;
         this.sellTime = sellTime;
@@ -39,12 +38,12 @@ public class SellOrder {
         this.sellOrderId = sellOrderId;
     }
 
-    public Integer getSellNumber() {
-        return SellNumber;
+    public Double getSellNumber() {
+        return sellNumber;
     }
 
-    public void setSellNumber(Integer sellNumber) {
-        SellNumber = sellNumber;
+    public void setSellNumber(Double sellNumber) {
+        this.sellNumber = sellNumber;
     }
 
     public Double getSellUnitPrice() {
@@ -101,7 +100,7 @@ public class SellOrder {
         if (o == null || getClass() != o.getClass()) return false;
         SellOrder sellOrder = (SellOrder) o;
         return Objects.equals(sellOrderId, sellOrder.sellOrderId) &&
-                Objects.equals(SellNumber, sellOrder.SellNumber) &&
+                Objects.equals(sellNumber, sellOrder.sellNumber) &&
                 Objects.equals(sellUnitPrice, sellOrder.sellUnitPrice) &&
                 Objects.equals(sellStatus, sellOrder.sellStatus) &&
                 Objects.equals(sellTime, sellOrder.sellTime) &&
@@ -112,14 +111,14 @@ public class SellOrder {
 
     @Override
     public int hashCode() {
-        return Objects.hash(sellOrderId, SellNumber, sellUnitPrice, sellStatus, sellTime, sellOrderRemark, sellGoodsId, customerId);
+        return Objects.hash(sellOrderId, sellNumber, sellUnitPrice, sellStatus, sellTime, sellOrderRemark, sellGoodsId, customerId);
     }
 
     @Override
     public String toString() {
         return "SellOrder{" +
                 "sellOrderId=" + sellOrderId +
-                ", SellNumber=" + SellNumber +
+                ", sellNumber=" + sellNumber +
                 ", sellUnitPrice=" + sellUnitPrice +
                 ", sellStatus=" + sellStatus +
                 ", sellTime=" + sellTime +

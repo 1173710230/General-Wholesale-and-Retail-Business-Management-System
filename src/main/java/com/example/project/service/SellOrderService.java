@@ -14,7 +14,7 @@ public interface SellOrderService {
      * 添加一个销售单
      *
      */
-    boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId, String remark);
+    boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, Double sellNumber, int customerId, String remark);
 
 
     /**
