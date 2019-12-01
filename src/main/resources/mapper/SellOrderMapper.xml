@@ -12,6 +12,7 @@
         <result column="order_status" property="sellStatus"/>
         <result column="sell_unit_price" property="sellUnitPrice"/>
         <result column="sell_number" property="SellNumber"/>
+        <result column="goods_id" property="sellGoodsId"/>
         <result column="remark" property="sellOrderRemark"/>
         <result column="customer_id" property="customerId"/>
         <!--        <association property="Goods" column="goods_id">-->
@@ -22,10 +23,16 @@
     <insert id="addSellOrder" parameterType="SellOrder">
         # 插入数据到销售单表
         insert into sell_order (sell_time, order_status, sell_unit_price, sell_number, remark, goods_id)
-        values (#{sellTime}, #{sellStatus}, #{sellUnitPrice}, #{SellNumber}, #{sellOrderRemark}, #{goodsId});
+        values (#{sellTime}, #{sellStatus}, #{sellUnitPrice}, #{SellNumber}, #{sellOrderRemark}, #{sellGoodsId});
+        <selectKey keyProperty="sellOrderId">
+            select last_insert_id()
+        </selectKey>
+    </insert>
+
+    <insert id="addSellOrderCustomerRelation" parameterType="SellOrder">
         # 插入关系
         insert into sell_customer_relation (customer_id, sell_order_id)
-        values (#{customerId}, last_insert_id());
+        values (#{customerId}, #{sellOrderId});
     </insert>
 
     <update id="updateSellOrder" parameterType="SellOrder">
@@ -37,8 +44,8 @@
             <if test="sellUnitPrice != null and sellUnitPrice != ''">
                 sell_unit_price = #{sellUnitPrice},
             </if>
-            <if test="time != null and time != ''">
-                sell_time = #{time},
+            <if test="sellTime != null and sellTime != ''">
+                sell_time = #{sellTime},
             </if>
             <if test="sellOrderRemark != null and sellOrderRemark != ''">
                 remark = #{sellOrderRemark},
@@ -50,7 +57,7 @@
             <!--                remark = #{customerName},-->
             <!--            </if>-->
         </set>
-        where out_id = #{id};
+        where out_id = #{sellOrderId};
     </update>
 
     <delete id="deleteSellOrder" parameterType="int">
@@ -59,17 +66,18 @@
         where out_id = #{sellOrderId};
     </delete>
 
-    <select id="getSellOrderById" parameterType="int">
+    <select id="getSellOrderById" parameterType="int" resultMap="sellOrderMap">
         select *
         from sell_order
         where out_id = #{sellOrderId};
     </select>
 
     <select id="querySellOrder" parameterType="SellOrder" resultMap="sellOrderMap">
-        select * from sell_order
+        select so.*, sur.customer_id from sell_order so, sell_customer_relation sur
         <where>
+            sur.sell_order_id = so.out_id
             <if test="sellStatus != null">
-                order_status = #{sellStatus}
+                and order_status = #{sellStatus}
             </if>
             <if test="SellNumber != null">
                 and sell_number = #{SellNumber}
