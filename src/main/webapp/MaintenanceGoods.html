@@ -53,8 +53,14 @@
                 type:"GET",
                 url : "/goods/add",
                 data: {checkGoodsId: id, goodsNumber: number, goodsName: name, spec: spec, warehouseId: wareId},
-                success: function (list) {
-                    alert("添加成功！");
+                success: function (bool) {
+                    if (bool) {
+                        alert("添加成功！");
+                    } else {
+                        alert("添加失败，出现错误！");
+                    }
+
+
                     //此处可能加true参数表示重新获取网页
                     location.reload();
                 },
