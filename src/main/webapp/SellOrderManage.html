@@ -21,7 +21,7 @@
                         var customerId = list[i].customerId;
                         var remark = list[i].sellOrderRemark;
                         var insert = `<tr><td>${id}</td><td id="${'goodsId' + id}">${goodsId}</td><td id="${'price' + id}">${price}</td>
-<td id="${'number' + id}">${number}</td><td id="${'customerId'}">${customerId}</td><td id="${'remark' + id}">${remark}</td>
+<td id="${'number' + id}">${number}</td><td id="${'customerId' + id}">${customerId}</td><td id="${'remark' + id}">${remark}</td>
 <td><table>
 <td><button class="btn btn-xs btn-primary" onclick="changeOrder(${id})">修改订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
@@ -57,7 +57,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="customerId">客户ID</label>
-                                <input type="text" class="form-control" id="customerId" placeholder="${$('#customer' + id).html()}">
+                                <input type="text" class="form-control" id="customerId" placeholder="${$('#customerId' + id).html()}">
                             </div>
                             <div class="form-group">
                                 <label for="remark">备注</label>
