@@ -100,11 +100,12 @@ public class SellOrderController {
    * 审核一个销售单是否通过审核
    * @param sellOrderId 需要审核的销售单
    * @param opinion 审核通过传入true，反之，传入false
+   * @return 只要opinion和内部审核时有一个没通过返回false
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public void checkOrder(int sellOrderId, boolean opinion){
-    sellOrderService.checkOrder(sellOrderId, opinion);
+  public boolean checkOrder(int sellOrderId, boolean opinion){
+    return opinion&&sellOrderService.checkOrder(sellOrderId, opinion);
   }
 
   /**
