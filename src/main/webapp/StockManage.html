@@ -17,7 +17,12 @@
                 url : "/importOrder/addNewImportOrder",
                 data: {goodsNumber: number, inputUnitPrice: price, goodsId: id, remark: remark},
                 success: function (bool) {
-                    alert("添加成功！");
+                    if (bool) {
+                        alert("添加成功！");
+                    } else {
+                        alert("添加失败，出现库存错误！");
+                    }
+
                     //此处可能加true参数表示重新获取网页
                     location.reload();
                 },

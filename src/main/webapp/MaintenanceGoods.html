@@ -85,13 +85,13 @@
                             </div>
                              <div class="form-group">
                                 <label for="goodsNumber1">货物数量</label>
-                                <input type="text" class="form-control" id="goodsNumber1" placeholder="${$('number' + id).html()}">
+                                <input type="text" class="form-control" id="goodsNumber1" placeholder="${$('#number' + id).html()}">
                             </div>
                              <div class="form-group">
                                 <label for="spec1">货物规格</label>
-                                <input type="text" class="form-control" id="spec1" placeholder="${$('spec' + id).html()}">
+                                <input type="text" class="form-control" id="spec1" placeholder="${$('#spec' + id).html()}">
                             </div>
-                            <button class="btn btn-default" type="button" onclick="changeOver()">提交</button>
+                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
                         </form>
                     </div>
                 </div>`;
@@ -101,12 +101,27 @@
     </script>、
 <!--    修改货物：上交服务器-->
     <script>
-        function changeOver() {
+        function changeOver(originId) {
             var id = $("#goodsId1").val();
             var name = $("#goodsName1").val();
             var wareId = $("#wareId1").val();
             var number = $("#goodsNumber1").val();
             var spec = $("#spec1").val();
+            if(id.length === 0){
+                id = originId;
+            }
+            if(name.length === 0) {
+                name = $('#name' + id).html();
+            }
+            if(wareId.length === 0) {
+                wareId = $('#wareId' + id).html();
+            }
+            if(number.length === 0) {
+                number = $('#number' + id).html();
+            }
+            if (spec.length === 0) {
+                spec = $('#spec' + id).html();
+            }
             $.ajax({
                 type:"GET",
                 url : "/goods/update",
@@ -144,7 +159,6 @@
                         $("#goods").append(insert);
                     }
                 }
-
             },
             error: function () {
                 alert("获取失败！");

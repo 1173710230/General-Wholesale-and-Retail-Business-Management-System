@@ -49,6 +49,7 @@
                     var remark = list[i].sellOrderRemark;
                     var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td><td>
 <table>
+<td><button class="btn btn-xs btn-primary" onclick="changeOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
 <td><button class="btn btn-xs btn-primary" onclick="pay(${id})">付款</button></td>
 </table>
@@ -165,13 +166,19 @@
             })
         }
     </script>
+<!--    修改订单-->
+    <script>
+        function changeOrder(id){
+
+        }
+    </script>
 </head>
 <body>
 <h1>销售业务管理</h1>
 <button type="button" class="btn btn-primary " onclick = "window.location.href='CreateSalesOrder.html'">开销售单</button>
 <br/>
 <br/>
-<div class="col-md-4">
+<div class="col-md-6">
     <p>未审核订单</p>
     <table class="table table-hover" id="unexamined">
         <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
@@ -179,18 +186,23 @@
     </table>
 
 </div>
-<div class="col-md-4">
+<div class="col-md-6" id="changeArea1">
+
+</div>
+<div class="col-md-6">
     <p>已审核未付款订单</p>
     <table class="table table-hover" id="unpaid">
         <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
 
     </table>
 </div>
-<div class="col-md-4">
+<div class="col-md-6" id="changeArea2"></div>
+<div class="col-md-6">
     <p>已付款订单</p>
     <table class="table table-hover" id="paid">
         <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
     </table>
 </div>
+<div class="col-md-6"  id="changeArea3"></div>
 </body>
 </html>

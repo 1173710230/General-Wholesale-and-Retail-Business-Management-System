@@ -47,8 +47,13 @@
             url : "/sellOrder/add",
             dataType: "json",
             data: {goodsId: goodsId, sellUnitPrice: price, sellsum: sum, customerId: customerId, remark: remark},
-            success: function (list) {
-                alert("添加成功！");
+            success: function (bool) {
+                if (bool) {
+                    alert("添加成功！");
+                } else {
+                    alert("添加失败，出现错误！");
+                }
+
                 window.location.href="BusinessmManage.html"
             },
             error: function () {
