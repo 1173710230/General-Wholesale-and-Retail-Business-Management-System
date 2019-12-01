@@ -37,8 +37,7 @@ public class GoodsController {
   }
 
   /**
-   * 在某个仓库中增加一种商品（这个商品可能在仓库中出现） TODO：不需要ckeckGoodsId，等会删除。
-   * @param checkGoodsId 商品的id（根据这个商品id只进行查询商品的是否存在，不是新的商品id）
+   * 在某个仓库中增加一种商品（这个商品可能在仓库中出现）
    * @param goodsNumber  商品的数量
    * @param goodsName 商品的名字
    * @param spec 商品的规格
@@ -47,8 +46,8 @@ public class GoodsController {
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public Boolean addGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
-    return warehouseService.addNewGoods(checkGoodsId, goodsNumber, goodsName, spec, warehouseId);
+  public Boolean addGoods(double goodsNumber, String goodsName, String spec, int warehouseId){
+    return warehouseService.addNewGoods(goodsNumber, goodsName, spec, warehouseId);
   }
 
   /**

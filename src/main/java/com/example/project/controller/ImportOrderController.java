@@ -31,8 +31,8 @@ public class ImportOrderController {
    */
   @RequestMapping("/addNewImportOrder")
   @ResponseBody
-  public boolean addNewImportOrder(int goodsNumber, double inputUnitPrice, int goodsId, String remark){
-    return goodsNumber>0 && inputOrderService.addNewInputOrder( goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
+  public boolean addNewImportOrder(double goodsNumber, double inputUnitPrice, int goodsId, String remark){
+    return goodsNumber>0 && inputOrderService.addNewInputOrder(goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
   }
 
 }
