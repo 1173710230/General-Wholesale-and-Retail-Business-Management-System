@@ -43,13 +43,12 @@ public class GoodsController {
    * @param goodsName 商品的名字
    * @param spec 商品的规格
    * @param warehouseId 仓库的id
-   * @return 返回当前的仓库商品
+   * @return 返回添加成功True，失败False
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public List<Goods> addGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
-    warehouseService.addNewGoods(checkGoodsId, goodsNumber, goodsName, spec, warehouseId);
-    return goodsService.getAllWarehouseGoods();
+  public Boolean addGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
+    return warehouseService.addNewGoods(checkGoodsId, goodsNumber, goodsName, spec, warehouseId);
   }
 
   /**
