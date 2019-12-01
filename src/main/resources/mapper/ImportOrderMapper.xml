@@ -6,8 +6,8 @@
 <mapper namespace="com.example.project.dao.ImportOrderMapper">
 
     <insert id="insert" parameterType="com.example.project.domain.InputOrder">
-        INSERT INTO import_order(unit_price, import_number, goods_id)
-        VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId})
+        INSERT INTO import_order(unit_price, import_number, goods_id, in_datetime, remark)
+        VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId}, #{inputTime}, #{inputOrderRemark})
     </insert>
 
     <select id="searchNumbersByGoodsId" parameterType="Integer" resultType="Integer">
