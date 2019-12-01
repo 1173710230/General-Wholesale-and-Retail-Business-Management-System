@@ -37,6 +37,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     @Override
     public List<Goods> getGoodsFromAllWarehouse() {
         Goods goods = new Goods();
+        // 获取关系表中....
         return goodsMapper.queryGoods(goods);
     }
 
@@ -44,6 +45,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     public List<Goods> queryGoodsByName(String name) {
         Goods goods = new Goods();
         goods.setGoodsName(name);
+        // 获取关系表中。。。
         return goodsMapper.queryGoods(goods);
     }
 
@@ -54,6 +56,8 @@ public class WarehouseServiceImpl implements WarehouseService{
         goods.setGoodsNumber(goodsNumber);
         goods.setWarehouseId(warehouseId);
         try {
+            // 如果数据库货物表中没有这一查验id，返回false
+            // 调用货物如库方法
             wareHouseMapper.addGoodsToWarehouse(goods);
             return true;
         } catch (DataAccessException ex) {

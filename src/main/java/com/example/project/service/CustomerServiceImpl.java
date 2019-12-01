@@ -29,6 +29,7 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer = new Customer();
         customer.setCustomerName(name);
         customer.setCustomerTel(tel);
+        //传入包含名字和电话号码字符串的Customer对象
         customerMapper.insertCustomer(customer);
         return true;
     }
@@ -36,6 +37,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean deleteCustomer(int customerId) {
         try {
+            // 调用按id删除方法
             customerMapper.deleteById(customerId);
             return true;
         } catch (DataAccessException ex) {
@@ -47,6 +49,7 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public boolean modifyCustomer(int customerId, String name, String tel) {
         try {
+            //调用按id修改名字，电话方法
             customerMapper.setNameById(customerId, name);
             customerMapper.setTelById(customerId, tel);
             return true;
@@ -57,6 +60,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public List<Customer> queryCustomerByName(String name) {
+        // 调用按名字查询方法
         return customerMapper.searchByCustomerName(name);
     }
 }
