@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
+
 //@RunWith(SpringRunner.class)
 @SpringBootTest
 public class DemoApplicationTest {
@@ -40,7 +42,22 @@ public class DemoApplicationTest {
     }
 
     @Test
-    public void testGoods(){
+    public void testInputOrder(){
+        Date date = new Date(System.currentTimeMillis());
+        System.out.println(date);
+        inputOrderService.addNewInputOrder(100,1.2,1,date,"just Test");
+    }
+
+    @Test
+    public void testAddOrder(){
+        Date date = new Date(System.currentTimeMillis());
+        sellOrderService.addSellOrder(date,1,1.5,80,2,"Cheap");
+
+    }
+
+    @Test
+    public void  testGoods(){
+
 
     }
 }
