@@ -29,14 +29,15 @@ public class SellOrderController {
    * 增加一个销售单
    * @param goodsId 销售单中商品的id
    * @param sellUnitPrice 商品的单价
-   * @param sellsum 总售价
+   * @param sellsum 总售价,TODO：实际上是总数量
    * @param customerId 顾客的id
    * @param remark 备注
+   * @return 当总数量大于0和增加销售单成功时，返回true，其他返回false.
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public void addSellOrder(int goodsId, double sellUnitPrice, int sellsum, int customerId, String remark){
-    sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, sellsum, customerId, remark);
+  public boolean addSellOrder(int goodsId, double sellUnitPrice, int sellsum, int customerId, String remark){
+    return sellsum>0 && sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, sellsum, customerId, remark);
   }
 
   /**
