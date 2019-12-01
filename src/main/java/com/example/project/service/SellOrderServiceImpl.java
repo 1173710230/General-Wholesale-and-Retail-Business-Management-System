@@ -94,7 +94,7 @@ public class SellOrderServiceImpl implements SellOrderService {
                     goodsMapper.reduceNumber(goodsId, sellNumber);
                     // 更改销售单状态
                     return changeStatus(sellOrderId, 2);
-                } else  {
+                } else {
                     // 数量不够，不允许审核通过
                     return false;
                 }
@@ -103,6 +103,7 @@ public class SellOrderServiceImpl implements SellOrderService {
                 return false;
             }
         }
+
     }
 
     @Override
@@ -145,6 +146,7 @@ public class SellOrderServiceImpl implements SellOrderService {
             sellOrderMapper.updateSellOrder(order);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

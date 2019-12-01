@@ -12,6 +12,7 @@
         <result column="order_status" property="sellStatus"/>
         <result column="sell_unit_price" property="sellUnitPrice"/>
         <result column="sell_number" property="SellNumber"/>
+        <result column="goods_id" property="sellGoodsId"/>
         <result column="remark" property="sellOrderRemark"/>
         <result column="customer_id" property="customerId"/>
         <!--        <association property="Goods" column="goods_id">-->
@@ -37,8 +38,8 @@
             <if test="sellUnitPrice != null and sellUnitPrice != ''">
                 sell_unit_price = #{sellUnitPrice},
             </if>
-            <if test="time != null and time != ''">
-                sell_time = #{time},
+            <if test="sellTime != null and sellTime != ''">
+                sell_time = #{sellTime},
             </if>
             <if test="sellOrderRemark != null and sellOrderRemark != ''">
                 remark = #{sellOrderRemark},
@@ -50,7 +51,7 @@
             <!--                remark = #{customerName},-->
             <!--            </if>-->
         </set>
-        where out_id = #{id};
+        where out_id = #{sellOrderId};
     </update>
 
     <delete id="deleteSellOrder" parameterType="int">
@@ -59,7 +60,7 @@
         where out_id = #{sellOrderId};
     </delete>
 
-    <select id="getSellOrderById" parameterType="int">
+    <select id="getSellOrderById" parameterType="int" resultMap="sellOrderMap">
         select *
         from sell_order
         where out_id = #{sellOrderId};
