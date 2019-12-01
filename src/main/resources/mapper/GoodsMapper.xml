@@ -11,7 +11,7 @@
         <result column="goods_name" property="goodsName"/>
         <result column="specification" property="goodsSpecification"/>
         <result column="number" property="goodsNumber"/>
-        <association property="warehouseId" column="warehouse_id"/>
+        <result property="warehouseId" column="warehouse_id"/>
         <!--                <result column="warehouse_id" property=""-->
     </resultMap>
 
