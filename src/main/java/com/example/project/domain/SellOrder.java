@@ -16,7 +16,6 @@ public class SellOrder {
     private Integer sellGoodsId;
     private Integer customerId;
 
-
     //ToDo constructor
     public SellOrder() {
     }
