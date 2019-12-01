@@ -30,14 +30,16 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrder.setSellGoodsId(goodsId);
         sellOrder.setSellTime(date.toLocaleString());
         sellOrder.setSellUnitPrice(sellUnitPrice);
-        sellOrder.setSellStatus(0);
+        sellOrder.setSellStatus(1);
         sellOrder.setCustomerId(customerId);
         sellOrder.setSellOrderRemark(remark);
         sellOrder.setSellNumber(sellSum);
+        // 新建进货单
         sellOrderMapper.addSellOrder(sellOrder);
         SellOrder sellOrder1 = new SellOrder();
         sellOrder1.setSellOrderId(sellOrder.getSellOrderId());
         sellOrder1.setCustomerId(customerId);
+        //关联进货单与客户id
         sellOrderMapper.addSellOrderCustomerRelation(sellOrder1);
         return true;
     }
@@ -45,9 +47,11 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public boolean modifySellOrder(SellOrder sellOrder) {
         try {
+            // 传入动态定义对象更新信息
             sellOrderMapper.updateSellOrder(sellOrder);
             return true;
         } catch (DataAccessException ex) {
+            // 不存在这一订货单
             return false;
         }
     }
@@ -55,9 +59,11 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public boolean deleteSellOrder(int sellOrderId) {
         try {
+            // 删除此id的订货单
             sellOrderMapper.deleteSellOrder(sellOrderId);
             return true;
         } catch (DataAccessException ex) {
+            //销售单不再数据库中
             return false;
         }
     }
@@ -65,6 +71,7 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public List<SellOrder> getUncheckedSellOrder() {
+        // 获取未审核的订单
         SellOrder uncheckedOrder = new SellOrder();
         uncheckedOrder.setSellStatus(1);
         return sellOrderMapper.querySellOrder(uncheckedOrder);

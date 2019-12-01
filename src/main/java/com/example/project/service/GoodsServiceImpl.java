@@ -37,12 +37,14 @@ public class GoodsServiceImpl implements GoodsService{
     @Override
     public List<Goods> getAllWarehouseGoods() {
         Goods goods = new Goods();
+        // 调用查询仓库货物关系表的方法，传入空对象返回所有仓库中货物。
         return goodsMapper.queryGoods(goods);
     }
 
     @Override
     public boolean deleteGoodsById(int goodsId) {
         try {
+            // 调用按id删除方法，按货物id删除货物仓库关系
             goodsMapper.deleteGoodsById(goodsId);
             return true;
         } catch (DataAccessException ex) {
@@ -57,6 +59,7 @@ public class GoodsServiceImpl implements GoodsService{
         goods.setGoodsSpecification(spec);
         goods.setGoodsId(goodsId);
         try {
+            //修改货物表中货物信息（按id查询所需）
             goodsMapper.updateGoods(goods);
             return true;
         } catch (DataAccessException ex) {
@@ -68,6 +71,7 @@ public class GoodsServiceImpl implements GoodsService{
     public List<Goods> queryGoodsByName(String name) {
         Goods goods = new Goods();
         goods.setGoodsName(name);
+        // 按名字查询货物货物信息（仓库中）
         return goodsMapper.queryGoods(goods);
 
     }

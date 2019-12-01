@@ -37,11 +37,13 @@ public class InputOrderServiceImpl implements InputOrderService{
         inputOrder.setInputOrderRemark(remark);
         inputOrder.setInputTime(time.toLocaleString());
         inputOrder.setInputUnitPrice(inputUnitPrice);
+        // 新建插入表
         importOrderMapper.insert(inputOrder);
         Goods goods = new Goods();
         goods.setWarehouseId(1);
         // goods.setGoodsNumber(Double.valueOf(goodsNumber));
         goods.setGoodsId(goodsId);
+        // 在货物仓库关系表中添加数量（货物仓库初始化关系在addNewGoods中）
         List<Goods> gdx = goodsMapper.queryGoods(goods);
         if(gdx == null || gdx.size() == 0){
             return false;
