@@ -68,7 +68,7 @@ public class GoodsServiceImpl implements GoodsService{
     public List<Goods> queryGoodsByName(String name) {
         Goods goods = new Goods();
         goods.setGoodsName(name);
-        goodsMapper.queryGoods(goods);
-        return null;
+        return goodsMapper.queryGoods(goods);
+
     }
 }

@@ -7,13 +7,13 @@
 
     <insert id="insert" parameterType="com.example.project.domain.InputOrder">
         INSERT INTO import_order(unit_price, import_number, goods_id)
-        VALUES (#{unitPrice}, #{importNumber}, #{goodsId})
+        VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId})
     </insert>
 
     <select id="searchNumbersByGoodsId" parameterType="Integer" resultType="Integer">
         SELECT import_number
         FROM import_order
-        WHERE import_order.goods_id = #{goodsId}
+        WHERE import_order.goods_id = #{inputGoodsId}
     </select>
 
 

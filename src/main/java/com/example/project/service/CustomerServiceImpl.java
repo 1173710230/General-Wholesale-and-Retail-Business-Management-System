@@ -39,6 +39,7 @@ public class CustomerServiceImpl implements CustomerService{
             customerMapper.deleteById(customerId);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }
