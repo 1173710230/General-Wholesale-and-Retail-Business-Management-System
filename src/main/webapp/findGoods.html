@@ -14,6 +14,7 @@
                 dataType: "json",
                 data:{name: name},
                 success:function (list) {
+                    let insert = `<tr><th>货物名称</th><th>仓库ID</th><th>数量</th><th>规格</th><th>操作</th></tr>`;
                     if (list !== null){
                         for(var i = 0; i < list.length; i++){
                             var id = list[i].goodsId;
@@ -21,10 +22,10 @@
                             var spec = list[i].goodsSpecification;
                             var wareId = list[i].warehouseId;
                             var number = list[i].goodsNumber;
-                            let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'wareId' + id}">${wareId}</td>
+                            insert += `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'wareId' + id}">${wareId}</td>
 <td id="${'number' + id}">${number}</td><td id="${'spec' + id}">${spec}</td>`;
-                            insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改货品</button></td>
-<td><button type="button" class="btn btn-primary btn-xs" onclick="deleteGoods(${id})">删除货品</button></td></tr>`;
+                            insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改货品</button>
+<button type="button" class="btn btn-primary btn-xs" onclick="deleteGoods(${id})">删除货品</button></td></tr>`;
                             $("#goods").append(insert);
                         }
                     }
@@ -109,9 +110,10 @@
     </div>
     <button class="btn btn-default" type="button" onclick="query($('#goodsName').val())">查找</button>
     <br>
-    <div id="goods">
-
-    </div>
+    <br>
+    <br>
+    <table class="table table-hover" id="goods">
+    </table>
 </div>
 <div class="col-md-4" id="addArea"></div>
 </body>
