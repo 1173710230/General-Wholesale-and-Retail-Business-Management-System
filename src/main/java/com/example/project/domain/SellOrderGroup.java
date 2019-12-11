@@ -19,7 +19,19 @@ public class SellOrderGroup {
 
     private Integer customerId;
 
+    private Double salary = 0.0;
+
+
+    //ToDo constructor
     public SellOrderGroup() {
+    }
+
+    public Double getSalary() {
+        return salary;
+    }
+
+    public void setSalary(Double salary) {
+        this.salary = salary;
     }
 
     public Integer getCustomerId() {

@@ -19,6 +19,7 @@ public class SellOrder {
     public SellOrder() {
     }
 
+    //ToDo constructor
     public SellOrder(Integer sellOrderId, Double sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
         this.sellOrderId = sellOrderId;
         this.sellNumber = sellNumber;

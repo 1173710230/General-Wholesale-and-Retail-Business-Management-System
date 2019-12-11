@@ -14,18 +14,20 @@ public class InputOrder {
     private Integer inputGoodsId;
     private String inputTime;
     private String inputOrderRemark;
+    private Integer warehouseId;
 
     //ToDo constructor
     public InputOrder() {
     }
 
-    public InputOrder(Integer inputOrderId, Double inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, String inputTime, String inputOrderRemark) {
+    public InputOrder(Integer inputOrderId, Double inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, String inputTime, String inputOrderRemark, Integer warehouseId) {
         this.inputOrderId = inputOrderId;
         this.inputGoodsNumber = inputGoodsNumber;
         this.inputUnitPrice = inputUnitPrice;
         this.inputGoodsId = inputGoodsId;
         this.inputTime = inputTime;
         this.inputOrderRemark = inputOrderRemark;
+        this.warehouseId = warehouseId;
     }
 
     @Override
@@ -99,5 +101,13 @@ public class InputOrder {
 
     public void setInputOrderRemark(String inputOrderRemark) {
         this.inputOrderRemark = inputOrderRemark;
+    }
+
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
     }
 }

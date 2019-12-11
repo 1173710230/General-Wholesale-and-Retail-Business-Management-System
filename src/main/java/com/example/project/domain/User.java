@@ -10,18 +10,18 @@ public class User {
     private Integer userId;
     private String userName;
     private String userPassword;
-
-
-    //public data 1;
-    //ToDO COnstructor
+    private Integer status;
+    // 0为经理，1为店长，2为店长
+    //ToDO Constructor
     public User() {
 
     }
 
-    public User(Integer userId, String userName, String userPassword) {
+    public User(Integer userId, String userName, String userPassword, Integer status) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
+        this.status = status;
     }
 
     public Integer getUserId() {
@@ -46,6 +46,14 @@ public class User {
 
     public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
