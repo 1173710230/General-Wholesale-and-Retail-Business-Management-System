@@ -95,4 +95,33 @@ public class WarehouseServiceImpl implements WarehouseService{
             return false;
         }
     }
+
+    @Override
+    public boolean warehouseTransfer(int goodsId, int oldWarehouseId, int newWarehouseId, double goodsNumber){
+        Goods goods = new Goods();
+        goods.setGoodsId(goodsId);
+        goods.setWarehouseId(oldWarehouseId);
+        Goods goods2 = new Goods();
+        goods2.setGoodsId(goodsId);
+        goods2.setWarehouseId(newWarehouseId);
+        try {
+
+            List<Goods> goodsList = goodsMapper.queryGoods(goods);
+            if(!(goodsList.size() == 1 && goodsList.get(0).getGoodsNumber() >= goodsNumber))
+                // 原仓库关系不存在或者原仓库货物数量不够出货的数量
+                return false;
+            //ToDo 货物减少（多仓库）
+
+            List<Goods> goodsList1 = goodsMapper.queryGoods(goods2);
+            if(goodsList1.size() == 0){
+                goods2.setGoodsNumber(goodsNumber);
+                goodsMapper.addGoodsWarehouseRelation(goods2);
+            }else{
+                //ToDo 货物出货（多仓库）
+            }
+            return true;
+        } catch (DataAccessException ex) {
+            return false;
+        }
+    }
 }
