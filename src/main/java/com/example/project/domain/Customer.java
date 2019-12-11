@@ -10,15 +10,17 @@ public class Customer {
     private String customerName;
     private String customerTel;
     private List<Integer> historySellOrderId;
+    private Integer status;
 
-    //ToDo constructor
-    public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId) {
+    public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId, Integer status) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.customerTel = customerTel;
         this.historySellOrderId = historySellOrderId;
+        this.status = status;
     }
 
+    //ToDo constructor
     public Customer(){
 
     }
@@ -53,6 +55,14 @@ public class Customer {
 
     public void setHistorySellOrderId(List<Integer> historySellOrderId) {
         this.historySellOrderId = historySellOrderId;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     @Override
