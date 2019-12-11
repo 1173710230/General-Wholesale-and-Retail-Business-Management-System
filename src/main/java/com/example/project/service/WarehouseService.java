@@ -30,9 +30,9 @@ public interface WarehouseService {
     boolean addGoodsToWareHouse(int checkGoodsId, double goodsNumber, int warehouseId);
 
     /**
-     * 按名字查询货物
+     * 添加新货物（Goods表中没有的货物）
      *
      */
-    boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId);
+    boolean addNewGoods(double goodsNumber, String goodsName, String spec, int warehouseId);
 
 }

@@ -14,10 +14,10 @@
                     <div class="panel-body">
                     <h3>添加</h3>
                         <form>
-                            <div class="form-group">
-                                <label for="goodsId">货物编号</label>
-                                <input type="text" class="form-control" id="goodsId">
-                            </div>
+                            <!--<div class="form-group">-->
+                                <!--<label for="goodsId">货物编号</label>-->
+                                <!--<input type="text" class="form-control" id="goodsId">-->
+                            <!--</div>-->
                             <div class="form-group">
                                 <label for="goodsName">货物名称</label>
                                 <input type="text" class="form-control" id="goodsName">
@@ -52,7 +52,7 @@
             $.ajax({
                 type:"GET",
                 url : "/goods/add",
-                data: {checkGoodsId: id, goodsNumber: number, goodsName: name, spec: spec, warehouseId: wareId},
+                data: {goodsNumber: number, goodsName: name, spec: spec, warehouseId: wareId},
                 success: function (bool) {
                     if (bool) {
                         alert("添加成功！");

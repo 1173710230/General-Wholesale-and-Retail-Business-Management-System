@@ -7,6 +7,7 @@ import com.example.project.domain.Warehouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -30,12 +31,13 @@ public class InputOrderServiceImpl implements InputOrderService{
         this.goodsMapper = goodsMapper;
     }
     @Override
-    public boolean addNewInputOrder(int goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark) {
+    public boolean addNewInputOrder(double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark) {
         InputOrder inputOrder = new InputOrder();
         inputOrder.setInputGoodsNumber(goodsNumber);
         inputOrder.setInputGoodsId(goodsId);
         inputOrder.setInputOrderRemark(remark);
-        inputOrder.setInputTime(time.toLocaleString());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        inputOrder.setInputTime(format.format(time));
         inputOrder.setInputUnitPrice(inputUnitPrice);
         // 新建插入表
         importOrderMapper.insert(inputOrder);

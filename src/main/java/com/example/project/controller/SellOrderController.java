@@ -29,15 +29,15 @@ public class SellOrderController {
    * 增加一个销售单
    * @param goodsId 销售单中商品的id
    * @param sellUnitPrice 商品的单价
-   * @param sellsum 总售价,TODO：实际上是总数量
+   * @param goodsNumber 实际上是总数量
    * @param customerId 顾客的id
    * @param remark 备注
    * @return 当总数量大于0和增加销售单成功时，返回true，其他返回false.
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public boolean addSellOrder(int goodsId, double sellUnitPrice, int sellsum, int customerId, String remark){
-    return sellsum>0 && sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, sellsum, customerId, remark);
+  public boolean addSellOrder(int goodsId, double sellUnitPrice, double goodsNumber, int customerId, String remark){
+    return goodsNumber>0 && sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, goodsNumber, customerId, remark);
   }
 
   /**
@@ -61,7 +61,7 @@ public class SellOrderController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
-  public boolean update(int goodsNumber, double sellUnitPrice, String remark, int goodsId, int customerId){
+  public boolean update(double goodsNumber, double sellUnitPrice, String remark, int goodsId, int customerId){
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，下层不使用id和状态进行修改，只考虑其他属性
     return  sellOrderService.modifySellOrder(new SellOrder(-1, goodsNumber, sellUnitPrice, -1,
         new Date(System.currentTimeMillis()).toLocaleString(), remark, goodsId, customerId));
@@ -106,7 +106,7 @@ public class SellOrderController {
   @RequestMapping("/checkOrder")
   @ResponseBody
   public boolean checkOrder(int sellOrderId, boolean opinion){
-    return opinion&&sellOrderService.checkOrder(sellOrderId, opinion);
+    return sellOrderService.checkOrder(sellOrderId, opinion)&&opinion;
   }
 
   /**
@@ -129,7 +129,6 @@ public class SellOrderController {
   @ResponseBody
   public boolean refundSellOrder(int sellOrderId){
     return sellOrderService.refundSellOrder(sellOrderId);
-
   }
 
 

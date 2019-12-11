@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -25,15 +26,18 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, int sellSum, int customerId, String remark) {
+    public boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, Double sellNumber, int customerId, String remark) {
         SellOrder sellOrder = new SellOrder();
         sellOrder.setSellGoodsId(goodsId);
-        sellOrder.setSellTime(date.toLocaleString());
+        //sellOrder.setSellTime(new SimpleDateFormat().format(date));
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sellOrder.setSellTime(format.format(date));
         sellOrder.setSellUnitPrice(sellUnitPrice);
         sellOrder.setSellStatus(1);
         sellOrder.setCustomerId(customerId);
         sellOrder.setSellOrderRemark(remark);
-        sellOrder.setSellNumber(sellSum);
+        sellOrder.setSellNumber(sellNumber);
         // 新建进货单
         sellOrderMapper.addSellOrder(sellOrder);
         SellOrder sellOrder1 = new SellOrder();
@@ -60,6 +64,9 @@ public class SellOrderServiceImpl implements SellOrderService {
     public boolean deleteSellOrder(int sellOrderId) {
         try {
             // 删除此id的订货单
+            SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
+            if(order.getSellStatus() == 2 || order.getSellStatus() == 4)
+                goodsMapper.addNumber(order.getSellGoodsId(),order.getSellNumber());
             sellOrderMapper.deleteSellOrder(sellOrderId);
             return true;
         } catch (DataAccessException ex) {
@@ -87,7 +94,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         } else {
             // 用户点击了通过审核
             // 获得销售单填写的销量
-            double sellNumber = order.getSellNumber().doubleValue();
+            double sellNumber = order.getSellNumber();
 
             // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
             Integer goodsId = order.getSellGoodsId();
@@ -124,6 +131,8 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public boolean refundSellOrder(int sellOrderId) {
+        SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
+        goodsMapper.addNumber(order.getSellGoodsId(),order.getSellNumber());
         return changeStatus(sellOrderId, 5);
     }
 

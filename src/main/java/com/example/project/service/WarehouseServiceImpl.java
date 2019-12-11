@@ -66,15 +66,15 @@ public class WarehouseServiceImpl implements WarehouseService{
     }
 
     @Override
-    public boolean addNewGoods(int checkGoodsId, int goodsNumber, String goodsName, String spec, int warehouseId){
+    public boolean addNewGoods(double goodsNumber, String goodsName, String spec, int warehouseId){
         try {
             Goods goods = new Goods();
             Goods goods1 = new Goods();
             // 查询一遍
-            goods1.setGoodsId(checkGoodsId);
-            if (goodsMapper.queryGoods(goods).contains(goods1)) {
-                return false;
-            }
+            //goods1.setGoodsId(checkGoodsId);
+            //if (goodsMapper.queryGoods(goods).contains(goods1)) {
+            //    return false;
+            //}
             // 添加到Goods数据库
             Goods goods2 = new Goods();
             goods2.setGoodsName(goodsName);
@@ -87,7 +87,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             Goods goods3 = new Goods();
             goods3.setGoodsId(gid);
             goods3.setWarehouseId(warehouseId);
-            goods3.setGoodsNumber((double) goodsNumber);
+            goods3.setGoodsNumber(goodsNumber);
             wareHouseMapper.addGoodsToWarehouse(goods3);
             return true;
         } catch (DataAccessException ex) {

@@ -9,7 +9,7 @@ import java.util.Objects;
 public class InputOrder {
 
     private Integer inputOrderId;
-    private Integer inputGoodsNumber;
+    private Double inputGoodsNumber;
     private Double inputUnitPrice;
     private Integer inputGoodsId;
     private String inputTime;
@@ -19,7 +19,7 @@ public class InputOrder {
     public InputOrder() {
     }
 
-    public InputOrder(Integer inputOrderId, Integer inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, String inputTime, String inputOrderRemark) {
+    public InputOrder(Integer inputOrderId, Double inputGoodsNumber, Double inputUnitPrice, Integer inputGoodsId, String inputTime, String inputOrderRemark) {
         this.inputOrderId = inputOrderId;
         this.inputGoodsNumber = inputGoodsNumber;
         this.inputUnitPrice = inputUnitPrice;
@@ -61,11 +61,11 @@ public class InputOrder {
         this.inputOrderId = inputOrderId;
     }
 
-    public Integer getInputGoodsNumber() {
+    public Double getInputGoodsNumber() {
         return inputGoodsNumber;
     }
 
-    public void setInputGoodsNumber(Integer inputGoodsNumber) {
+    public void setInputGoodsNumber(Double inputGoodsNumber) {
         this.inputGoodsNumber = inputGoodsNumber;
     }
 

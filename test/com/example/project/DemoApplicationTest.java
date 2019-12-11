@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 //@RunWith(SpringRunner.class)
@@ -49,9 +51,19 @@ public class DemoApplicationTest {
     }
 
     @Test
-    public void testAddOrder(){
-        Date date = new Date(System.currentTimeMillis());
-        sellOrderService.addSellOrder(date,1,1.5,80,2,"Cheap");
+    public void testAddOrder() throws ParseException {
+
+       // Date date = new Date(System.currentTimeMillis());
+
+        // 将提交的数据添加到数据库中.
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String format = sf.format(new Date());
+        Date parse = sf.parse(format);
+        System.out.println("1:"+new Date());
+        System.out.println("2:"+parse);
+
+
+        sellOrderService.addSellOrder(parse,1,1.5,80.0,2,"Cheap");
 
     }
 
