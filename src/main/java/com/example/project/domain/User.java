@@ -11,9 +11,7 @@ public class User {
     private String userName;
     private String userPassword;
     private Integer status;
-
-
-    //public data 1;
+    // 0为经理，1为店长，2为店长
     //ToDO Constructor
     public User() {
 

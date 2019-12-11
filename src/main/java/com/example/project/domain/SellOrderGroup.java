@@ -21,6 +21,8 @@ public class SellOrderGroup {
 
     private Double salary = 0.0;
 
+
+    //ToDo constructor
     public SellOrderGroup() {
     }
 

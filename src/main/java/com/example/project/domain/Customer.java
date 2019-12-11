@@ -11,6 +11,8 @@ public class Customer {
     private String customerTel;
     private List<Integer> historySellOrderId;
     private Integer status;
+    // 0为批发， 1 为零售
+
 
     public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId, Integer status) {
         this.customerId = customerId;
