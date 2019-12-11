@@ -100,14 +100,6 @@
     <!--        </where>-->
     <!--    </select>-->
 
-    <select id="getStockById">
-        select (sum(iod.import_number) - sum(sod.sell_number))
-        from sell_order sod,
-             import_order iod
-        where sod.goods_id = #{goodsId}
-          and iod.goods_id = sod.goods_id
-    </select>
-
     <update id="updateGoods" parameterType="Goods">
         update goods
         <set>
@@ -121,28 +113,28 @@
         where goods_id = #{goodsId};
     </update>
 
-    <!--    现在因为只有一个仓库，所以默认仓库ID为1-->
-    <update id="changeStock">
+    <!--现在支持多仓库-->
+    <update id="changeStock" parameterType="Goods">
         update goods_warehouse_relation
         set number = #{newNumber}
         where goods_id = #{goodsId}
-          and warehouse_id = 1;
+          and warehouse_id = #{warehouseId};
     </update>
 
-    <!--    因现在只有一个仓库，所以仓库ID默认为1-->
-    <update id="addNumber">
+    <!--现在支持多仓库-->
+    <update id="addNumber" parameterType="Goods">
         update goods_warehouse_relation
         set number = number + #{addNumber}
         where goods_id = #{goodsId}
-          and warehouse_id = 1;
+          and warehouse_id = #{warehouseId};
     </update>
 
-    <!--    因现在只有一个仓库，所以仓库ID默认为1-->
-    <update id="reduceNumber">
+    <!--现在支持多仓库-->
+    <update id="reduceNumber" parameterType="Goods">
         update goods_warehouse_relation
         set number = number - #{reduceNumber}
         where goods_id = #{goodsId}
-          and warehouse_id = 1
+          and warehouse_id = #{warehouseId};
     </update>
 
 

@@ -64,16 +64,6 @@ public interface GoodsMapper {
     List<Goods> queryGoods(Goods goods);
 
     /**
-     * 获得货物的库存。
-     * 现在不要用这个方法，以后可能删除
-     *
-     * @param id 需要查询库存的货物ID
-     * @return 货物的库存
-     */
-    @Deprecated
-    int getStockById(int id);
-
-    /**
      * 直接修改库存。
      *
      * @param goodsId    要修改库存的货物ID

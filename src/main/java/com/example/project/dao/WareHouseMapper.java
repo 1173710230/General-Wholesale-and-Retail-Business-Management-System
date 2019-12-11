@@ -4,6 +4,7 @@ package com.example.project.dao;
 import com.example.project.domain.Goods;
 import com.example.project.domain.Warehouse;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 

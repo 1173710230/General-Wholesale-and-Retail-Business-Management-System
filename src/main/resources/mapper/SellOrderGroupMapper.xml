@@ -4,7 +4,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 
-<mapper namespace="com.example.project.dao.SellOrderMapper">
+<mapper namespace="com.example.project.dao.SellOrderGroupMapper">
+
+    <resultMap id="sellOrderMap" type="SellOrder">
+        <id column="group_id" property="sellOrderGroupId"/>
+        <result column="group_name" property="groupName"/>
+        <result column="sell_time" property="sellTime"/>
+        <result column="order_status" property="sellStatus"/>
+        <result column="sell_unit_price" property="sellUnitPrice"/>
+        <result column="sell_number" property="sellNumber"/>
+        <result column="goods_id" property="sellGoodsId"/>
+        <result column="remark" property="sellOrderRemark"/>
+        <result column="customer_id" property="customerId"/>
+        <collection property="sellOrders" ofType="SellOrder">
+            <id column="order_id" property="sellOrderId"/>
+        </collection>
+    </resultMap>
+
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
@@ -21,6 +37,10 @@
         </foreach>
     </insert>
 
+    <select id="querySellOrderGroup" parameterType="SellOrderGroup">
+        select *
+        from sell_order_group sog ;
+    </select>
 
 </mapper>
 
