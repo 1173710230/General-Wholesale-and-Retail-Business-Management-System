@@ -39,16 +39,20 @@
         from goods g,
         goods_warehouse_relation gwr
         <where>
-            <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1，未来直接把andxxx=1删掉即可-->
-            gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
+            <!-- 当前版本已经支持多个仓库-->
+            <!-- todo 未来改一下where的顺序能够提升速度-->
+            gwr.goods_id = g.goods_id
             <if test="goodsId != null and goodsId != 0">
                 and g.goods_id = #{goodsId}
             </if>
             <if test="goodsName != null and goodsName != ''">
-                and g.goods_name = #{goodsName}
+                and g.goods_name like #{goodsName}
             </if>
             <if test="goodsSpecification != null and goodsSpecification != ''">
                 and g.specification like #{goodsSpecification};
+            </if>
+            <if test="warehouseId != null and warehouseId != 0">
+                and warehouse_id = #{warehouseId}
             </if>
         </where>
     </select>
@@ -58,8 +62,9 @@
         from goods g,
         goods_warehouse_relation gwr
         <where>
-            <!-- 当前版本默认只有一个仓库， 所以ID默认设置成1-->
-            gwr.goods_id = g.goods_id and gwr.warehouse_id = 1
+            <!-- 当前版本已经不止有一个仓库了，所以去掉了仓库ID=1 的判断，现在计算出来的
+            是所有仓库的库存总和-->
+            gwr.goods_id = g.goods_id
             <if test="goodsId != null and goodsId != 0">
                 and g.goods_id = #{goodsId}
             </if>

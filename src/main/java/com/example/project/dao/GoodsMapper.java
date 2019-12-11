@@ -51,6 +51,14 @@ public interface GoodsMapper {
      * @param goods 一个没有现实意义的goods对象，根据这个对象中非空的属性查找，
      *              例如想查找货物名称为"苹果"的货物，
      *              只需要将name设置为苹果，其他为null或者空
+     *
+     *              几个示例：
+     *              1. 如果希望查找1号货物在1号仓库的信息，
+     *              只需将Goods对象的goodsId设置为1，warehouseId 设置为1，这样查询出来
+     *              的将是Goods对象，如果List长度大于0，说明查询到了，否则未查询到；
+     *              2. 如果希望查询1号仓库的所有货物的详情，只需要将Goods对象的
+     *              warehouseId 设置为1即可。
+     *
      * @return 一个列表，是按照上述条件查找出来的结果
      */
     List<Goods> queryGoods(Goods goods);
@@ -100,5 +108,7 @@ public interface GoodsMapper {
      * @param reduceNumber 减少数量
      */
     void reduceNumber(@Param("goodsId") int goodsId, @Param("reduceNumber") double reduceNumber);
+
+
 
 }

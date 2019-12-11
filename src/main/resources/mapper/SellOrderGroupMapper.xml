@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.project.dao.SellOrderMapper">
+
+    <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
+        # 先插入一条group记录
+        insert into sell_order_group (group_name, sell_time, remark, order_type)
+        values (#{groupName}, #{sellTime}, #{sellOrderRemark}, #{sellOrderType});
+
+        set @group_id = last_insert_id();
+
+        # 插入到销售记录 sell_order表中
+        insert into sell_order (sell_unit_price, sell_number, goods_id, group_id)
+        values
+        <foreach collection="list" item="sellOrders" separator=",">
+            (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId}, @group_id)
+        </foreach>
+    </insert>
+
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

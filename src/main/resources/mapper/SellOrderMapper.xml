@@ -31,8 +31,8 @@
 
     <insert id="addSellOrderCustomerRelation" parameterType="SellOrder">
         # 插入关系
-        insert into sell_customer_relation (customer_id, sell_order_id)
-        values (#{customerId}, #{sellOrderId});
+        insert into sell_customer_relation (customer_id, sell_order_id, order_type)
+        values (#{customerId}, #{sellOrderId}, #{orderType});
     </insert>
 
     <update id="updateSellOrder" parameterType="SellOrder">
