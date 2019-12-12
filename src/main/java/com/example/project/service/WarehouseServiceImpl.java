@@ -37,7 +37,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     @Override
     public List<Goods> getGoodsFromAllWarehouse() {
         Goods goods = new Goods();
-        // 获取关系表中....
+        // 获取关系表中...
         return goodsMapper.queryGoods(goods);
     }
 
