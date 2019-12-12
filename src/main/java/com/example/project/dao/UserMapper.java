@@ -15,4 +15,10 @@ public interface UserMapper {
 
     public User searchUserByUserId(int userId);
 
+    /**
+     * 根据传入的user对象的非空属性查询用户。
+     * @param user  查询的条件
+     */
+    void queryUser(User user);
+
 }
