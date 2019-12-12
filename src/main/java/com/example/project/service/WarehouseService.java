@@ -8,6 +8,7 @@ import java.util.List;
 @Service
 public interface WarehouseService {
 
+
     /**
      * 获取所有仓库中货物
      *
