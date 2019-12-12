@@ -42,6 +42,13 @@ public class WarehouseServiceImpl implements WarehouseService{
     }
 
     @Override
+    public List<Goods> getGoodsFromCurrentWarehouse(int warehouseId){
+        Goods goods = new Goods();
+        goods.setWarehouseId(warehouseId);
+        return goodsMapper.queryGoods(goods);
+    }
+
+    @Override
     public List<Goods> queryGoodsByName(String name) {
         Goods goods = new Goods();
         goods.setGoodsName(name);
@@ -49,6 +56,13 @@ public class WarehouseServiceImpl implements WarehouseService{
         return goodsMapper.queryGoods(goods);
     }
 
+    @Override
+    public List<Goods> queryGoodsFromCurrentWarehouseByName(String name, int warehouseId){
+        Goods goods = new Goods();
+        goods.setGoodsName(name);
+        goods.setWarehouseId(warehouseId);
+        return goodsMapper.queryGoods(goods);
+    }
     @Override
     public boolean addGoodsToWareHouse(int checkGoodsId, double goodsNumber, int warehouseId){
         Goods goods = new Goods();
@@ -124,4 +138,6 @@ public class WarehouseServiceImpl implements WarehouseService{
             return false;
         }
     }
+
+
 }

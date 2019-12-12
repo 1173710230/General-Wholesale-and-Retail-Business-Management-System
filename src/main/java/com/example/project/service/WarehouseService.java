@@ -17,10 +17,23 @@ public interface WarehouseService {
 
 
     /**
+     * 获取当前仓库中货物
+     *
+     */
+    List<Goods> getGoodsFromCurrentWarehouse(int warehouseId);
+
+
+    /**
      * 按名字查询所有仓库中此货物
      *
      */
     List<Goods> queryGoodsByName(String name);
+
+    /**
+     * 按名字查询当前仓库中此货物
+     *
+     */
+    List<Goods> queryGoodsFromCurrentWarehouseByName(String name, int warehouseId);
 
 
     /**
