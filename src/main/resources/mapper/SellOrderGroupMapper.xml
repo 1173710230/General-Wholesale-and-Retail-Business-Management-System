@@ -39,7 +39,22 @@
 
     <select id="querySellOrderGroup" parameterType="SellOrderGroup">
         select *
-        from sell_order_group sog ;
+        from sell_order_group sog
+        <where>
+            sur.sell_order_id = so.out_id
+            <if test="sellStatus != null">
+                and order_status = #{sellStatus}
+            </if>
+            <if test="SellNumber != null">
+                and sell_number = #{SellNumber}
+            </if>
+            <if test="sellUnitPrice != null">
+                and sell_unit_price = #{sellUnitPrice}
+            </if>
+            <if test="sellOrderRemark != null and sellOrderRemark != ''">
+                and remark like #{sellOrderRemark}
+            </if>
+        </where>
     </select>
 
 </mapper>

@@ -31,5 +31,22 @@
         values (#{goodsId}, #{warehouseId}, #{goodsNumber});
     </insert>
 
+    <select id="queryWarehouse" resultMap="warehouse">
+        select * from warehouse
+        <where>
+            <if test="warehouseId != null and warehouseId != ''">
+                wh_id = #{warehouseId}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+        </where>
+    </select>
+
+    <update id="updateWarehouseNameById">
+        update warehouse
+        set name = #{newName}
+        where wh_id = #{id};
+    </update>
 
 </mapper>

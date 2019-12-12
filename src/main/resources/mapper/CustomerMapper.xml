@@ -24,7 +24,7 @@
     <select id="searchByCustomerName" parameterType="String" resultMap="customers">
         SELECT customer_id, customer_name, customer_tel
         FROM customer
-        WHERE customer.customer_name = #{customerName}
+        WHERE customer.customer_name like #{customerName}
     </select>
 
     <select id="searchById" parameterType="int" resultType="Customer">

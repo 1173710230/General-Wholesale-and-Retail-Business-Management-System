@@ -8,8 +8,6 @@
     <insert id="insert" parameterType="com.example.project.domain.InputOrder">
         INSERT INTO import_order(unit_price, import_number, goods_id, in_datetime, remark, warehouse_id)
         VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId}, #{inputTime}, #{inputOrderRemark}, #{warehouseId})
-
-
     </insert>
 
     <select id="searchNumbersByGoodsId" parameterType="Integer" resultType="Integer">
@@ -21,3 +19,5 @@
 
 
 </mapper>
+
+

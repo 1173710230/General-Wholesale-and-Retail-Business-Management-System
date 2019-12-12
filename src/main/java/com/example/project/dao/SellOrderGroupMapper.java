@@ -8,8 +8,12 @@ import java.util.List;
 @Mapper
 public interface SellOrderGroupMapper {
 
-    // todo 参数不知道呢
-    void insertSellOrderGroup();
+    /**
+     * 增加一个销售单（组）。
+     *
+     * @param group 销售单对象
+     */
+    void insertSellOrderGroup(SellOrderGroup group);
 
     /**
      * 根据传入条件查询销售单。

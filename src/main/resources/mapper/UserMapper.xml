@@ -5,26 +5,55 @@
 
 <mapper namespace="com.example.project.dao.UserMapper">
 
+    <resultMap id="userMap" type="User">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName"/>
+        <result column="password" property="password"/>
+        <result column="user_character" property="status"/>
+    </resultMap>
+
     <insert id="insertUser" parameterType="com.example.project.domain.User">
-        INSERT INTO user(user_id, user_name, user_password)
+        INSERT INTO user(user_id, user_name, password)
         VALUES (#{userId}, #{userName}, #{userPassword})
     </insert>
 
-    <update id="setNameByUserId" >
+    <update id="setNameByUserId">
         UPDATE user
         SET user.user_name = #{name}
         WHERE user.user_id = #{userId}
     </update>
 
-    <update id="setPasswordByUserId" >
+    <update id="setPasswordByUserId">
         UPDATE user
-        SET user.user_password = #{password}
+        SET user.password = #{password}
         WHERE user.user_id = #{userId}
     </update>
 
     <select id="searchUserByUserId" parameterType="String" resultType="com.example.project.domain.User">
-        SELECT user_id userId, user_name userName, user_password userPassword
+        SELECT user_id userId, user_name userName, password userPassword
         FROM user
         WHERE user.user_id = #{userId}
     </select>
+
+    <select id="queryUser" parameterType="User" resultMap="User">
+        select *
+        from user
+        <where>
+            <if test="userId != null">
+                user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                # 用户名改成了模糊搜索
+                and user_name like #{userName}
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                and user_password = #{userPassword}
+            </if>  
+            <if test="status != null">
+                and user_character = #{status}
+            </if>
+        </where>
+    </select>
+
+
 </mapper>
