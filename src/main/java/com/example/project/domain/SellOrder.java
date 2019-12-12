@@ -5,30 +5,20 @@ import java.util.Objects;
 
 public class SellOrder {
 
-    private Integer sellOrderId;
-    private Double sellNumber;//卖掉的数量
-    private Double sellUnitPrice;
-    private Integer sellStatus = 0;
-    // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
-    private String sellTime;
-    private String sellOrderRemark;
-    private Integer sellGoodsId;
-    private Integer customerId;
+    private Integer sellOrderId;//save
+    private Double sellNumber;//卖掉的数量save
+    private Double sellUnitPrice;//save
+    private Integer sellGoodsId;//save
 
     //ToDo constructor
     public SellOrder() {
     }
 
-    //ToDo constructor
-    public SellOrder(Integer sellOrderId, Double sellNumber, Double sellUnitPrice, Integer sellStatus, String sellTime, String sellOrderRemark, Integer sellGoodsId, Integer customerId) {
+    public SellOrder(Integer sellOrderId, Double sellNumber, Double sellUnitPrice, Integer sellGoodsId) {
         this.sellOrderId = sellOrderId;
         this.sellNumber = sellNumber;
         this.sellUnitPrice = sellUnitPrice;
-        this.sellStatus = sellStatus;
-        this.sellTime = sellTime;
-        this.sellOrderRemark = sellOrderRemark;
         this.sellGoodsId = sellGoodsId;
-        this.customerId = customerId;
     }
 
     public Integer getSellOrderId() {
@@ -55,30 +45,6 @@ public class SellOrder {
         this.sellUnitPrice = sellUnitPrice;
     }
 
-    public Integer getSellStatus() {
-        return sellStatus;
-    }
-
-    public void setSellStatus(Integer sellStatus) {
-        this.sellStatus = sellStatus;
-    }
-
-    public String getSellTime() {
-        return sellTime;
-    }
-
-    public void setSellTime(String sellTime) {
-        this.sellTime = sellTime;
-    }
-
-    public String getSellOrderRemark() {
-        return sellOrderRemark;
-    }
-
-    public void setSellOrderRemark(String sellOrderRemark) {
-        this.sellOrderRemark = sellOrderRemark;
-    }
-
     public Integer getSellGoodsId() {
         return sellGoodsId;
     }
@@ -87,32 +53,17 @@ public class SellOrder {
         this.sellGoodsId = sellGoodsId;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SellOrder sellOrder = (SellOrder) o;
-        return Objects.equals(sellOrderId, sellOrder.sellOrderId) &&
-                Objects.equals(sellNumber, sellOrder.sellNumber) &&
-                Objects.equals(sellUnitPrice, sellOrder.sellUnitPrice) &&
-                Objects.equals(sellStatus, sellOrder.sellStatus) &&
-                Objects.equals(sellTime, sellOrder.sellTime) &&
-                Objects.equals(sellOrderRemark, sellOrder.sellOrderRemark) &&
-                Objects.equals(sellGoodsId, sellOrder.sellGoodsId) &&
-                Objects.equals(customerId, sellOrder.customerId);
+        return Objects.equals(sellOrderId, sellOrder.sellOrderId) ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(sellOrderId, sellNumber, sellUnitPrice, sellStatus, sellTime, sellOrderRemark, sellGoodsId, customerId);
+        return Objects.hash(sellOrderId, sellNumber, sellUnitPrice,  sellGoodsId);
     }
 
     @Override
@@ -121,11 +72,7 @@ public class SellOrder {
                 "sellOrderId=" + sellOrderId +
                 ", sellNumber=" + sellNumber +
                 ", sellUnitPrice=" + sellUnitPrice +
-                ", sellStatus=" + sellStatus +
-                ", sellTime=" + sellTime +
-                ", sellOrderRemark='" + sellOrderRemark + '\'' +
                 ", sellGoodsId=" + sellGoodsId +
-                ", customerId=" + customerId +
                 '}';
     }
 }

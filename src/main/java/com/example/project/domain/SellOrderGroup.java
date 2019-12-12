@@ -12,14 +12,18 @@ public class SellOrderGroup {
     private String sellOrderRemark;
 
     private Integer sellOrderType;
+    //0批发，1零售
 
     private Integer sellStatus = 0;
+    // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
 
     private List<SellOrder> sellOrders = new ArrayList<>();
 
     private Integer customerId;
 
     private Double salary = 0.0;
+
+    private Integer warehouseId;
 
 
     //ToDo constructor
@@ -90,6 +94,13 @@ public class SellOrderGroup {
         this.sellOrders = sellOrders;
     }
 
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
+    }
 
     /*---------------添加删除销售记录的方法----------------*/
     public void addRecord(SellOrder order) {
