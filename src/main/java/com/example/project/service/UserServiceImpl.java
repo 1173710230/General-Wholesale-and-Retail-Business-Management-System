@@ -29,4 +29,10 @@ public class UserServiceImpl implements UserService{
         User user = new User(userId, userName, password, status);
         this.userMapper.insertUser(user);
     }
+
+    @Override
+    public void updateUserMessage(User user) {
+
+        this.userMapper.updateUser(user);
+    }
 }

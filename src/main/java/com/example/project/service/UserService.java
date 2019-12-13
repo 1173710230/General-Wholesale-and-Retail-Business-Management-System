@@ -1,5 +1,6 @@
 package com.example.project.service;
 
+import com.example.project.domain.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -21,4 +22,10 @@ public interface UserService {
      * @param status  用户职位
      */
     public void register(Integer userId, String userName, String password, Integer status);
+
+    /**
+     * 更新用户信息
+     * @param user  携带新用户信息的对象。(用户id不为空)
+     */
+    public void updateUserMessage(User user);
 }

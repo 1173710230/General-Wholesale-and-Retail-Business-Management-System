@@ -124,14 +124,15 @@ public class WarehouseServiceImpl implements WarehouseService{
             if(!(goodsList.size() == 1 && goodsList.get(0).getGoodsNumber() >= goodsNumber))
                 // 原仓库关系不存在或者原仓库货物数量不够出货的数量
                 return false;
-            //ToDo 货物减少（多仓库）
-
+            //出货
+            goodsMapper.reduceNumber(goodsId, goodsNumber, oldWarehouseId);
             List<Goods> goodsList1 = goodsMapper.queryGoods(goods2);
             if(goodsList1.size() == 0){
+                //不存在关系
                 goods2.setGoodsNumber(goodsNumber);
                 goodsMapper.addGoodsWarehouseRelation(goods2);
             }else{
-                //ToDo 货物出货（多仓库）
+                goodsMapper.addNumber(goodsId, goodsNumber, newWarehouseId);
             }
             return true;
         } catch (DataAccessException ex) {

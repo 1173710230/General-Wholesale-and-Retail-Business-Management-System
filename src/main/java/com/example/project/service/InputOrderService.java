@@ -12,5 +12,5 @@ public interface InputOrderService {
      * 添加一个进货单
      *
      */
-    boolean addNewInputOrder( double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark);
+    boolean addNewInputOrder( double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark, int warehouseId);
 }

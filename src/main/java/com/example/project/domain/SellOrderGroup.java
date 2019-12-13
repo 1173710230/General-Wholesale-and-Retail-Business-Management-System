@@ -14,7 +14,7 @@ public class SellOrderGroup {
     private Integer sellOrderType;
     //0批发，1零售
 
-    private Integer sellStatus = 0;
+    private Integer sellStatus = null;
     // 未提交0；待审核1；审核通过2；审核不通过3；订单完成（已付款）4；已退款5；
 
     private List<SellOrder> sellOrders = new ArrayList<>();
