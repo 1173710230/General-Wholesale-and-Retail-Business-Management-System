@@ -7,7 +7,8 @@
 
     <insert id="insert" parameterType="com.example.project.domain.InputOrder">
         INSERT INTO import_order(unit_price, import_number, goods_id, in_datetime, remark, warehouse_id)
-        VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId}, #{inputTime}, #{inputOrderRemark}, #{warehouseId})
+        VALUES (#{inputUnitPrice}, #{inputGoodsNumber}, #{inputGoodsId}, #{inputTime}, #{inputOrderRemark},
+                #{warehouseId})
     </insert>
 
     <select id="searchNumbersByGoodsId" parameterType="Integer" resultType="Integer">
@@ -16,6 +17,30 @@
         WHERE import_order.goods_id = #{inputGoodsId}
     </select>
 
+    <select id="queryImportOrder" parameterType="InputOrder">
+        select * from import_order
+        <where>
+            <if test="remark != null and remark != ''">
+                remark like #{inputOrderRemark}
+            </if>
+            <if test="inputGoodsNumber != null">
+                and import_number = #{inputGoodsNumber}
+            </if>
+            <if test="inputGoodsId != null">
+                and goods_id = #{inputGoodsId}
+            </if>
+            <if test="warehouse_id != null">
+                and warehouse_id = #{warehouseId}
+            </if>
+            <if test="inputUnitPrice != null">
+                and unit_price = #{inputUnitPrice}
+            </if>
+        </where>
+    </select>
+
+    <select id="getImportOrderById" parameterType="int">
+        select * from import_order where in_id = #{id}
+    </select>
 
 
 </mapper>

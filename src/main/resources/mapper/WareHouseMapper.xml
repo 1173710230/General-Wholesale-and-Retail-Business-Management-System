@@ -15,12 +15,6 @@
         FROM warehouse
     </select>
 
-    <select id="searchNameById" parameterType="Integer" resultType="String">
-        SELECT name
-        FROM warehouse
-        WHERE warehouse.wh_id = #{warehouseId}
-    </select>
-
     <insert id="insert" parameterType="com.example.project.domain.Warehouse">
         INSERT INTO warehouse(wh_id, name)
         VALUES (#{warehouseId}, #{name})

@@ -10,9 +10,12 @@ import java.util.List;
 
 @Mapper
 public interface WareHouseMapper {
-    List<Warehouse> getAllWareHouse();
 
-    String searchNameById(int id);
+    /**
+     * Get all warehouses.
+     * @return  a list of warehouse
+     */
+    List<Warehouse> getAllWareHouse();
 
     void insert(Warehouse wareHouse);
 
