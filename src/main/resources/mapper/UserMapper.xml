@@ -17,17 +17,17 @@
         VALUES (#{userId}, #{userName}, #{userPassword})
     </insert>
 
-    <update id="setNameByUserId">
-        UPDATE user
-        SET user.user_name = #{name}
-        WHERE user.user_id = #{userId}
-    </update>
+<!--    <update id="setNameByUserId">-->
+<!--        UPDATE user-->
+<!--        SET user.user_name = #{name}-->
+<!--        WHERE user.user_id = #{userId}-->
+<!--    </update>-->
 
-    <update id="setPasswordByUserId">
-        UPDATE user
-        SET user.password = #{password}
-        WHERE user.user_id = #{userId}
-    </update>
+<!--    <update id="setPasswordByUserId">-->
+<!--        UPDATE user-->
+<!--        SET user.password = #{password}-->
+<!--        WHERE user.user_id = #{userId}-->
+<!--    </update>-->
 
     <select id="searchUserByUserId" parameterType="String" resultType="com.example.project.domain.User">
         SELECT user_id userId, user_name userName, password userPassword
@@ -54,6 +54,22 @@
             </if>
         </where>
     </select>
+
+    <update id = 'updateUser' parameterType="User">
+        update user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName}
+            </if>
+            <if test="userPassword != null and userPassword != ''">
+                password = #{userPassword}
+            </if>
+            <if test="status != null and status != ''">
+                user_character = #{status}
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
 
 
 </mapper>
