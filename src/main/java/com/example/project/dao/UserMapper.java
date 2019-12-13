@@ -9,9 +9,9 @@ public interface UserMapper {
 
     public void insertUser(User user);
 
-    public void setNameByUserId(@Param("userId") int userId, @Param("name") String name);
-
-    public void setPasswordByUserId(@Param("userId") int userId, @Param("password") String password);
+//    public void setNameByUserId(@Param("userId") int userId, @Param("name") String name);
+//
+//    public void setPasswordByUserId(@Param("userId") int userId, @Param("password") String password);
 
     public User searchUserByUserId(int userId);
 
@@ -20,5 +20,11 @@ public interface UserMapper {
      * @param user  查询的条件
      */
     void queryUser(User user);
+
+    /**
+     * 根据传入的User对象的非空属性更新已有用户信息
+     * @param user  用户id不为空的User对象
+     */
+    public void updateUser(User user);
 
 }
