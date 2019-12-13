@@ -49,4 +49,34 @@
         where wh_id = #{id};
     </update>
 
+    <update id="move">
+        set @move_goods_id = #{goodsId};
+        set @move_number = #{number};
+        set @old_wh_id = (select warehouse_id
+                          from goods_warehouse_relation
+                          where warehouse_id = #{oldWarehouseId}
+                            and goods_id = @move_goods_id
+                          group by warehouse_id);
+        set @new_wh_id = (select warehouse_id
+                          from goods_warehouse_relation
+                          where warehouse_id = #{newWarehouseId}
+                            and goods_id = @move_goods_id
+                          group by warehouse_id);
+
+        # 用插入一个不符合类型的东西制造异常，中断修改
+        update goods_warehouse_relation
+        set number = (
+            IF(@old_wh_id is null or @new_wh_id is null, 'f', number - @move_number)
+            )
+        where warehouse_id = @old_wh_id
+          and goods_id = @move_goods_id;
+        update goods_warehouse_relation
+        set number = (
+            IF(@old_wh_id is null or @new_wh_id is null, 'f', number + @move_number)
+            )
+        where warehouse_id = @new_wh_id
+          and goods_id = @move_goods_id;
+    </update>
+
+
 </mapper>
