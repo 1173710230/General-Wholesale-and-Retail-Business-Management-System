@@ -7,7 +7,7 @@ public class CashierDeskServiceImpl implements CashierDeskService{
     @Override
     public Double[] gathering(SellOrderGroup sellOrderGroup) {
         Integer status = sellOrderGroup.getSellStatus();
-        if (status == 3) { //销售单状态必须是已审核且未付款
+        if (status == 2) { //销售单状态必须是已审核且未付款
             Double[] result = {0.0, 0.0};
             Double totalPrice = 0.0, salary = 0.0;
 
