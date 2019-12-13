@@ -40,7 +40,7 @@
     <insert id="addSellOrderCustomerRelation" parameterType="SellOrderGroup">
         # 插入关系
         insert into sell_customer_relation (customer_id, sell_order_id)
-        values (#{customerId}, #{sellOrderId});
+        values (#{customerId}, #{sellOrderGroupId});
     </insert>
 
     <update id="updateSellOrderGroup" parameterType="SellOrderGroup">
@@ -83,6 +83,14 @@
                 and remark like #{sellOrderRemark}
             </if>
         </where>
+    </select>
+
+    <select id="getSellOrderGroupById" parameterType="int">
+        select sog.*
+        from sell_order_group sog, sell_customer_relation sur, sell_order so
+
+            where sog.group_id = #{groupId} and sur.sell_order_id = so.out_id
+
     </select>
 
 </mapper>
