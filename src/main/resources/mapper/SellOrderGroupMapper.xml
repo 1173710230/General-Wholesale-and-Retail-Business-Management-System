@@ -3,29 +3,37 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.example.project.dao.SellOrderGroupMapper">
-
     <resultMap id="sellOrderMap" type="SellOrder">
         <id column="group_id" property="sellOrderGroupId"/>
         <result column="group_name" property="groupName"/>
         <result column="sell_time" property="sellTime"/>
         <result column="order_status" property="sellStatus"/>
-        <result column="sell_unit_price" property="sellUnitPrice"/>
-        <result column="sell_number" property="sellNumber"/>
-        <result column="goods_id" property="sellGoodsId"/>
         <result column="remark" property="sellOrderRemark"/>
         <result column="customer_id" property="customerId"/>
+        <!--总价还有利润-->
+        <result column="profit" property="profit"/>
+        <result column="sum_money" property="salary"/>
+
         <collection property="sellOrders" ofType="SellOrder">
             <id column="order_id" property="sellOrderId"/>
+            <result column="sell_unit_price" property="sellUnitPrice"/>
+            <result column="sell_number" property="sellNumber"/>
+            <!--            暂时去掉goods的查询，因为Java类修改起来有点麻烦-->
+            <!--            <association property="goods" javaType="Goods">-->
+            <!--                <id column="goods_id" property="goodsId"/>-->
+            <!--                <result column="goods_name" property="goodsName"/>-->
+            <!--                <result column="specification" property="goodsSpecification"/>-->
+            <!--                <result property="warehouseId" column="warehouse_id"/>-->
+            <!--            </association>-->
         </collection>
     </resultMap>
 
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
-        insert into sell_order_group (group_name, sell_time, remark, order_type)
-        values (#{groupName}, #{sellTime}, #{sellOrderRemark}, #{sellOrderType});
+        insert into sell_order_group (group_name, sell_time, remark, order_type, customer_id)
+        values (#{groupName}, #{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId});
 
         set @group_id = last_insert_id();
 
@@ -35,12 +43,6 @@
         <foreach collection="list" item="sellOrders" separator=",">
             (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId}, @group_id)
         </foreach>
-    </insert>
-
-    <insert id="addSellOrderCustomerRelation" parameterType="SellOrderGroup">
-        # 插入关系
-        insert into sell_customer_relation (customer_id, sell_order_id)
-        values (#{customerId}, #{sellOrderGroupId});
     </insert>
 
     <update id="updateSellOrderGroup" parameterType="SellOrderGroup">
@@ -66,18 +68,24 @@
     </update>
 
     <select id="querySellOrderGroup" parameterType="SellOrderGroup">
-        select sog.*
-        from sell_order_group sog, sell_customer_relation sur, sell_order
+        select sog.*, so.*, c.*, g.*
+        from sell_order_group sog,
+        customer c,
+        sell_order so,
+        goods g
         <where>
-            sur.sell_order_id = so.out_id
+            so.group_id = sog.group_id
+            and c.customer_id = sog.customer_id
+            and so.goods_id = g.goods_id
+            <if test="sellOrderGroupId != null">
+                and group_id = #{sellOrderGroupId}
+            </if>
+            # 到底有没有warehouseId？
+            <if test="customerId != null">
+                and customer_id = #{customerId}
+            </if>
             <if test="sellStatus != null">
                 and order_status = #{sellStatus}
-            </if>
-            <if test="SellNumber != null">
-                and sell_number = #{SellNumber}
-            </if>
-            <if test="sellUnitPrice != null">
-                and sell_unit_price = #{sellUnitPrice}
             </if>
             <if test="sellOrderRemark != null and sellOrderRemark != ''">
                 and remark like #{sellOrderRemark}
@@ -86,11 +94,15 @@
     </select>
 
     <select id="getSellOrderGroupById" parameterType="int">
-        select sog.*
-        from sell_order_group sog, sell_customer_relation sur, sell_order so
-
-            where sog.group_id = #{groupId} and sur.sell_order_id = so.out_id
-
+        select sog.*, so.*, c.*, g.*
+        from sell_order_group sog,
+             customer c,
+             sell_order so,
+             goods g
+        where sog.group_id = #{groupId}
+          and so.group_id = sog.group_id
+          and c.customer_id = sog.customer_id
+          and so.goods_id = g.goods_id
     </select>
 
 </mapper>
