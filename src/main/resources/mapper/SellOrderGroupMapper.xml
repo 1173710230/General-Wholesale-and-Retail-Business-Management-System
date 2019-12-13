@@ -37,9 +37,37 @@
         </foreach>
     </insert>
 
+    <insert id="addSellOrderCustomerRelation" parameterType="SellOrderGroup">
+        # 插入关系
+        insert into sell_customer_relation (customer_id, sell_order_id)
+        values (#{customerId}, #{sellOrderId});
+    </insert>
+
+    <update id="updateSellOrderGroup" parameterType="SellOrderGroup">
+        update sell_order_group
+        <set>
+            <if test="sellStatus != null">
+                order_status = #{sellStatus},
+            </if>
+            <if test="sellUnitPrice != null and sellUnitPrice != ''">
+                sell_unit_price = #{sellUnitPrice},
+            </if>
+            <if test="sellTime != null and sellTime != ''">
+                sell_time = #{sellTime},
+            </if>
+            <if test="sellOrderRemark != null and sellOrderRemark != ''">
+                remark = #{sellOrderRemark},
+            </if>
+            <if test="customerId != null and customerId != ''">
+                customer_id = #{customerId},
+            </if>
+        </set>
+        where out_id = #{sellOrderId};
+    </update>
+
     <select id="querySellOrderGroup" parameterType="SellOrderGroup">
-        select *
-        from sell_order_group sog
+        select sog.*
+        from sell_order_group sog, sell_customer_relation sur, sell_order
         <where>
             sur.sell_order_id = so.out_id
             <if test="sellStatus != null">
