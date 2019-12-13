@@ -18,7 +18,7 @@ public interface GoodsMapper {
      *
      * @param newGoods 货物对象，将这个对象中不为空的属性存入数据库
      */
-    int addGoods(Goods newGoods);
+    void addGoods(Goods newGoods);
 
     /**
      * 添加货物和数量。

@@ -16,13 +16,6 @@ public interface SellOrderGroupMapper {
     void insertSellOrderGroup(SellOrderGroup group);
 
     /**
-     * 添加顾客和销售单的关系。
-     *
-     * @param group 将其中的顾客ID和销售单ID作为关系添加
-     */
-    void addSellOrderCustomerRelation(SellOrderGroup group);
-
-    /**
      * 删除一个销售单。
      *
      * @param groupId 销售单ID

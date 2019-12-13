@@ -3,25 +3,20 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="com.example.project.dao.SellOrderMapper">
 
     <resultMap id="sellOrderMap" type="SellOrder">
         <id column="out_id" property="sellOrderId"/>
-        <result column="sell_time" property="sellTime"/>
-        <result column="order_status" property="sellStatus"/>
         <result column="sell_unit_price" property="sellUnitPrice"/>
-        <result column="sell_number" property="SellNumber"/>
+        <result column="sell_number" property="sellNumber"/>
         <result column="goods_id" property="sellGoodsId"/>
-        <result column="remark" property="sellOrderRemark"/>
-        <result column="customer_id" property="customerId"/>
-        <!--        <association property="Goods" column="goods_id">-->
+        <!--        <association property="goods" javaType="Goods">-->
         <!--            -->
         <!--        </association>-->
     </resultMap>
 
     <insert id="addSellOrder" parameterType="SellOrder">
-        # 插入数据到销售单表
+        # 插入数据到销售记录表
         insert into sell_order (sell_unit_price, sell_number, goods_id)
         values (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId});
         <selectKey keyProperty="sellOrderId" order="AFTER" resultType="int">
@@ -32,24 +27,12 @@
     <update id="updateSellOrder" parameterType="SellOrder">
         update sell_order
         <set>
-            <if test="sellStatus != null">
-                order_status = #{sellStatus},
-            </if>
             <if test="sellUnitPrice != null and sellUnitPrice != ''">
                 sell_unit_price = #{sellUnitPrice},
             </if>
-            <if test="sellTime != null and sellTime != ''">
-                sell_time = #{sellTime},
+            <if test="sellNumber != null and sellNumber != 0">
+                sell_number = #{sellNumber},
             </if>
-            <if test="sellOrderRemark != null and sellOrderRemark != ''">
-                remark = #{sellOrderRemark},
-            </if>
-            <if test="SellNumber != null and SellNumber != 0">
-                sell_number = #{SellNumber},
-            </if>
-            <!--            <if test="customerName != null and customerName != ''">-->
-            <!--                remark = #{customerName},-->
-            <!--            </if>-->
         </set>
         where out_id = #{sellOrderId};
     </update>
@@ -67,20 +50,19 @@
     </select>
 
     <select id="querySellOrder" parameterType="SellOrder" resultMap="sellOrderMap">
-        select so.*, sur.customer_id from sell_order so, sell_customer_relation sur
+        select so.* from sell_order so
         <where>
-            sur.sell_order_id = so.out_id
-            <if test="sellStatus != null">
-                and order_status = #{sellStatus}
-            </if>
-            <if test="SellNumber != null">
-                and sell_number = #{SellNumber}
+            <if test="sellNumber != null">
+                sell_number = #{sellNumber}
             </if>
             <if test="sellUnitPrice != null">
                 and sell_unit_price = #{sellUnitPrice}
             </if>
             <if test="sellOrderRemark != null and sellOrderRemark != ''">
                 and remark like #{sellOrderRemark}
+            </if>
+            <if test="sellGoodsId != null">
+                and goods_id = #{sellGoodsId}
             </if>
         </where>
     </select>
