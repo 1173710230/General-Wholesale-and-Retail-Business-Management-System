@@ -208,5 +208,15 @@ public class SellOrderServiceImpl implements SellOrderService {
         }
     }
 
+    @Override
+    public Double getSellOrderGroupProfit(int sellOrderGroupId) {
+        SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+        return order.getProfit();
+    }
 
+    @Override
+    public Double getSellOrderGroupTotalPrice(int sellOrderGroupId) {
+        SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+        return order.getSalary();
+    }
 }

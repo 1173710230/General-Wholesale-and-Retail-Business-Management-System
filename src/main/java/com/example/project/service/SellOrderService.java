@@ -73,4 +73,15 @@ public interface SellOrderService {
      */
     List<SellOrderGroup>  getUnRefundOrder();
 
+    /**
+     * 获取销售单总价
+     *
+     */
+    Double getSellOrderGroupTotalPrice(int sellOrderGroupId);
+
+    /**
+     * 获取销售单利润
+     *
+     */
+    Double getSellOrderGroupProfit(int sellOrderGroupId);
 }

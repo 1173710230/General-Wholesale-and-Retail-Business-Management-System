@@ -25,6 +25,7 @@ public class SellOrderGroup {
 
     private Integer warehouseId;
 
+    private Double profit;
 
     //ToDo constructor
     public SellOrderGroup() {
@@ -100,6 +101,14 @@ public class SellOrderGroup {
 
     public void setWarehouseId(Integer warehouseId) {
         this.warehouseId = warehouseId;
+    }
+
+    public Double getProfit() {
+        return profit;
+    }
+
+    public void setProfit(Double profit) {
+        this.profit = profit;
     }
 
     /*---------------添加删除销售记录的方法----------------*/
