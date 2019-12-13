@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.domain.SellOrder;
+import com.example.project.domain.SellOrderGroup;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -11,17 +12,18 @@ public interface SellOrderService {
 
 
     /**
-     * 添加一个销售单
+     * 添加一个销售单对象
+     *
      *
      */
-    boolean addSellOrder(Date date, int goodsId, double sellUnitPrice, Double sellNumber, int customerId, String remark);
+    boolean addSellOrder(SellOrderGroup newSellOrderGroup);
 
 
     /**
      * 更新销售单，变化内容存到参数中
      *
      */
-    boolean modifySellOrder(SellOrder sellOrder);
+    boolean modifySellOrder(SellOrderGroup sellOrderGroup);
 
 
     /**
@@ -35,14 +37,14 @@ public interface SellOrderService {
      * 获取未确认的销售单
      *
      */
-    List<SellOrder> getUncheckedSellOrder();
+    List<SellOrderGroup>  getUncheckedSellOrder();
 
 
     /**
      * 审核销售单
      *
      */
-    boolean checkOrder(int sellOrderId, boolean opinion);
+    boolean checkOrder(int sellOrderGroupId, boolean opinion, int warehouseId);
 
 
     /**
@@ -63,12 +65,12 @@ public interface SellOrderService {
      * 获取未付款（审核成功）的订单
      *
      */
-    List<SellOrder> getUnpaidOrder();
+    List<SellOrderGroup>  getUnpaidOrder();
 
     /**
      * 获取已付款未退款的订单
      *
      */
-     List<SellOrder> getUnRefundOrder();
+    List<SellOrderGroup>  getUnRefundOrder();
 
 }

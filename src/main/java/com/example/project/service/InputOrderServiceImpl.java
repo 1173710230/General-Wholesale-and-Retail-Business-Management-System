@@ -31,7 +31,7 @@ public class InputOrderServiceImpl implements InputOrderService{
         this.goodsMapper = goodsMapper;
     }
     @Override
-    public boolean addNewInputOrder(double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark) {
+    public boolean addNewInputOrder(double goodsNumber, double inputUnitPrice, int goodsId, Date time, String remark,int warehouseId) {
         InputOrder inputOrder = new InputOrder();
         inputOrder.setInputGoodsNumber(goodsNumber);
         inputOrder.setInputGoodsId(goodsId);
@@ -50,7 +50,7 @@ public class InputOrderServiceImpl implements InputOrderService{
         if(gdx == null || gdx.size() == 0){
             return false;
         }
-        goodsMapper.addNumber(goodsId, goodsNumber);
+        goodsMapper.addNumber(goodsId, goodsNumber,warehouseId);
         return true;
     }
 }
