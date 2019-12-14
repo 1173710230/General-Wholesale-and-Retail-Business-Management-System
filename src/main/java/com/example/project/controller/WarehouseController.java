@@ -139,7 +139,7 @@ public class WarehouseController {
    * @param newName  新名字
    * @return  修改成功返回true，否则返回false
    */
-  @RequestMapping(value = "/updateEWarehouse")
+  @RequestMapping(value = "/updateWarehouse")
   @ResponseBody
   public boolean updateWarehouse(int warehouseId, String newName){
     return warehouseService.updateWarehouse(warehouseId, newName);

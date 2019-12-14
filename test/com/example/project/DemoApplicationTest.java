@@ -85,4 +85,15 @@ public class DemoApplicationTest {
         System.out.println(group);
     }
 
+    @Test
+    public void testUser(){
+        userService.register("滑稽1","43961",0);
+        userService.register("滑稽2","43962",1);
+        System.out.println(userService.register("滑稽2","43963",2));
+    }
+    @Test
+    public void testWarehouseQuery() {
+        log.info(warehouseService.queryGoodsByName("苹果"));
+    }
+
 }
