@@ -2,10 +2,10 @@ package com.example.project;
 
 
 import com.example.project.dao.SellOrderGroupMapper;
+import com.example.project.dao.SellOrderMapper;
 import com.example.project.domain.Customer;
 import com.example.project.domain.SellOrderGroup;
 import com.example.project.service.*;
-import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -34,12 +34,8 @@ public class DemoApplicationTest {
     private WarehouseService warehouseService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private SellOrderGroupMapper sellOrderGroupMapper;
 
-    private Logger log = Logger.getLogger(DemoApplicationTest.class);
 
     @Test
     public void testCustomers() {
@@ -57,7 +53,7 @@ public class DemoApplicationTest {
     public void testInputOrder() {
         Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
-//        inputOrderService.addNewInputOrder(100, 1.2, 1, date, "just Test");
+        inputOrderService.addNewInputOrder(100, 1.2, 1, date, "just Test");
     }
 
     @Test
@@ -73,13 +69,13 @@ public class DemoApplicationTest {
         System.out.println("2:" + parse);
 
 
-//        sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
+        sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
 
     }
 
     @Test
-    public void testQuerySellOrderGrouo() {
-        log.info(sellOrderGroupMapper.getSellOrderGroupById(1));
+    public void testGoods() {
+
 
     }
 
@@ -89,10 +85,4 @@ public class DemoApplicationTest {
         System.out.println(group);
     }
 
-    @Test
-    public void testUser(){
-        userService.register("滑稽1","43961",0);
-        userService.register("滑稽2","43962",1);
-        System.out.println(userService.register("滑稽2","43963",2));
-    }
 }
