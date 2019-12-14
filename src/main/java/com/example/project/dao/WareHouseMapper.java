@@ -17,7 +17,14 @@ public interface WareHouseMapper {
      */
     List<Warehouse> getAllWareHouse();
 
-    void insert(Warehouse wareHouse);
+    void insert(String warehouseName);
+
+    /**
+     * 由id删除某个仓库
+     * @param warehouseId  待删除仓库的id
+     */
+    void deleteById(Integer warehouseId);
+
 
     void addGoodsToWarehouse(Goods goods);
 
@@ -28,6 +35,13 @@ public interface WareHouseMapper {
      * @return 满足条件的仓库列表
      */
     List<Warehouse> queryWarehouse(Warehouse warehouse);
+
+    /**
+     * 查询一个仓库的所有货物
+     * @param warehouseId  要查询的仓库的id
+     * @return 该仓库的所有货物
+     */
+    List<Goods> queryAllGoodsInWarehouse(Integer warehouseId);
 
     /**
      * 根据id更新仓库名字。
