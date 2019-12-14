@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>货物列表</title>
+    <meta name="description" content="Admin, Dashboard, Bootstrap, Bootstrap 4, Angular, AngularJS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- for ios 7 style, multi-resolution icon of 152x152 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-barstyle" content="black-translucent">
+    <link rel="apple-touch-icon" href="assets/images/logo.png">
+    <meta name="apple-mobile-web-app-title" content="Flatkit">
+    <!-- for Chrome on Android, multi-resolution icon of 196x196 -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="shortcut icon" sizes="196x196" href="assets/images/logo.png">
+
+    <!-- style -->
+    <link rel="stylesheet" href="assets/animate.css/animate.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/glyphicons/glyphicons.css" type="text/css" />
+    <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="assets/material-design-icons/material-design-icons.css" type="text/css" />
+
+    <link rel="stylesheet" href="assets/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+    <!-- build:css assets/styles/app.min.css -->
+    <link rel="stylesheet" href="assets/styles/app.css" type="text/css" />
+    <!-- endbuild -->
+    <link rel="stylesheet" href="assets/styles/font.css" type="text/css" />
+
+    <!--    修改订单-->
+    <script>
+        function changeOrder(id){
+            $("#changeOrder").remove();
+            let insertHTML = `<div class="panel panel-default" id="changeOrder">
+                    <div class="panel-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="goodsId">商品ID</label>
+                                <input type="text" class="form-control" id="goodsId" placeholder="${$('#goodsId' + id).html()}">
+                            </div>
+                            <div class="form-group">
+                                <label for="price">商品ID</label>
+                                <input type="text" class="form-control" id="price" placeholder="${$('#price' + id).html()}">
+                            </div>
+                            <div class="form-group">
+                                <label for="number">数量</label>
+                                <input type="text" class="form-control" id="number" placeholder="${$('#number' + id).html()}">
+                            </div>
+                            <div class="form-group">
+                                <label for="customerId">客户ID</label>
+                                <input type="text" class="form-control" id="customerId" placeholder="${$('#customerId' + id).html()}">
+                            </div>
+                            <div class="form-group">
+                                <label for="remark">备注</label>
+                                <input type="text" class="form-control" id="remark" placeholder="${$('#remark' + id).html()}">
+                            </div>
+                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
+                        </form>
+                    </div>
+                </div>`;
+            $("#changeArea1").append(insertHTML);
+        }
+    </script>
+    <!--    提交更改-->
+    <script>
+        function changeOver(id) {
+            var goodsId = $("#goodsId").val();
+            var price = $("#price").val();
+            var number = $("#number").val();
+            var customerId = $("#customerId").val();
+            var remark = $("#remark").val();
+            if (goodsId.length === 0) {
+                goodsId = $('#goodsId' + id).html();
+            }
+            if (price.length === 0) {
+                price = $('#price' + id).html();
+            }
+            if (number.length === 0) {
+                number = $('#number' + id).html();
+            }
+            if (customerId.length === 0) {
+                customerId = $('#customerId' + id).html();
+            }
+            if (remark.length === 0) {
+                remark = $('#remark' + id).html();
+            }
+
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/update",
+                dataType: "json",
+                data: {goodsNumber: number, sellUnitPrice: price, remark: remark, goodsId: goodsId, customerId: customerId},
+                success: function (bool) {
+                    if (bool) {
+                        alert("修改成功！");
+
+                    } else {
+                        alert("修改失败，出现错误！");
+                    }
+                    location.reload();
+                },
+                error: function () {
+                    alert("修改失败！");
+                }
+            })
+        }
+    </script>
+    <!--    取得未付款的订单-->
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/sellOrder/getUnreceiptedOrder",
+            dataType:"json",
+            success: function (list) {
+                for(var i = 0; i < list.length; i++){
+                    var id = list[i].sellOrderId;
+                    var goodsId = list[i].sellGoodsId;
+                    var price = list[i].sellUnitPrice;
+                    var number = list[i].sellNumber;
+                    var customerId = list[i].customerId;
+                    var remark = list[i].sellOrderRemark;
+                    var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td><td>
+<table>
+
+<td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
+<td><button class="btn btn-xs btn-primary" onclick="pay(${id})">付款</button></td>
+</table>
+</td></tr>
+`;
+                    $("#unpaid").append(insert);
+                }
+            },
+            error: function () {
+                alert("获取失败！");
+            }
+        })
+    </script>
+    <!--   删除订单-->
+    <script>
+        function deleteOrder(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/delete",
+                dataType: "json",
+                data: {id: id},
+                success: function (list) {
+                    alert("删除成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("删除失败！");
+                }
+            })
+        }
+    </script>
+    <!--    审核-->
+    <script>
+        function examine(id, boolean) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/checkOrder",
+                dataType: "json",
+                data: {sellOrderId: id, opinion: boolean},
+                success: function () {
+                    alert("操作成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("审核失败！");
+                }
+            })
+        }
+    </script>
+    <!--    付款-->
+    <script>
+        function pay(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/receipt",
+                dataType: "json",
+                data: {sellOrderId: id},
+                success: function () {
+                    alert("付款成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("付款失败！");
+                }
+            })
+        }
+    </script>
+    <!--    退款-->
+    <script>
+        function refund(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/refund",
+                dataType: "json",
+                data: {sellOrderId: id},
+                success: function () {
+                    alert("退款成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("退款失败！");
+                }
+            })
+        }
+    </script>
+</head>
+<body>
+<div class="app" id="app">
+
+    <!-- ############ LAYOUT START-->
+
+    <!-- aside -->
+    <div id="aside" class="app-aside modal fade lg nav-dropdown">
+        <div class="left navside grey dk" layout="column">
+            <div class="navbar no-radius">
+                <!-- brand -->
+                <a class="navbar-brand">
+                    <div ui-include="'assets/images/logo.svg'"></div>
+                    <span class="hidden-folded inline">智能管理系统</span>
+                </a>
+                <!-- / brand -->
+            </div>
+            <div flex class="hide-scroll">
+                <nav class="scroll nav-border b-primary">
+
+                    <ul class="nav" ui-nav>
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">货品资料维护</small>
+                        </li>
+
+                        <li>
+                            <a href="newGoodsList.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe5c3;
+                      <span ui-include="'assets/images/i_1.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">货品列表</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newAddGoods.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe5c3;
+                      <span ui-include="'assets/images/i_1.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">添加货品</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newQueryGoods.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe5c3;
+                      <span ui-include="'assets/images/i_1.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">查询货品</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">客户资料维护</small>
+                        </li>
+                        <li>
+                            <a href="newCustomerList.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe3e8;
+                      <span ui-include="'assets/images/i_5.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">客户列表</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newAddCustomer.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe3e8;
+                      <span ui-include="'assets/images/i_5.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">添加客户</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newQueryCustomer.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe3e8;
+                      <span ui-include="'assets/images/i_5.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">查询客户</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">销售业务管理</small>
+                        </li>
+                        <li>
+                            <a href="newCreateSellOrder.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe39e;
+                      <span ui-include="'assets/images/i_6.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">开销售单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newUnexaminedList.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe39e;
+                      <span ui-include="'assets/images/i_6.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">未审核订单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newUnpaidList.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe39e;
+                      <span ui-include="'assets/images/i_6.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">已审核未付款订单</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newPaidList.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe39e;
+                      <span ui-include="'assets/images/i_6.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">已付款订单</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">库存管理</small>
+                        </li>
+                        <li>
+                            <a href="newJinHuo.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe429;
+                      <span ui-include="'assets/images/i_4.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">进货</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newStockCheck.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe429;
+                      <span ui-include="'assets/images/i_4.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">库存盘点</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="newStockQuery.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe429;
+                      <span ui-include="'assets/images/i_4.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">库存统计查询</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div flex-no-shrink>
+                <div ui-include="'../views/blocks/aside.bottom.0.html'"></div>
+            </div>
+        </div>
+    </div>
+    <!-- / aside -->
+
+    <!-- content -->
+    <div id="content" class="app-content box-shadow-z2 box-radius-1x" role="main">
+        <div class="app-header white box-shadow">
+            <div class="navbar">
+                <!-- Open side - Naviation on mobile -->
+                <a data-toggle="modal" data-target="#aside" class="navbar-item pull-left hidden-lg-up">
+                    <i class="material-icons">&#xe5d2;</i>
+                </a>
+                <!-- / -->
+
+                <!-- Page title - Bind to $state's title -->
+                <div class="navbar-item pull-left h5" ng-bind="$state.current.data.title" id="pageTitle"></div>
+
+                <!-- 右上角的头像 -->
+                <ul class="nav navbar-nav pull-right">
+                    <li class="nav-item dropdown pos-stc-xs">
+                        <a class="nav-link" href data-toggle="dropdown">
+                            <i class="material-icons">&#xe7f5;</i>
+                            <span class="label label-sm up warn">3</span>
+                        </a>
+                        <div ui-include="'../views/blocks/dropdown.notification.html'"></div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link clear" href data-toggle="dropdown">
+                 <span class="avatar w-32">
+                   <img src="assets/images/a0.jpg" alt="...">
+                   <i class="on b-white bottom"></i>
+                 </span>
+                        </a>
+                        <div ui-include="'../views/blocks/dropdown.user.html'"></div>
+                    </li>
+                    <li class="nav-item hidden-md-up">
+                        <a class="nav-link" data-toggle="collapse" data-target="#collapse">
+                            <i class="material-icons">&#xe5d4;</i>
+                        </a>
+                    </li>
+                </ul>
+                <!-- / navbar right -->
+
+            </div>
+        </div>
+        <!--    内容底部 版权-->
+        <div class="app-footer">
+            <div class="p-a text-xs">
+                <div class="pull-right text-muted">
+                    &copy; Copyright <strong>A09-408+wjf</strong> <span class="hidden-xs-down">- Built with Love v2.0</span>
+                    <a ui-scroll-to="content"><i class="fa fa-long-arrow-up p-x-sm"></i></a>
+                </div>
+
+            </div>
+        </div>
+        <div ui-view class="app-body" id="view">
+
+            <!-- ############ PAGE START-->
+            <div class="row-col b-b">
+                <div class="col-md-6">
+                    <div class="padding">
+                        <div class="margin">
+                            <h5 class="m-b-0 _300">欢迎回来！</h5>
+                        </div>
+                        <div class="box-header">
+                            <h2>未付款订单</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped b-t b-b">
+                                <thead>
+                                <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
+                                </thead>
+                                <tbody id="unpaid">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" id="changeArea1"></div>
+            </div>
+
+            <div class="modal fade inactive" id="chat" data-backdrop="false">
+                <div class="right w-xxl grey lt b-l">
+                    <div ui-include="'../views/blocks/modal.chat.html'"></div>
+                </div>
+            </div>
+
+            <!-- ############ PAGE END-->
+
+        </div>
+    </div>
+    <!-- / content -->
+
+    <!-- / -->
+
+    <!-- ############ LAYOUT END-->
+
+</div>
+<!-- build:js scripts/app.html.js -->
+<!-- jQuery -->
+<script src="libs/jquery/jquery/dist/jquery.js"></script>
+<!-- Bootstrap -->
+<script src="libs/jquery/tether/dist/js/tether.min.js"></script>
+<script src="libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+<!-- core -->
+<script src="libs/jquery/underscore/underscore-min.js"></script>
+<script src="libs/jquery/jQuery-Storage-API/jquery.storageapi.min.js"></script>
+<script src="libs/jquery/PACE/pace.min.js"></script>
+
+<script src="scripts/config.lazyload.js"></script>
+
+<script src="scripts/palette.js"></script>
+<script src="scripts/ui-load.js"></script>
+<script src="scripts/ui-jp.js"></script>
+<script src="scripts/ui-include.js"></script>
+<script src="scripts/ui-device.js"></script>
+<script src="scripts/ui-form.js"></script>
+<script src="scripts/ui-nav.js"></script>
+<script src="scripts/ui-screenfull.js"></script>
+<script src="scripts/ui-scroll-to.js"></script>
+<script src="scripts/ui-toggle-class.js"></script>
+
+<script src="scripts/app.js"></script>
+
+<!-- ajax -->
+<script src="libs/jquery/jquery-pjax/jquery.pjax.js"></script>
+<script src="scripts/ajax.js"></script>
+<!-- endbuild -->
+</body>
+</html>
