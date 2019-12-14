@@ -74,8 +74,8 @@ public class DemoApplicationTest {
     }
 
     @Test
-    public void testGoods() {
-
+    public void testQuerySellOrderGrouo() {
+        System.out.println(sellOrderGroupMapper.getSellOrderGroupById(1));
 
     }
 
