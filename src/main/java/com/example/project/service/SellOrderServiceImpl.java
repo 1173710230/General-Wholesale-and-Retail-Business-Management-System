@@ -76,14 +76,14 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public List<SellOrderGroup> getAllWholeSaleOrder(SellOrderGroup sellOrderGroup) {
+    public List<SellOrderGroup> getAllWholeSaleOrder() {
         SellOrderGroup uncheckedOrder = new SellOrderGroup();
         uncheckedOrder.setSellOrderType(0);
         return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);
     }
 
     @Override
-    public List<SellOrderGroup> getAllRetailOrder(SellOrderGroup sellOrderGroup) {
+    public List<SellOrderGroup> getAllRetailOrder() {
         SellOrderGroup uncheckedOrder = new SellOrderGroup();
         uncheckedOrder.setSellOrderType(1);
         return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);

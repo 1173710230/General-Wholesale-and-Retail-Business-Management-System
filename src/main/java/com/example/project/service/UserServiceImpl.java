@@ -32,6 +32,7 @@ public class UserServiceImpl implements UserService{
             this.userMapper.insertUser(user);
             return true;
         } catch(DataAccessException ex){
+            ex.printStackTrace();
            return false;
         }
 

@@ -1,6 +1,7 @@
 package com.example.project.controller;
 
 import com.example.project.domain.Goods;
+import com.example.project.domain.Warehouse;
 import com.example.project.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,4 +112,47 @@ public class WarehouseController {
     return warehouseService.warehouseTransfer(goodsId, oldWarehouseId, newWarehouseId, goodsNumber);
   }
 
+  /**
+   * 获取所有仓库
+   * @return 所有仓库的List
+   */
+  @RequestMapping(value = "/getAllWarehouse")
+  @ResponseBody
+  public List<Warehouse> getAllWarehouse(){
+    return warehouseService.getAllWarehouses();
+  }
+
+  /**
+   * 新建一个仓库
+   * @param warehouseName 仓库的名称
+   * @return 新建成功返回true，失败返回false
+   */
+  @RequestMapping(value = "/addWarehouse")
+  @ResponseBody
+  public boolean addWarehouse(String warehouseName){
+    return warehouseService.addWarehouse(warehouseName);
+  }
+
+  /**
+   * 修改仓库名
+   * @param warehouseId  仓库id
+   * @param newName  新名字
+   * @return  修改成功返回true，否则返回false
+   */
+  @RequestMapping(value = "/updateEWarehouse")
+  @ResponseBody
+  public boolean updateWarehouse(int warehouseId, String newName){
+    return warehouseService.updateWarehouse(warehouseId, newName);
+  }
+
+  /**
+   * 删除一个仓库
+   * @param warehouseId  待删除的仓库的id
+   * @return  删除成功返回true，否则返回false
+   */
+  @RequestMapping(value = "/deleteWarehouse")
+  @ResponseBody
+  public boolean deleteWarehouse(int warehouseId){
+    return  warehouseService.deleteWarehouse(warehouseId);
+  }
 }

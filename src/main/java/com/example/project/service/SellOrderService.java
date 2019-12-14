@@ -88,10 +88,10 @@ public interface SellOrderService {
     /**
      * 获取全部批发单
      */
-    List<SellOrderGroup> getAllWholeSaleOrder(SellOrderGroup sellOrderGroup);
+    List<SellOrderGroup> getAllWholeSaleOrder();
 
     /**
      * 获取全部零售单
      */
-    List<SellOrderGroup> getAllRetailOrder(SellOrderGroup sellOrderGroup);
+    List<SellOrderGroup> getAllRetailOrder();
 }
