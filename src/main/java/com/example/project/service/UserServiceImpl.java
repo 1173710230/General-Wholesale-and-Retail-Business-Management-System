@@ -53,6 +53,6 @@ public class UserServiceImpl implements UserService{
     public User getUserById(int userId){
         User user = new User();
         user.setUserId(userId);
-        return userMapper.queryUser(user);
+        return userMapper.queryUser(user).get(0);
     }
 }
