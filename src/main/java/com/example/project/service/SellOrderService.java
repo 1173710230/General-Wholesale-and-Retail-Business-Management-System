@@ -84,4 +84,14 @@ public interface SellOrderService {
      *
      */
     Double getSellOrderGroupProfit(int sellOrderGroupId);
+
+    /**
+     * 获取全部批发单
+     */
+    List<SellOrderGroup> getAllWholeSaleOrder(SellOrderGroup sellOrderGroup);
+
+    /**
+     * 获取全部零售单
+     */
+    List<SellOrderGroup> getAllRetailOrder(SellOrderGroup sellOrderGroup);
 }

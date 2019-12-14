@@ -76,6 +76,21 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
+    public List<SellOrderGroup> getAllWholeSaleOrder(SellOrderGroup sellOrderGroup) {
+        SellOrderGroup uncheckedOrder = new SellOrderGroup();
+        uncheckedOrder.setSellOrderType(0);
+        return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);
+    }
+
+    @Override
+    public List<SellOrderGroup> getAllRetailOrder(SellOrderGroup sellOrderGroup) {
+        SellOrderGroup uncheckedOrder = new SellOrderGroup();
+        uncheckedOrder.setSellOrderType(1);
+        return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);
+    }
+
+
+    @Override
     public boolean deleteSellOrder(int sellOrderGroupId) {
         try {
             // 删除此id的订货单
