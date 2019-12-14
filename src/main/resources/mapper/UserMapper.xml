@@ -23,7 +23,7 @@
         WHERE user.user_id = #{userId}
     </select>
 
-    <select id="queryUser" parameterType="User" resultMap="User">
+    <select id="queryUser" parameterType="User" resultMap="userMap">
         select *
         from user
         <where>

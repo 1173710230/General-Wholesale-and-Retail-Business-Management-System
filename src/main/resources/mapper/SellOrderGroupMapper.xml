@@ -6,19 +6,23 @@
 <mapper namespace="com.example.project.dao.SellOrderGroupMapper">
     <resultMap id="sellOrderGroupMap" type="SellOrderGroup">
         <id column="group_id" property="sellOrderGroupId"/>
-        <result column="group_name" property="groupName"/>
+<!--        <result column="group_name" property="groupName"/>-->
         <result column="sell_time" property="sellTime"/>
         <result column="order_status" property="sellStatus"/>
         <result column="remark" property="sellOrderRemark"/>
         <result column="customer_id" property="customerId"/>
+        <result column="order_type" property="sellOrderType"/>
+        <result column="warehouse_id" property="warehouseId"/>
+
         <!--总价还有利润-->
         <result column="profit" property="profit"/>
         <result column="sum_money" property="salary"/>
 
         <collection property="sellOrders" ofType="SellOrder">
-            <id column="order_id" property="sellOrderId"/>
+            <id column="out_id" property="sellOrderId"/>
             <result column="sell_unit_price" property="sellUnitPrice"/>
             <result column="sell_number" property="sellNumber"/>
+            <result column="goods_id" property="sellGoodsId"/>
             <!--            暂时去掉goods的查询，因为Java类修改起来有点麻烦-->
             <!--            <association property="goods" javaType="Goods">-->
             <!--                <id column="goods_id" property="goodsId"/>-->
@@ -72,11 +76,13 @@
         from sell_order_group sog,
         customer c,
         sell_order so,
-        goods g
+        goods g,
+             warehouse w
         <where>
             so.group_id = sog.group_id
             and c.customer_id = sog.customer_id
             and so.goods_id = g.goods_id
+            and w.wh_id = sog.warehouse_id
             <if test="sellOrderGroupId != null">
                 and group_id = #{sellOrderGroupId}
             </if>

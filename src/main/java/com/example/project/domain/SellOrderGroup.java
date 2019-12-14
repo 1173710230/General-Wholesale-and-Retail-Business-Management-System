@@ -140,4 +140,19 @@ public class SellOrderGroup {
         return temp;
     }
 
+    @Override
+    public String toString() {
+        return "SellOrderGroup{" +
+                "sellOrderGroupId=" + sellOrderGroupId +
+                ", sellTime='" + sellTime + '\'' +
+                ", sellOrderRemark='" + sellOrderRemark + '\'' +
+                ", sellOrderType=" + sellOrderType +
+                ", sellStatus=" + sellStatus +
+                ", sellOrders=" + sellOrders +
+                ", customerId=" + customerId +
+                ", salary=" + salary +
+                ", warehouseId=" + warehouseId +
+                ", profit=" + profit +
+                '}';
+    }
 }

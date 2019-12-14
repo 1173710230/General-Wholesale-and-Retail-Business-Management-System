@@ -2,10 +2,10 @@ package com.example.project;
 
 
 import com.example.project.dao.SellOrderGroupMapper;
-import com.example.project.dao.SellOrderMapper;
 import com.example.project.domain.Customer;
 import com.example.project.domain.SellOrderGroup;
 import com.example.project.service.*;
+import org.apache.log4j.Logger;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,6 +36,7 @@ public class DemoApplicationTest {
     @Autowired
     private SellOrderGroupMapper sellOrderGroupMapper;
 
+    private Logger log = Logger.getLogger(DemoApplicationTest.class);
 
     @Test
     public void testCustomers() {
@@ -75,7 +76,7 @@ public class DemoApplicationTest {
 
     @Test
     public void testQuerySellOrderGrouo() {
-        System.out.println(sellOrderGroupMapper.getSellOrderGroupById(1));
+        log.info(sellOrderGroupMapper.getSellOrderGroupById(1));
 
     }
 
