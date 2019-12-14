@@ -142,7 +142,7 @@ public class SellOrderController {
  /**
   * 对销售单进行退款
   * @param sellOrderId 需要退款的销售单
-  * @return 退款是否成功
+  * @return
   */
  @RequestMapping("/refund")
  @ResponseBody
