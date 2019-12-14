@@ -41,8 +41,7 @@ public class userController {
   @RequestMapping(value = "/register")
   @ResponseBody
   public boolean registerNewUser(String userName, String password, int status){
-    userService.register(0, userName, password, status);
-    return false; // 修改返回值
+    return userService.register(userName, password, status);
   }
 
   /**
@@ -56,8 +55,7 @@ public class userController {
   @RequestMapping(value = "/modify")
   @ResponseBody
   public boolean modifyUser(int userId, String userName, String password, int status){
-    userService.updateUserMessage(new User(userId, userName, password, status));
-    return false;  //要修改返回值
+    return userService.updateUserMessage(new User(userId, userName, password, status));
   }
 
 }
