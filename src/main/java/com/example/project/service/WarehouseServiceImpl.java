@@ -143,7 +143,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     @Override
     public boolean addWarehouse(String warehouseName) {
         try{
-            //wareHouseMapper.insert(warehouseName);
+            wareHouseMapper.insert(warehouseName);
             return true;
         } catch(DataAccessException ex){
             return false;
@@ -163,7 +163,11 @@ public class WarehouseServiceImpl implements WarehouseService{
     @Override
     public boolean deleteWarehouse(Integer warehouseId) {
         try{
-            return true;
+            if (this.wareHouseMapper.queryAllGoodsInWarehouse(warehouseId).size() == 0){
+                this.wareHouseMapper.deleteById(warehouseId);
+                return true;
+            } else
+                return false;
         } catch (DataAccessException ex){
             return false;
         }
