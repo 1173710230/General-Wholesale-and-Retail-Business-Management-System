@@ -21,36 +21,36 @@ import java.util.List;
 @RequestMapping("/sellOrder")
 public class SellOrderController {
 
- private final SellOrderService sellOrderService;
+  private final SellOrderService sellOrderService;
 
   @Autowired
   public SellOrderController(SellOrderService sellOrderService) {
     this.sellOrderService = sellOrderService;
   }
 
- /**
-  * 将构造一个新销售单传递给后台
-  *
-  * @param warehouseId 销售单的仓库id
-  * @param sellOrderType 销售单的类型 //0批发，1零售
-  * @param sellOrderRemark 销售单的备注
-  * @param customerId 顾客id
-  * @param goodsId 商品的id数组（有顺序）
-  * @param sellUnitPrice 商品的单价数组（有顺序）
-  * @param goodsNumber 商品的数量数组（有顺序）
-  * @return 销售单添加成功返回true，反之返回false
-  */
- @RequestMapping(value = "/add", method = RequestMethod.GET)
- @ResponseBody
+  /**
+   * 将构造一个新销售单传递给后台
+   *
+   * @param warehouseId 销售单的仓库id
+   * @param sellOrderType 销售单的类型 //0批发，1零售
+   * @param sellOrderRemark 销售单的备注
+   * @param customerId 顾客id
+   * @param goodsId 商品的id数组（有顺序）
+   * @param sellUnitPrice 商品的单价数组（有顺序）
+   * @param goodsNumber 商品的数量数组（有顺序）
+   * @return 销售单添加成功返回true，反之返回false
+   */
+  @RequestMapping(value = "/add", method = RequestMethod.GET)
+  @ResponseBody
   public boolean addSellOrderGroup(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
                                    int[] goodsId, double[] sellUnitPrice, double[] goodsNumber){
-   List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
-   for(int i = 0; i< goodsId.length; i++){
-     allSellOrderInGroup.add(new SellOrder(-1, goodsNumber[i], sellUnitPrice[i], goodsId[i]));
-   }
-   //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
-   return sellOrderService.addSellOrder(new SellOrderGroup(-1, new Date(System.currentTimeMillis()).toLocaleString(),
-       sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
+    List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
+    for(int i = 0; i< goodsId.length; i++){
+      allSellOrderInGroup.add(new SellOrder(-1, goodsNumber[i], sellUnitPrice[i], goodsId[i]));
+    }
+    //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
+    return sellOrderService.addSellOrder(new SellOrderGroup(-1, new Date(System.currentTimeMillis()).toLocaleString(),
+        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
   }
 
   /**
@@ -142,7 +142,7 @@ public class SellOrderController {
   /**
    * 对销售单进行退款
    * @param sellOrderId 需要退款的销售单
-   * @return 退款是否成功
+   * @return
    */
   @RequestMapping("/refund")
   @ResponseBody

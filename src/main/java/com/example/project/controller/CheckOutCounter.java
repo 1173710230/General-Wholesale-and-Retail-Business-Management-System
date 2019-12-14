@@ -31,7 +31,7 @@ public class CheckOutCounter {
    */
   @RequestMapping(value = "/getAllRetailOrder")
   @ResponseBody
-  public List<SellOrder> getAllRetailOrder(){
-    return null;  //等会改
+  public List<SellOrderGroup> getAllRetailOrder(){
+    return sellOrderService.getAllRetailOrder();
   }
 }

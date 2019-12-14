@@ -119,7 +119,7 @@ public class WarehouseController {
   @RequestMapping(value = "/getAllWarehouse")
   @ResponseBody
   public List<Warehouse> getAllWarehouse(){
-    return new ArrayList<>();
+    return warehouseService.getAllWarehouses();
   }
 
   /**
