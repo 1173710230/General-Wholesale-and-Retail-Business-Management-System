@@ -71,6 +71,9 @@ public class SellOrderServiceImpl implements SellOrderService {
         try {
             // 删除此id的订货单
             SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+            //判断销售单的类型
+            if(sellOrderGroup.getSellOrderType() == 1)
+                return false;
             if(sellOrderGroup.getSellStatus() == 2 || sellOrderGroup .getSellStatus() == 4)
             {
                 List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
@@ -93,6 +96,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public List<SellOrderGroup> getUncheckedSellOrder() {
         // 获取未审核的订单
+        // 灵兽丹只有一个状态0
         SellOrderGroup uncheckedOrder = new SellOrderGroup();
         uncheckedOrder.setSellStatus(1);
         return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);
@@ -103,6 +107,11 @@ public class SellOrderServiceImpl implements SellOrderService {
         // SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
+
+        //判断销售单的类型
+        if(sellOrderGroup.getSellOrderType() == 1)
+            return false;
+
         // 如果opinion是false，不管库存够不够，都是审核不通过的
         if (!opinion) {
             return changeStatus(sellOrderGroupId, 3);    // 这里审核不通过
@@ -158,6 +167,14 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public boolean paySellOrder(int sellOrderGroupId) {
+
+        SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+        assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
+
+        //判断销售单的类型
+        if(sellOrderGroup.getSellOrderType() == 1)
+            return false;
+
         return changeStatus(sellOrderGroupId, 4);
     }
 
@@ -166,6 +183,11 @@ public class SellOrderServiceImpl implements SellOrderService {
 
         try {
             SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+
+            //判断销售单的类型
+            if(order.getSellOrderType() == 1)
+                return false;
+
             List<SellOrder> sellOrderList = order.getSellOrders();
             for (SellOrder sellOrder : sellOrderList) {
                 goodsMapper.addNumber(sellOrder.getSellGoodsId(), sellOrder.getSellNumber(), order.getWarehouseId());
@@ -180,6 +202,10 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public List<SellOrderGroup>  getUnpaidOrder() {
         SellOrderGroup order = new SellOrderGroup();
+        //判断销售单的类型
+        if(order.getSellOrderType() == 1)
+            return null;
+
         order.setSellStatus(2);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
@@ -187,6 +213,9 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public List<SellOrderGroup> getUnRefundOrder() {
         SellOrderGroup order = new SellOrderGroup();
+        //判断销售单的类型
+        if(order.getSellOrderType() == 1)
+            return null;
         order.setSellStatus(4);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
@@ -215,12 +244,18 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public Double getSellOrderGroupProfit(int sellOrderGroupId) {
         SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+        //判断销售单的类型
+        if(order.getSellOrderType() == 0)
+            return 0.0;
         return order.getProfit();
     }
 
     @Override
     public Double getSellOrderGroupTotalPrice(int sellOrderGroupId) {
         SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
+        //判断销售单的类型
+        if(order.getSellOrderType() == 0)
+            return 0.0;
         return order.getSalary();
     }
 
