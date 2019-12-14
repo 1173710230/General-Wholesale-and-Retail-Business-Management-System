@@ -71,7 +71,7 @@ public class WarehouseServiceImpl implements WarehouseService{
         goods.setWarehouseId(warehouseId);
         try {
             // 如果数据库货物表中没有这一查验id，返回false
-            // 调用货物如库方法
+            // 调用货物入库方法
             wareHouseMapper.addGoodsToWarehouse(goods);
             return true;
         } catch (DataAccessException ex) {

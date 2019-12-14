@@ -11,7 +11,7 @@ public class User {
     private String userName;
     private String userPassword;
     private Integer status;
-    // 0为经理，1为店长，2为店长
+    // 0为经理，1为店长，2为店员？？？（原来时两个店长，我把2修改为店员）
     //ToDO Constructor
     public User() {
 

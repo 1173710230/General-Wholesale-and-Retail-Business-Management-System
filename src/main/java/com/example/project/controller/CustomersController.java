@@ -35,14 +35,15 @@ public class CustomersController {
   }
 
   /**
-   * 增加一个顾客
+   * 增加一个顾客,参数还要修改
    * @param name 顾客姓名
    * @param tel 顾客联系方式
+   * @param status 用户的状态, 0为批发， 1 为零售
    * @return 返回当前的顾客列表
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
-  public List<Customer> addCustomer(String name, String tel){
+  public List<Customer> addCustomer(String name, String tel, int status){
     customerService.addCustomer(name, tel);
     return customerService.getallCustomers();
   }
@@ -60,14 +61,15 @@ public class CustomersController {
   }
 
   /**
-   * 修改一个客户的信息
+   * 修改一个客户的信息，参数还要修改
    * @param name 新的客户的名字（前端没有输入时为null）
    * @param tel 新的客户的电话（前端没有输入时为null）
+   * @param status 用户的状态  0为批发， 1 为零售
    * @return 返回当前的客户列表
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
-  public List<Customer> update(int customerId, String name, String tel){
+  public List<Customer> update(int customerId, String name, String tel, int status){
     customerService.modifyCustomer(customerId, name, tel);
     return customerService.getallCustomers();
   }

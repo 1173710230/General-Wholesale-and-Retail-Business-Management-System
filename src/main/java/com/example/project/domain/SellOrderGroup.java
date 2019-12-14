@@ -30,6 +30,19 @@ public class SellOrderGroup {
     //ToDo constructor
     public SellOrderGroup() {
     }
+    //new constructor because controller needs a constructor with all parameters
+    public SellOrderGroup(Integer sellOrderGroupId, String sellTime, String sellOrderRemark, Integer sellOrderType, Integer sellStatus, List<SellOrder> sellOrders, Integer customerId, Double salary, Integer warehouseId, Double profit) {
+        this.sellOrderGroupId = sellOrderGroupId;
+        this.sellTime = sellTime;
+        this.sellOrderRemark = sellOrderRemark;
+        this.sellOrderType = sellOrderType;
+        this.sellStatus = sellStatus;
+        this.sellOrders = sellOrders;
+        this.customerId = customerId;
+        this.salary = salary;
+        this.warehouseId = warehouseId;
+        this.profit = profit;
+    }
 
     public Double getSalary() {
         return salary;
