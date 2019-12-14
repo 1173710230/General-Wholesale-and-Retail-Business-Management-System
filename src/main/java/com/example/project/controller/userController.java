@@ -41,7 +41,7 @@ public class userController {
   @RequestMapping(value = "/register")
   @ResponseBody
   public boolean registerNewUser(String userName, String password, int status){
-    userService.register(0, userName, password, status);
+    userService.register(userName, password, status);
     return false; // 修改返回值
   }
 

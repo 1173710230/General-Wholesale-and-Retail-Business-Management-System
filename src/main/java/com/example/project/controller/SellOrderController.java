@@ -150,7 +150,7 @@ public class SellOrderController {
   @RequestMapping("/checkOrder")
   @ResponseBody
   public boolean checkOrder(int sellOrderId, boolean opinion){
-    return sellOrderService.checkOrder(sellOrderId, opinion, 0)&&opinion;
+    return sellOrderService.checkOrder(sellOrderId, opinion)&&opinion;
   }
 
   /**
