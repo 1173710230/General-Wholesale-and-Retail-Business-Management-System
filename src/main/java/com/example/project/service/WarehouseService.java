@@ -1,6 +1,7 @@
 package com.example.project.service;
 
 import com.example.project.domain.Goods;
+import com.example.project.domain.Warehouse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,5 +76,10 @@ public interface WarehouseService {
      * @return  删除成功返回true，否则返回false
      */
     boolean deleteWarehouse(Integer warehouseId);
+
+    /**
+     * 获取全部仓库
+     */
+    List<Warehouse> getAllWarehouses();
 
 }
