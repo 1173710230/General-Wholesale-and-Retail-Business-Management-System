@@ -11,10 +11,10 @@
     </resultMap>
 
     <resultMap id="goods" type="Goods">
-        <id column="goods_id" property="goodsId"></id>
-        <result column="goods_name" property="goodsName"></result>
-        <result column="specification" property="goodsSpecification"></result>
-        <result column="number" property="number"></result>
+        <id column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="specification" property="goodsSpecification"/>
+        <result column="number" property="number"/>
     </resultMap>
 
     <select id="getAllWareHouse" resultMap="warehouse">
@@ -32,7 +32,7 @@
     
     <delete id="deleteById" parameterType="Integer">
         delete from warehouse
-        where warehouse_id = #{warehouseId}
+        where wh_id = #{warehouseId}
     </delete>
 
     <insert id="insert" parameterType="String">
