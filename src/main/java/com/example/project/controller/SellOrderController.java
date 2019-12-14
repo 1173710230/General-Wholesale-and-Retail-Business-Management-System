@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 /**
  * 这是一个销售单的controller模块，实现销售单的增删改查和状态变化等功能
- * todo: 涉及user身份信息的部分未完成
+ *
  */
 @Controller
 @RequestMapping("/sellOrder")
@@ -88,7 +89,7 @@ public class SellOrderController {
 
   /**
    * 得到所有的未审核的订单
-   * @return 返回当前未审核的销售单
+   * @return 返回当前未审核的销售单，
    */
   @RequestMapping("/getAllSellOrderUnderCheck")
   @ResponseBody
@@ -117,15 +118,19 @@ public class SellOrderController {
   }
 
   /**
-   * 审核一个销售单是否通过审核
+   * 审核一个销售单是否通过审核（只允许经理，店长check，不允许店员check）
    * @param sellOrderId 需要审核的销售单
    * @param opinion 审核通过传入true，反之，传入false
    * @return 只要opinion和内部审核时有一个没通过返回false
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public boolean checkOrder(int sellOrderId, boolean opinion){
-    return sellOrderService.checkOrder(sellOrderId, opinion)&&opinion;
+  public boolean checkOrder(HttpSession req, int sellOrderId, boolean opinion){
+    int userStatus = (int) req.getAttribute("userStatus");
+    if(userStatus==0||userStatus==1) {
+      return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
+    }
+    return false;
   }
 
   /**
@@ -140,14 +145,18 @@ public class SellOrderController {
   }
 
   /**
-   * 对销售单进行退款
+   * 对销售单进行退款(只允许经理退款，不允许店长，店员退款）
    * @param sellOrderId 需要退款的销售单
-   * @return
+   * @return 退款成功返回true， 反之返回false
    */
   @RequestMapping("/refund")
   @ResponseBody
-  public boolean refundSellOrder(int sellOrderId){
-    return sellOrderService.refundSellOrder(sellOrderId);
+  public boolean refundSellOrder(int sellOrderId, HttpSession req){
+    int userStatus = (int) req.getAttribute("userStatus");
+    if(userStatus==0) {
+      return sellOrderService.refundSellOrder(sellOrderId);
+    }
+    return false;
   }
 
 }

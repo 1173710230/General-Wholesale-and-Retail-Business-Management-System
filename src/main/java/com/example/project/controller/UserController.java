@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 //这个是用户的controller，处理用户的数据
 @Controller
 @RequestMapping("/user")
@@ -20,14 +23,18 @@ public class UserController {
 
 
   /**
-   * 用户登录  //todo: 尚未完成拦截器和session的部分，所以销售单涉及user只为还需要修改，但是前端可以先使用
+   * 用户登录  //todo: 尚未完成拦截器
    * @param userId 用户id
    * @param password 用户的密码
    * @return 登录是否成功
    */
   @RequestMapping(value = "/login")
   @ResponseBody
-  public boolean login(int userId, String password){
+  public boolean login(HttpServletRequest req, int userId, String password){
+    //登录
+    HttpSession session = req.getSession();
+    int userStatus = userService.getUserById(userId).getStatus();
+    session.setAttribute("userStatus", userStatus);
     return userService.login(userId, password);
   }
 
