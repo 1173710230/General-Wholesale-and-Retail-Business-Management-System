@@ -7,7 +7,7 @@
 
     <resultMap id="warehouse" type="Warehouse">
         <id column="wh_id" property="warehouseId"/>
-        <result column="name" property="name"/>
+        <result column="name" property="warehouseName"/>
     </resultMap>
 
     <resultMap id="goods" type="Goods">
