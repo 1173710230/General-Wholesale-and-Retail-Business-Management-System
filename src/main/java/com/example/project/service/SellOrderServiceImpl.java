@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     @Override
     public boolean addSellOrder(SellOrderGroup newSellOrderGroup) {
         //sellOrder.setSellTime(new SimpleDateFormat().format(date));
+        mergeSimilarGoods(newSellOrderGroup);
 
         SellOrderGroup sellOrderGroup = new SellOrderGroup();
         sellOrderGroup.setSellOrderRemark(newSellOrderGroup.getSellOrderRemark());
@@ -55,6 +57,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     public boolean modifySellOrder(SellOrderGroup sellOrderGroup) {
         try {
             // 传入动态定义对象更新信息
+            mergeSimilarGoods(sellOrderGroup);
             sellOrderGroupMapper.updateSellOrderGroup(sellOrderGroup);
             return true;
         } catch (DataAccessException ex) {
@@ -219,5 +222,35 @@ public class SellOrderServiceImpl implements SellOrderService {
     public Double getSellOrderGroupTotalPrice(int sellOrderGroupId) {
         SellOrderGroup order = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         return order.getSalary();
+    }
+
+    /**
+     * 合并销售单项中重复的部分
+     *
+     * @param sellOrderGroup 待修正的销售单
+     * @return
+     */
+    private SellOrderGroup mergeSimilarGoods(SellOrderGroup sellOrderGroup){
+        List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
+        List<SellOrder> newSellOrderList = new ArrayList<>();
+        for (SellOrder sellOrder : sellOrderList) {
+            boolean flag = false; //重复标志位
+            for (SellOrder order : newSellOrderList) {
+                if (order == sellOrder) {
+                    // 处理重复情况
+                    double temp = order.getSellNumber();
+                    order.setSellNumber(temp + sellOrder.getSellNumber());
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                // 新建列表
+                newSellOrderList.add(sellOrder);
+            }
+        }
+        sellOrderGroup.deleteAllOrderRecords();
+        sellOrderGroup.setSellOrders(newSellOrderList);
+        return sellOrderGroup;
     }
 }

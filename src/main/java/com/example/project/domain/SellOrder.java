@@ -58,7 +58,7 @@ public class SellOrder {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         SellOrder sellOrder = (SellOrder) o;
-        return Objects.equals(sellOrderId, sellOrder.sellOrderId) ;
+        return Objects.equals(sellOrderId, sellOrder.sellOrderId);
     }
 
     @Override
