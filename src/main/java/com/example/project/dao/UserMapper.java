@@ -25,6 +25,6 @@ public interface UserMapper {
      * 根据传入的User对象的非空属性更新已有用户信息
      * @param user  用户id不为空的User对象
      */
-    public void updateUser(User user);
+    void updateUser(User user);
 
 }

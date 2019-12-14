@@ -27,12 +27,13 @@ public class ImportOrderController {
    * @param inputUnitPrice 商品的单价
    * @param goodsId 货物的id
    * @param remark 备注
+   * @param warehouseId 仓库id
    * @return 商品数量>0而且增加成功返回true，其他返回false
    */
   @RequestMapping("/addNewImportOrder")
   @ResponseBody
-  public boolean addNewImportOrder(double goodsNumber, double inputUnitPrice, int goodsId, String remark){
-    return goodsNumber>0 && inputOrderService.addNewInputOrder(goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark);
+  public boolean addNewImportOrder(double goodsNumber, double inputUnitPrice, int goodsId, String remark, int warehouseId){
+    return goodsNumber>0 && inputOrderService.addNewInputOrder(goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark, warehouseId);
   }
 
 }

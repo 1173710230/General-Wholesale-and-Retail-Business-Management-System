@@ -26,8 +26,8 @@ public interface SellOrderGroupMapper {
      * 根据传入条件查询销售单。
      * 这是通用查询，但是注意，不支持按照获利查询。
      *
-     * @param group
-     * @return
+     * @param group 销售单（组）的对象，是查询的条件
+     * @return 满足传入条件的销售单列表，如果没有满足的销售单，列表的长度将是0
      */
     List<SellOrderGroup> querySellOrderGroup(SellOrderGroup group);
 
@@ -40,6 +40,12 @@ public interface SellOrderGroupMapper {
      */
     void updateSellOrderGroup(SellOrderGroup group);
 
+    /**
+     * 通过销售单的ID获得销售单对象，其内的销售记录都将被填满。
+     *
+     * @param groupId 销售单（组）ID
+     * @return 销售单对象
+     */
     SellOrderGroup getSellOrderGroupById(int groupId);
 
 }

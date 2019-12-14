@@ -25,7 +25,7 @@ public interface GoodsMapper {
      * 这个方法需要完成两步操作，第一将货物添加到货物表，第二满足货物分配到仓库的关系。
      * 调用此方法时确保是新的货物！
      *
-     * @param newGoods 带添加的货物，必须给goodsId和warehouseID和number的值
+     * @param newGoods 待添加的货物，必须给goodsId和warehouseID和number的值
      */
     void addGoodsWarehouseRelation(Goods newGoods);
 
