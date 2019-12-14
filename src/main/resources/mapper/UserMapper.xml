@@ -13,8 +13,8 @@
     </resultMap>
 
     <insert id="insertUser" parameterType="com.example.project.domain.User">
-        INSERT INTO user(user_id, user_name, password)
-        VALUES (#{userId}, #{userName}, #{userPassword})
+        INSERT INTO user(user_name, password, user_character)
+        VALUES (#{userName}, #{userPassword}, #{status})
     </insert>
 
     <select id="searchUserByUserId" parameterType="String" resultType="com.example.project.domain.User">

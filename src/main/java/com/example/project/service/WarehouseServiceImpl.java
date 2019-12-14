@@ -140,5 +140,34 @@ public class WarehouseServiceImpl implements WarehouseService{
         }
     }
 
+    @Override
+    public boolean addWarehouse(String warehouseName) {
+        try{
+            //wareHouseMapper.insert(warehouseName);
+            return true;
+        } catch(DataAccessException ex){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updateWarehouse(Integer warehouseId, String newName) {
+        try{
+            this.wareHouseMapper.updateWarehouseNameById(warehouseId, newName);
+            return true;
+        } catch(DataAccessException ex){
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteWarehouse(Integer warehouseId) {
+        try{
+            return true;
+        } catch (DataAccessException ex){
+            return false;
+        }
+    }
+
 
 }
