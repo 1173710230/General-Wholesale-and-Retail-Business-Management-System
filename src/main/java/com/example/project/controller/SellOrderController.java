@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,46 +23,31 @@ public class SellOrderController {
 
  private final SellOrderService sellOrderService;
 
- //currentSellOrders里存储当前增加处理的销售订单的销售记录.只能同时增加一个订单
-  private List<SellOrder> currentSellOrders = new ArrayList<>();
-  //currentSellOrders里存储当前修改处理的销售订单的销售记录，只能同时修改一个订单
-  private List<SellOrder> currentModifySellOrders = new ArrayList<>();
-
   @Autowired
   public SellOrderController(SellOrderService sellOrderService) {
     this.sellOrderService = sellOrderService;
   }
 
-  /**
-   * 增加一个销售销售记录，并不传递给后台，只是暂存在controller中，等到添加一个完整的销售单时，
-   * 一并传递给后台（由addSellOrder完成）
-   *
-   * @param goodsId 销售记录中商品的id
-   * @param sellUnitPrice 商品的单价
-   * @param goodsNumber 某种商品的数量
-   * @return 当数量大于0，返回true，其他返回false.
-   */
-  @RequestMapping(value = "/add", method = RequestMethod.GET)
-  @ResponseBody
-  public boolean addSellOrder(int goodsId, double sellUnitPrice, double goodsNumber){
-    currentSellOrders.add(new SellOrder(-1, goodsNumber, sellUnitPrice, goodsId)); //因为我不知道sellOrderId，所以置成-1，之后service要改
-    return goodsNumber>0;//goodsNumber>0 && sellOrderService.addSellOrder(new Date(System.currentTimeMillis()), goodsId, sellUnitPrice, goodsNumber, customerId, remark);
-  }
-
  /**
-  * 将销售记录构造一个销售单传递给后台，并清除当前暂存的销售记录
+  * 将构造一个新销售单传递给后台
   *
   * @param warehouseId 销售单的仓库id
   * @param sellOrderType 销售单的类型 //0批发，1零售
   * @param sellOrderRemark 销售单的备注
   * @param customerId 顾客id
+  * @param goodsId 商品的id数组（有顺序）
+  * @param sellUnitPrice 商品的单价数组（有顺序）
+  * @param goodsNumber 商品的数量数组（有顺序）
   * @return 销售单添加成功返回true，反之返回false
   */
- @RequestMapping(value = "/addNewSellOrder", method = RequestMethod.GET)
+ @RequestMapping(value = "/add", method = RequestMethod.GET)
  @ResponseBody
-  public boolean addSellOrderGroup(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId){
-   List<SellOrder>  allSellOrderInGroup = new ArrayList<>(currentSellOrders);
-   currentSellOrders.clear();  //清除当前销售记录
+  public boolean addSellOrderGroup(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
+                                   int[] goodsId, double[] sellUnitPrice, double[] goodsNumber){
+   List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
+   for(int i = 0; i< goodsId.length; i++){
+     allSellOrderInGroup.add(new SellOrder(-1, goodsNumber[i], sellUnitPrice[i], goodsId[i]));
+   }
    //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
    return sellOrderService.addSellOrder(new SellOrderGroup(-1, new Date(System.currentTimeMillis()).toLocaleString(),
        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
@@ -80,18 +64,6 @@ public class SellOrderController {
     return sellOrderService.deleteSellOrder(id);
   }
 
-  /**
-   * 修改一条销售记录，并将结果暂存在controller(前端多次调用，没修改的要填上原来的默认值)
-   *
-   * @param sellNumber 销售记录的销售数量
-   * @param sellUnitPrice 销售的单价
-   * @param sellGoodsId 销售的商品id
-   * @return sellNumber是否大于0
-   */
-  public boolean updateSellOrder(double sellNumber, double sellUnitPrice, int sellGoodsId){
-    currentModifySellOrders.add(new SellOrder(-1, sellNumber, sellUnitPrice, sellGoodsId)); //因为我不知道sellOrderId，所以置成-1，之后service要改
-    return sellNumber>0;
-  }
 
   /**
    * 更新一个销售单的信息（商品单id和销售单的状态不改变）
@@ -101,11 +73,14 @@ public class SellOrderController {
    * @param customerId 顾客id
    * @return 更新成返回true，反之，返回false
    */
-  @RequestMapping(value = "/updateNewSellOrder", method = RequestMethod.GET)
+  @RequestMapping(value = "/updateSellOrder", method = RequestMethod.GET)
   @ResponseBody
-  public boolean update(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId){
-    List<SellOrder> allSellOrderInGroup = new ArrayList<>(currentModifySellOrders);
-    currentModifySellOrders.clear();
+  public boolean update(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
+                        int[] goodsId, double[] sellUnitPrice, double[] goodsNumber){
+    List<SellOrder> allSellOrderInGroup = new ArrayList<>();
+    for(int i = 0; i< goodsId.length; i++){
+      allSellOrderInGroup.add(new SellOrder(-1, goodsNumber[i], sellUnitPrice[i], goodsId[i]));
+    }
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
     return sellOrderService.modifySellOrder(new SellOrderGroup(-1, new Date().toLocaleString(),
         sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));

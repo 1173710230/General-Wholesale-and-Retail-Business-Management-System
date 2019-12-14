@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 //这个是用户的controller，处理用户的数据
 @Controller
 @RequestMapping("/user")
-public class userController {
+public class UserController {
   @Autowired
   private final UserService userService;
 
-  public userController(UserService userService) {
+  public UserController(UserService userService) {
     this.userService = userService;
   }
 
 
   /**
-   * 用户登录 //todo: 尚未完成拦截器和session的部分，所以销售单涉及user只为还需要修改，但是前端可以先使用
+   * 用户登录  //todo: 尚未完成拦截器和session的部分，所以销售单涉及user只为还需要修改，但是前端可以先使用
    * @param userId 用户id
    * @param password 用户的密码
    * @return 登录是否成功
