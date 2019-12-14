@@ -4,22 +4,24 @@ import com.example.project.domain.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 @Mapper
 public interface UserMapper {
 
-    public void insertUser(User user);
+    void insertUser(User user);
 
 //    public void setNameByUserId(@Param("userId") int userId, @Param("name") String name);
 //
 //    public void setPasswordByUserId(@Param("userId") int userId, @Param("password") String password);
 
-    public User searchUserByUserId(int userId);
+    User searchUserByUserId(int userId);
 
     /**
      * 根据传入的user对象的非空属性查询用户。
      * @param user  查询的条件
      */
-    void queryUser(User user);
+    List<User> queryUser(User user);
 
     /**
      * 根据传入的User对象的非空属性更新已有用户信息
