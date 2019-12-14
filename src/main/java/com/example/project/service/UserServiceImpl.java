@@ -48,4 +48,11 @@ public class UserServiceImpl implements UserService{
         }
 
     }
+
+    @Override
+    public User getUserById(int userId){
+        User user = new User();
+        user.setUserId(userId);
+        return userMapper.queryUser(user);
+    }
 }

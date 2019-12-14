@@ -16,7 +16,6 @@ public interface UserService {
 
     /**
      * 新用户注册
-     * @param userId  新用户用户名
      * @param password  密码
      * @param userName  用户名
      * @param status  用户职位
@@ -28,4 +27,9 @@ public interface UserService {
      * @param user  携带新用户信息的对象。(用户id不为空)
      */
     public boolean updateUserMessage(User user);
+
+    /**
+     * 按id查询用户
+     */
+    public User getUserById(int userId);
 }
