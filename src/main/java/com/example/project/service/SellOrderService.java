@@ -44,7 +44,7 @@ public interface SellOrderService {
      * 审核销售单
      *
      */
-    boolean checkOrder(int sellOrderGroupId, boolean opinion, int warehouseId);
+    boolean checkOrder(int sellOrderGroupId, boolean opinion);
 
 
     /**

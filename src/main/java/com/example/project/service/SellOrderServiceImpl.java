@@ -40,12 +40,13 @@ public class SellOrderServiceImpl implements SellOrderService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         sellOrderGroup.setSellTime(format.format(newSellOrderGroup.getSellTime()));
         sellOrderGroup.setSalary(0.0);
+        sellOrderGroup.setProfit(0.0);
         sellOrderGroup.setSellStatus(0);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         // 新建进货单
         sellOrderGroupMapper.insertSellOrderGroup(sellOrderGroup);
-        sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);
+        // sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);
         //关联进货单与客户id
         return true;
     }
@@ -95,7 +96,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean checkOrder(int sellOrderGroupId, boolean opinion, int warehouseId) {
+    public boolean checkOrder(int sellOrderGroupId, boolean opinion) {
         // SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
@@ -137,7 +138,7 @@ public class SellOrderServiceImpl implements SellOrderService {
                     if (stock >= sellNumber) {
                         // 数量足够
                         // 减少库存
-                        goodsMapper.reduceNumber(goodsId, sellNumber, warehouseId);
+                        goodsMapper.reduceNumber(goodsId, sellNumber, sellOrderGroup.getWarehouseId());
                         // 更改销售单状态
                         // return changeStatus(sellOrderGroupId, 2);
                     }
