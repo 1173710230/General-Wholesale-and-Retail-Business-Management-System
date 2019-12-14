@@ -21,11 +21,11 @@ public interface UserService {
      * @param userName  用户名
      * @param status  用户职位
      */
-    public void register(Integer userId, String userName, String password, Integer status);
+    public boolean register(String userName, String password, Integer status);
 
     /**
      * 更新用户信息
      * @param user  携带新用户信息的对象。(用户id不为空)
      */
-    public void updateUserMessage(User user);
+    public boolean updateUserMessage(User user);
 }

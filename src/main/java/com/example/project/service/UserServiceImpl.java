@@ -3,6 +3,7 @@ package com.example.project.service;
 import com.example.project.dao.UserMapper;
 import com.example.project.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,14 +26,25 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void register(Integer userId, String userName, String password, Integer status) {
-        User user = new User(userId, userName, password, status);
-        this.userMapper.insertUser(user);
+    public boolean register(String userName, String password, Integer status) {
+        try{
+            User user = new User(null, userName, password, status);
+            this.userMapper.insertUser(user);
+            return true;
+        } catch(DataAccessException ex){
+           return false;
+        }
+
     }
 
     @Override
-    public void updateUserMessage(User user) {
+    public boolean updateUserMessage(User user) {
+        try{
+            this.userMapper.updateUser(user);
+            return true;
+        } catch (DataAccessException ex){
+            return false;
+        }
 
-        this.userMapper.updateUser(user);
     }
 }

@@ -53,7 +53,7 @@ public class DemoApplicationTest {
     public void testInputOrder() {
         Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
-        inputOrderService.addNewInputOrder(100, 1.2, 1, date, "just Test");
+//        inputOrderService.addNewInputOrder(100, 1.2, 1, date, "just Test");
     }
 
     @Test
@@ -69,7 +69,7 @@ public class DemoApplicationTest {
         System.out.println("2:" + parse);
 
 
-        sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
+//        sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
 
     }
 
