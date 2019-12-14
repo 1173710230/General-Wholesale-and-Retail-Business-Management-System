@@ -50,6 +50,15 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroupMapper.insertSellOrderGroup(sellOrderGroup);
         // sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);
         //关联进货单与客户id
+        //灵兽丹自动审核收款
+        if(sellOrderGroup.getSellOrderType() == 1){
+            if(!(checkOrder(sellOrderGroup.getSellOrderGroupId(),true))){
+                //库存不足删除灵兽丹
+                sellOrderGroupMapper.deleteSellOrderGroupById(sellOrderGroup.getSellOrderGroupId());
+                return false;
+            }
+            paySellOrder(sellOrderGroup.getSellOrderGroupId());
+        }
         return true;
     }
 
@@ -109,8 +118,8 @@ public class SellOrderServiceImpl implements SellOrderService {
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
 
         //判断销售单的类型
-        if(sellOrderGroup.getSellOrderType() == 1)
-            return false;
+        // if(sellOrderGroup.getSellOrderType() == 1)
+        //    return false;
 
         // 如果opinion是false，不管库存够不够，都是审核不通过的
         if (!opinion) {
@@ -172,8 +181,8 @@ public class SellOrderServiceImpl implements SellOrderService {
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
 
         //判断销售单的类型
-        if(sellOrderGroup.getSellOrderType() == 1)
-            return false;
+        //if(sellOrderGroup.getSellOrderType() == 1)
+        //    return false;
 
         return changeStatus(sellOrderGroupId, 4);
     }
@@ -240,6 +249,8 @@ public class SellOrderServiceImpl implements SellOrderService {
             return false;
         }
     }
+
+
 
     @Override
     public Double getSellOrderGroupProfit(int sellOrderGroupId) {
