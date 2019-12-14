@@ -10,6 +10,16 @@ public class SellOrder {
     private Double sellUnitPrice;//save
     private Integer sellGoodsId;//save
 
+    @Override
+    public String toString() {
+        return "SellOrder{" +
+                "sellOrderId=" + sellOrderId +
+                ", sellNumber=" + sellNumber +
+                ", sellUnitPrice=" + sellUnitPrice +
+                ", sellGoodsId=" + sellGoodsId +
+                '}';
+    }
+
     //ToDo constructor
     public SellOrder() {
     }
@@ -66,13 +76,4 @@ public class SellOrder {
         return Objects.hash(sellOrderId, sellNumber, sellUnitPrice,  sellGoodsId);
     }
 
-    @Override
-    public String toString() {
-        return "SellOrder{" +
-                "sellOrderId=" + sellOrderId +
-                ", sellNumber=" + sellNumber +
-                ", sellUnitPrice=" + sellUnitPrice +
-                ", sellGoodsId=" + sellGoodsId +
-                '}';
-    }
 }

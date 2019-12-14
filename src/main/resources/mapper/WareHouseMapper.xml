@@ -10,14 +10,34 @@
         <result column="name" property="name"/>
     </resultMap>
 
+    <resultMap id="goods" type="Goods">
+        <id column="goods_id" property="goodsId"/>
+        <result column="goods_name" property="goodsName"/>
+        <result column="specification" property="goodsSpecification"/>
+        <result column="number" property="number"/>
+    </resultMap>
+
     <select id="getAllWareHouse" resultMap="warehouse">
         SELECT *
         FROM warehouse
     </select>
 
-    <insert id="insert" parameterType="com.example.project.domain.Warehouse">
-        INSERT INTO warehouse(wh_id, name)
-        VALUES (#{warehouseId}, #{name})
+    <select id="queryAllGoodsInWarehouse" parameterType="Integer" resultMap="goods">
+        select g.*, gwr.number
+        from goods g, goods_warehouse_relation gwr
+        where g.goods_id in (select goods_id
+                            from goods_warehouse_relation
+                            where warehouse_id = #{id}) and g.goods_id = gwr.goods_id
+    </select>
+    
+    <delete id="deleteById" parameterType="Integer">
+        delete from warehouse
+        where wh_id = #{warehouseId}
+    </delete>
+
+    <insert id="insert" parameterType="String">
+        INSERT INTO warehouse(name)
+        VALUES (#{warehouseName})
     </insert>
 
     <insert id="addGoodsToWarehouse" parameterType="Goods">
