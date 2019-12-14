@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.project.dao.SellOrderGroupMapper">
-    <resultMap id="sellOrderMap" type="SellOrder">
+    <resultMap id="sellOrderGroupMap" type="SellOrderGroup">
         <id column="group_id" property="sellOrderGroupId"/>
         <result column="group_name" property="groupName"/>
         <result column="sell_time" property="sellTime"/>
@@ -67,7 +67,7 @@
         where out_id = #{sellOrderId};
     </update>
 
-    <select id="querySellOrderGroup" parameterType="SellOrderGroup">
+    <select id="querySellOrderGroup" parameterType="SellOrderGroup" resultMap="sellOrderGroupMap">
         select sog.*, so.*, c.*, g.*
         from sell_order_group sog,
         customer c,
@@ -93,7 +93,7 @@
         </where>
     </select>
 
-    <select id="getSellOrderGroupById" parameterType="int">
+    <select id="getSellOrderGroupById" parameterType="int" resultMap="sellOrderGroupMap">
         select sog.*, so.*, c.*, g.*
         from sell_order_group sog,
              customer c,

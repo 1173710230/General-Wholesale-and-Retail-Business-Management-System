@@ -54,4 +54,26 @@ public interface WarehouseService {
      */
     boolean warehouseTransfer(int goodsId, int oldWarehouseId, int newWarehouseId, double goodsNumber);
 
+    /**
+     * 新建一个仓库
+     * @param warehouseName
+     * @return  添加成功返回true，否则返回false
+     */
+    boolean addWarehouse(String warehouseName);
+
+    /**
+     * 修改仓库名
+     * @param warehouseId  仓库id
+     * @param newName   新名字
+     * @return  修改成功返回true，否则返回false
+     */
+    boolean updateWarehouse(Integer warehouseId, String newName);
+
+    /**
+     * 删除一个仓库
+     * @param warehouseId  待删除的仓库的id
+     * @return  删除成功返回true，否则返回false
+     */
+    boolean deleteWarehouse(Integer warehouseId);
+
 }
