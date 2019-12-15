@@ -68,6 +68,10 @@ public class SellOrderServiceImpl implements SellOrderService {
             // 传入动态定义对象更新信息
             mergeSimilarGoods(sellOrderGroup);
             sellOrderGroupMapper.updateSellOrderGroup(sellOrderGroup);
+            List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
+            for(SellOrder sellOrder: sellOrderList){
+                sellOrderMapper.updateSellOrder(sellOrder);
+            }
             return true;
         } catch (DataAccessException ex) {
             // 不存在这一订货单
