@@ -55,9 +55,6 @@
             <if test="sellStatus != null">
                 order_status = #{sellStatus},
             </if>
-            <if test="sellUnitPrice != null and sellUnitPrice != ''">
-                sell_unit_price = #{sellUnitPrice},
-            </if>
             <if test="sellTime != null and sellTime != ''">
                 sell_time = #{sellTime},
             </if>
@@ -68,7 +65,7 @@
                 customer_id = #{customerId},
             </if>
         </set>
-        where out_id = #{sellOrderId};
+        where group_id = #{sellOrderGroupId};
     </update>
 
     <select id="querySellOrderGroup" parameterType="SellOrderGroup" resultMap="sellOrderGroupMap">

@@ -39,16 +39,17 @@ public class InputOrderServiceImpl implements InputOrderService{
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         inputOrder.setInputTime(format.format(time));
         inputOrder.setInputUnitPrice(inputUnitPrice);
+        inputOrder.setWarehouseId(warehouseId);
         // 新建插入表
         importOrderMapper.insert(inputOrder);
         Goods goods = new Goods();
-        goods.setWarehouseId(1);
+        goods.setWarehouseId(warehouseId);
         // goods.setGoodsNumber(Double.valueOf(goodsNumber));
         goods.setGoodsId(goodsId);
         // 在货物仓库关系表中添加数量（货物仓库初始化关系在addNewGoods中）
         List<Goods> gdx = goodsMapper.queryGoods(goods);
         if(gdx == null || gdx.size() == 0){
-            return false;
+            goodsMapper.addGoodsWarehouseRelation(goods);
         }
         goodsMapper.addNumber(goodsId, goodsNumber,warehouseId);
         return true;

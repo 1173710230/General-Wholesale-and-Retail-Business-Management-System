@@ -114,23 +114,60 @@
             type: "GET",
             url: "/sellOrder/getRefundSellOrder",
             dataType:"json",
-            success: function (list) {
-                if (list !== null) {
-                    for(var i = 0; i < list.length; i++){
-                        var id = list[i].sellOrderId;
-                        var goodsId = list[i].sellGoodsId;
-                        var price = list[i].sellUnitPrice;
-                        var number = list[i].sellNumber;
-                        var customerId = list[i].customerId;
-                        var remark = list[i].sellOrderRemark;
-                        var insert = `<tr><td>${id}</td><td>${goodsId}</td><td>${price}</td><td>${number}</td><td>${customerId}</td><td>${remark}</td><td>
-<table>
-<td><button class="btn btn-xs btn-primary" onclick="refund(${id})">退款</button></td>
-</table>
-</td>
-</tr>`;
-                        $("#paid").append(insert);
+            success: function (result) {
+                console.log(result);
+                for (var order of result) {
+                    var recordLength = order.sellOrders.length;
+
+                    if (recordLength === undefined || recordLength === null) {
+                        // 不存在就记作1
+                        recordLength = 1;
                     }
+
+                    var index = 0;
+
+                    let content = ``;
+                    content += `<tr>`;
+                    content += `<td rowspan="${recordLength}">${order.sellOrderGroupId}</td>`;
+
+                    // 第一次要包住未合并的内容
+                    var record = order.sellOrders[index];
+                    content += `<td>${record.sellGoodsId}</td>`;
+                    content += `<td>${record.sellNumber}</td>`;
+                    content += `<td>${record.sellUnitPrice}</td>`;
+                    index += 1;
+
+                    content += `<td rowspan="${recordLength}">${order.customerId}</td>`;
+                    // content += `<td rowspan="${recordLength}">${order.sellTime}</td>`;
+                    var orderType = '批发';
+                    if (order.sellOrderType === 1) {
+                        orderType = '零售';
+                    }
+                    content += `<td rowspan="${recordLength}">${orderType}</td>`;
+                    var orderStatus = '已付款';
+                    content += `<td rowspan="${recordLength}">${orderStatus}</td>`;
+                    content += `<td rowspan="${recordLength}">${order.sellOrderRemark}</td>`;
+                    content += `<td rowspan="${recordLength}">${order.profit}</td><td rowspan="${recordLength}">${order.salary}</td>`;
+
+                    content +=
+                        `<td rowspan="${recordLength}">
+<button class="btn btn-outline-danger btn-sm" onclick="refund('${order.sellOrderGroupId}')">标记为已退款</button>
+</td>`;
+
+                    content += `</tr>`;
+
+                    while (index < recordLength) {
+                        // 当index比长度小的时候进行循环，这些自己加上tr标签
+                        record = order.sellOrders[index];
+                        content += `<tr>`;
+                        content += `<td>${record.sellGoodsId}</td>`;
+                        content += `<td>${record.sellNumber}</td>`;
+                        content += `<td>${record.sellUnitPrice}</td>`;
+                        content += `</tr>`;
+                        index += 1;
+                    }
+
+                    $('#order-table').append(content);
                 }
 
             },
@@ -138,60 +175,6 @@
                 alert("获取失败！");
             }
         })
-    </script>
-    <!--   删除订单-->
-    <script>
-        function deleteOrder(id) {
-            $.ajax({
-                type:"GET",
-                url : "/sellOrder/delete",
-                dataType: "json",
-                data: {id: id},
-                success: function (list) {
-                    alert("删除成功！");
-                    location.reload();
-                },
-                error: function () {
-                    alert("删除失败！");
-                }
-            })
-        }
-    </script>
-    <!--    审核-->
-    <script>
-        function examine(id, boolean) {
-            $.ajax({
-                type:"GET",
-                url : "/sellOrder/checkOrder",
-                dataType: "json",
-                data: {sellOrderId: id, opinion: boolean},
-                success: function () {
-                    alert("操作成功！");
-                    location.reload();
-                },
-                error: function () {
-                    alert("审核失败！");
-                }
-            })
-        }
-    </script>
-    <!--    付款-->
-    <script>
-        function pay(id) {
-            $.ajax({
-                type:"GET",
-                url : "/sellOrder/receipt",
-                dataType: "json",
-                data: {sellOrderId: id},
-                success: function () {
-                    alert("付款成功！");
-                    location.reload();
-                },
-                error: function () {
-                    alert("付款失败！");
-                }
-            })
-        }
     </script>
     <!--    退款-->
     <script>
@@ -469,26 +452,25 @@
 
             <!-- ############ PAGE START-->
             <div class="row-col b-b">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="padding">
                         <div class="margin">
                             <h5 class="m-b-0 _300">欢迎回来！</h5>
                         </div>
                         <div class="box-header">
-                            <h2>已付款订单</h2>
+                            <h2>未付款订单</h2>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped b-t b-b">
-                                <thead>
-                                <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
-                                </thead>
-                                <tbody id="paid">
-                                </tbody>
-                            </table>
-                        </div>
+                        <!--                        从这里修改-->
+                        <table class="table table-striped b-t b-b">
+                            <thead>
+                            <tr><th>销售单ID</th><th>商品ID</th><th>数量</th><th>单价</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
+                            </thead>
+                            <tbody id="order-table">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="col-md-6" id="changeArea1"></div>
+                <!--                <div class="col-md-3" id="changeArea"></div>-->
             </div>
 
             <div class="modal fade inactive" id="chat" data-backdrop="false">

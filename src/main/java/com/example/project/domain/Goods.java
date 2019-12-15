@@ -10,7 +10,7 @@ public class Goods {
     private String goodsName;
     private String goodsSpecification;
     private Integer warehouseId;
-    private Double goodsNumber;
+    private Double goodsNumber = 0.0;
 
     public Goods(Integer goodsId, String goodsName, String goodsSpecification, Integer warehouseId, Double goodsNumber) {
         this.goodsId = goodsId;
