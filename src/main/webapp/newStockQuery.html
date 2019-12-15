@@ -32,6 +32,7 @@
     <!--    库存统计查询-->
     <script>
         function query(){
+            $("#goodsQuery").html('');
             var name = $("#queryName").val();
             $.ajax({
                 type:"GET",
@@ -48,9 +49,10 @@
                             var number = list[i].goodsNumber;
                             insert += `<tr id="${id}"><td id="${'nameQuery' + id}">${name}</td><td id="${'wareIdQuery' + id}">${wareId}</td>
 <td id="${'numberQuery' + id}">${number}</td><td id="${'specQuery' + id}">${spec}</td></tr>`;
-                            $("#goodsQuery").append(insert);
                         }
                     }
+                    $("#goodsQuery").append(insert);
+
 
                 },
                 error: function () {

@@ -39,6 +39,7 @@
                 dataType: "json",
                 data:{name: name},
                 success:function (list) {
+                    $("#customerTable").html('');
                     if (list !== null){
                         for(var i = 0; i < list.length; i++){
                             var id = list[i].customerId;
