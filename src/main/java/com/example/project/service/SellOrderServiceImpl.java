@@ -229,9 +229,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     public List<SellOrderGroup>  getUnpaidOrder() {
         SellOrderGroup order = new SellOrderGroup();
         //判断销售单的类型
-        if(order.getSellOrderType() == 1)
-            return null;
-
+        order.setSellOrderType(0);
         order.setSellStatus(2);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
@@ -240,8 +238,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     public List<SellOrderGroup> getUnRefundOrder() {
         SellOrderGroup order = new SellOrderGroup();
         //判断销售单的类型
-        if(order.getSellOrderType() == 1)
-            return null;
+        order.setSellOrderType(0);
         order.setSellStatus(4);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
