@@ -42,7 +42,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSellTime(newSellOrderGroup.getSellTime());
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
-        sellOrderGroup.setSellStatus(0);
+        sellOrderGroup.setSellStatus(1);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
