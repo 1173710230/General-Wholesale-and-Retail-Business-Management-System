@@ -8,7 +8,7 @@
     <resultMap id="userMap" type="User">
         <id column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
-        <result column="password" property="password"/>
+        <result column="password" property="userPassword"/>
         <result column="user_character" property="status"/>
     </resultMap>
 
