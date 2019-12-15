@@ -36,14 +36,15 @@
             var wareId = $("#wareId").val();
             var customerId = $("#customerId").val();
             var remark = $("#remark").val();
-            var goodsId = [];
-            var price = [];
-            var number = [];
+            var goodsId = '';
+            var price = '';
+            var number = '';
             for(var i = 1;i<6;i++){
-                goodsId[i-1] = $("#goodid" + i).val();
-                price[i-1] = $("#price" + i).val();
-                number[i-1] = $("#number" + i).val()
+                goodsId += $("goodid" + i).val();
+                price += $("#price" + i).val();
+                number += $("#number" + i).val()
             }
+
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/add",
