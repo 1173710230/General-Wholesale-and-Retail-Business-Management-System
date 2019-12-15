@@ -39,11 +39,10 @@ public class SellOrderServiceImpl implements SellOrderService {
         SellOrderGroup sellOrderGroup = new SellOrderGroup();
         sellOrderGroup.setSellOrderRemark(newSellOrderGroup.getSellOrderRemark());
         sellOrderGroup.setCustomerId(newSellOrderGroup.getCustomerId());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sellOrderGroup.setSellTime(format.format(newSellOrderGroup.getSellTime()));
+        sellOrderGroup.setSellTime(newSellOrderGroup.getSellTime());
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
-        sellOrderGroup.setSellStatus(0);
+        sellOrderGroup.setSellStatus(1);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
