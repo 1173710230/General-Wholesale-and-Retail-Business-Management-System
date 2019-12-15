@@ -233,7 +233,7 @@ module
                         return (item.isReady && !item.isUploading);
                     })
                     .sort(function(item1, item2) {
-                        return item1.index - item2.index;
+                        return item1.donotuse - item2.donotuse;
                     });
             };
             /**

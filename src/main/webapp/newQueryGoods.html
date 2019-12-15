@@ -27,15 +27,19 @@
     <link rel="stylesheet" href="assets/styles/app.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="assets/styles/font.css" type="text/css" />
+    <script src="libs/jquery/jquery/dist/jquery.js"></script>
+
     <!--    查找货品函数-->
     <script>
-        function query(name){
+        function queryGoods(name){
+            $("#goods").html('');
             $.ajax({
                 type: "GET",
                 url: "/goods/queryGoodsByName",
                 dataType: "json",
                 data:{name: name},
                 success:function (list) {
+                    console.log(list);
                     let insert = `<tr><th>货物名称</th><th>仓库ID</th><th>数量</th><th>规格</th><th>操作</th></tr>`;
                     if (list !== null){
                         for(var i = 0; i < list.length; i++){
@@ -48,9 +52,10 @@
 <td id="${'number' + id}">${number}</td><td id="${'spec' + id}">${spec}</td>`;
                             insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改货品</button>
 <button type="button" class="btn btn-primary btn-xs" onclick="deleteGoods(${id})">删除货品</button></td></tr>`;
-                            $("#goods").append(insert);
+
                         }
                     }
+                    $("#goods").append(insert);
                 },
                 error: function () {
                     alert("查找失败！");
@@ -273,7 +278,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newStockCheck.html" >
+                            <a href="index.html" >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>
@@ -370,16 +375,12 @@
                             <div class="input-group input-group-lg">
                                 <input type="text" class="form-control" placeholder="货物名字" id="goodsName">
                                 <span class="input-group-btn">
-        <button class="btn b-a no-shadow white" type="button" onclick="query($('#goodsName').val())">查询</button>
+        <button class="btn b-a no-shadow white" type="button" onclick="queryGoods($('#goodsName').val())">查询</button>
       </span>
                             </div>
                         </form>
-                        <table class="table table-striped b-t b-b">
-                            <thead>
-                            <tr><th>货物编号</th><th>货物名称</th><th>仓库编号</th><th>货物数量</th><th>货物规格</th><th>操作</th></tr>
-                            </thead>
-                            <tbody id="goods">
-                            </tbody>
+                        <table class="table table-striped b-t b-b" id="goods">
+
                         </table>
                     </div>
                 </div>

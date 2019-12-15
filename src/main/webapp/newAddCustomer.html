@@ -27,6 +27,8 @@
     <link rel="stylesheet" href="assets/styles/app.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="assets/styles/font.css" type="text/css" />
+    <script src="libs/jquery/jquery/dist/jquery.js"></script>
+
     <!--    根据条目所填信息新建用户-->
     <script>
         var id = 2;
@@ -35,7 +37,7 @@
             var tel = $("#address").val();
             $.ajax({
                 type:"GET",
-                url : "/customer/add",
+                url : "/src/java/com.example.project/controller/CustomersController/customer/add",
                 data: {name: name, tel: tel},
                 success: function (list) {
                     alert("添加成功！");
@@ -196,7 +198,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newStockCheck.html" >
+                            <a href="index.html" >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>

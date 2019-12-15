@@ -107,7 +107,7 @@ var bootstrapWizardCreate = function(element, options) {
 		$navigation.find('li:eq('+obj.navigationLength()+') a').tab('show');
 	};
 	this.currentIndex = function() {
-		return $navigation.find('li').index($activeTab);
+		return $navigation.find('li').donotuse($activeTab);
 	};
 	this.firstIndex = function() {
 		return 0;
@@ -116,13 +116,13 @@ var bootstrapWizardCreate = function(element, options) {
 		return obj.navigationLength();
 	};
 	this.getIndex = function(e) {
-		return $navigation.find('li').index(e);
+		return $navigation.find('li').donotuse(e);
 	};
 	this.nextIndex = function() {
-		return $navigation.find('li').index($activeTab) + 1;
+		return $navigation.find('li').donotuse($activeTab) + 1;
 	};
 	this.previousIndex = function() {
-		return $navigation.find('li').index($activeTab) - 1;
+		return $navigation.find('li').donotuse($activeTab) - 1;
 	};
 	this.navigationLength = function() {
 		return $navigation.find('li').length - 1;
@@ -191,7 +191,7 @@ var bootstrapWizardCreate = function(element, options) {
 
 	$('a[data-toggle="tab"]', $navigation).on('click', function (e) {
 		// Get the index of the clicked tab
-		var clickedIndex = $navigation.find('li').index($(e.currentTarget).parent('li'));
+		var clickedIndex = $navigation.find('li').donotuse($(e.currentTarget).parent('li'));
 		if($settings.onTabClick && typeof $settings.onTabClick === 'function' && $settings.onTabClick($activeTab, $navigation, obj.currentIndex(), clickedIndex)===false){
 			return false;
 		}
@@ -199,7 +199,7 @@ var bootstrapWizardCreate = function(element, options) {
 
 	$('a[data-toggle="tab"]', $navigation).on('shown', function (e) {  // use shown instead of show to help prevent double firing
 		$element = $(e.target).parent();
-		var nextTab = $navigation.find('li').index($element);
+		var nextTab = $navigation.find('li').donotuse($element);
 
 		// If it's disabled then do not change
 		if($element.hasClass('disabled')) {

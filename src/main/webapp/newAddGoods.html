@@ -27,9 +27,11 @@
     <link rel="stylesheet" href="assets/styles/app.css" type="text/css" />
     <!-- endbuild -->
     <link rel="stylesheet" href="assets/styles/font.css" type="text/css" />
+    <script src="libs/jquery/jquery/dist/jquery.js"></script>
+
     <!--添加货物：上传服务器-->
     <script>
-        function insertAdd(){
+        function insertAddGoods(){
             var id = $("#goodsId").val();
             var name = $("#goodsName").val();
             var wareId = $("#wareId").val();
@@ -204,7 +206,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newStockCheck.html" >
+                            <a href="index.html" >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>
@@ -314,7 +316,7 @@
                                     <label>货物规格</label>
                                     <input type="text" class="form-control" id="spec">
                                 </div>
-                                <button type="button" class="btn btn-info m-t" onclick="insertAdd()">提交</button>
+                                <button type="button" class="btn btn-info m-t" onclick="insertAddGoods()">提交</button>
                             </form>
                         </div>
                     </div>
