@@ -41,8 +41,11 @@
             var number = '';
             for(var i = 1;i<6;i++){
                 goodsId += $("goodid" + i).val();
+                goodsId += ",";
                 price += $("#price" + i).val();
-                number += $("#number" + i).val()
+                price += ",";
+                number += $("#number" + i).val();
+                number += ",";
             }
 
             $.ajax({
