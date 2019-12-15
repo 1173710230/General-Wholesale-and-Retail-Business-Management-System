@@ -26,7 +26,7 @@ public class SellOrderGroup {
 
     private Integer warehouseId;
 
-    private Double profit;
+    private Double profit = 0.0;
 
     //ToDo constructor
     public SellOrderGroup() {

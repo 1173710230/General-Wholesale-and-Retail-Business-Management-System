@@ -13,7 +13,7 @@ public interface SellOrderService {
 
     /**
      * 添加一个销售单对象
-     *
+     * 参数：包含 time， remark，type，customerId，warehouseId
      *
      */
     boolean addSellOrder(SellOrderGroup newSellOrderGroup);
