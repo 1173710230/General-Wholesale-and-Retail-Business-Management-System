@@ -32,23 +32,36 @@
     <!--    开销售单：上交服务器-->
     <script>
         function addOver() {
-            var goodsId = $("#goodsId").val();
-            var price = $("#goodsPrice").val();
-            var sum = $("#goodsNumber").val();
+            var status = $("input[name='typeRadio']:checked").val();
+            var wareId = $("#wareId").val();
             var customerId = $("#customerId").val();
             var remark = $("#remark").val();
+            alert(status);
+            var goodsId = '';
+            var price = '';
+            var number = '';
+            for(var i = 1;i<6;i++){
+                goodsId += $("#goodid" + i).val();
+                goodsId += ",";
+                price += $("#price" + i).val();
+                price += ",";
+                number += $("#number" + i).val();
+                number += ",";
+            }
+            console.log(price);
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/add",
                 dataType: "json",
-                data: {goodsId: goodsId, sellUnitPrice: price, sellsum: sum, customerId: customerId, remark: remark},
+                data: {warehouseId: wareId, sellOrderType: status, sellOrderRemark: remark,
+                    customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number},
+                traditional: true,
                 success: function (bool) {
                     if (bool) {
                         alert("添加成功！");
                     } else {
                         alert("添加失败，出现错误！");
                     }
-
                     window.location.href="main.html"
                 },
                 error: function () {
@@ -326,16 +339,12 @@
                         <div class="tab-pane active" id="tab-1">
                             <form role="form" class="p-a-md col-md-6">
                                 <div class="form-group">
-                                    <label for="goodsId">商品ID</label>
-                                    <input type="text" class="form-control" id="goodsId">
+                                    <input type="radio" id="status1" value="0" name="typeRadio">批发
+                                    <input type="radio" id="status2" value="1" name="typeRadio">零售
                                 </div>
                                 <div class="form-group">
-                                    <label for="goodsPrice">商品单价</label>
-                                    <input type="text" class="form-control" id="goodsPrice">
-                                </div>
-                                <div class="form-group">
-                                    <label for="goodsNumber">总数量</label>
-                                    <input type="text" class="form-control" id="goodsNumber">
+                                    <label for="wareId">仓库ID</label>
+                                    <input type="text" class="form-control" id="wareId">
                                 </div>
                                 <div class="form-group">
                                     <label for="customerId">顾客ID</label>
@@ -345,6 +354,81 @@
                                     <label for="remark">备注</label>
                                     <input type="text" class="form-control" id="remark">
                                 </div>
+                                <table class="table table-striped b-t b-b">
+                                <thead>
+                                <tr><th>商品ID</th><th>商品单价</th><th>商品数量</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="goodid1">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price1">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="number1">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="goodid2">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price2">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="number2">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="goodid3">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price3">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="number3">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="goodid4">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price4">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="number4">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="form-control" id="goodid5">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="price5">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="number5">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                </table>
+<!--                                <div class="form-group">-->
+<!--                                    <label for="goodsPrice">商品单价</label>-->
+<!--                                    <input type="text" class="form-control" id="goodsPrice">-->
+<!--                                </div>-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="goodsNumber">总数量</label>-->
+<!--                                    <input type="text" class="form-control" id="goodsNumber">-->
+<!--                                </div>-->
+<!--                                -->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="remark">备注</label>-->
+<!--                                    <input type="text" class="form-control" id="remark">-->
+<!--                                </div>-->
                                 <button type="button" class="btn btn-info m-t" onclick="addOver()">提交</button>
                             </form>
                         </div>

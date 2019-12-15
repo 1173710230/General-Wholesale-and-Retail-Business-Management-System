@@ -39,13 +39,13 @@ public class SellOrderServiceImpl implements SellOrderService {
         SellOrderGroup sellOrderGroup = new SellOrderGroup();
         sellOrderGroup.setSellOrderRemark(newSellOrderGroup.getSellOrderRemark());
         sellOrderGroup.setCustomerId(newSellOrderGroup.getCustomerId());
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        sellOrderGroup.setSellTime(format.format(newSellOrderGroup.getSellTime()));
+        sellOrderGroup.setSellTime(newSellOrderGroup.getSellTime());
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
-        sellOrderGroup.setSellStatus(0);
+        sellOrderGroup.setSellStatus(1);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
+        sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
         // 新建进货单
         sellOrderGroupMapper.insertSellOrderGroup(sellOrderGroup);
         // sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);
@@ -149,8 +149,11 @@ public class SellOrderServiceImpl implements SellOrderService {
                 double sellNumber = sellOrder.getSellNumber();
                 // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
                 Integer goodsId = sellOrder.getSellGoodsId();
+
                 Goods goods = new Goods();
                 goods.setGoodsId(goodsId);
+                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
+
                 List<Goods> goodsList = goodsMapper.queryGoods(goods);
                 if (goodsList != null && goodsList.size() > 0) {
                     // 查询到了这个货物的信息
@@ -168,6 +171,8 @@ public class SellOrderServiceImpl implements SellOrderService {
                 Integer goodsId = sellOrder.getSellGoodsId();
                 Goods goods = new Goods();
                 goods.setGoodsId(goodsId);
+                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
+
                 List<Goods> goodsList = goodsMapper.queryGoods(goods);
                 if (goodsList != null && goodsList.size() > 0) {
                     // 查询到了这个货物的信息
@@ -229,9 +234,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     public List<SellOrderGroup>  getUnpaidOrder() {
         SellOrderGroup order = new SellOrderGroup();
         //判断销售单的类型
-        if(order.getSellOrderType() == 1)
-            return null;
-
+        order.setSellOrderType(0);
         order.setSellStatus(2);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
@@ -240,8 +243,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     public List<SellOrderGroup> getUnRefundOrder() {
         SellOrderGroup order = new SellOrderGroup();
         //判断销售单的类型
-        if(order.getSellOrderType() == 1)
-            return null;
+        order.setSellOrderType(0);
         order.setSellStatus(4);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }

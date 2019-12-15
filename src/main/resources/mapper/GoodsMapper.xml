@@ -48,10 +48,10 @@
                 and g.goods_id = #{goodsId}
             </if>
             <if test="goodsName != null and goodsName != ''">
-                and g.goods_name like #{goodsName}
+                and g.goods_name like concat('%', #{goodsName}, '%')
             </if>
             <if test="goodsSpecification != null and goodsSpecification != ''">
-                and g.specification like #{goodsSpecification};
+                and g.specification like concat('%', #{goodsSpecification}, '%')
             </if>
             <if test="warehouseId != null and warehouseId != 0">
                 and warehouse_id = #{warehouseId}
@@ -71,7 +71,7 @@
                 and g.goods_id = #{goodsId}
             </if>
             <if test="goodsName != null and goodsName != ''">
-                and g.goods_name = #{goodsName}
+                and g.goods_name like #{goodsName}
             </if>
             <if test="goodsSpecification != null and goodsSpecification != ''">
                 and g.specification like #{goodsSpecification};

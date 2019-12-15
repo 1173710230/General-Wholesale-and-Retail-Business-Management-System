@@ -6,7 +6,7 @@
 <mapper namespace="com.example.project.dao.SellOrderGroupMapper">
     <resultMap id="sellOrderGroupMap" type="SellOrderGroup">
         <id column="group_id" property="sellOrderGroupId"/>
-<!--        <result column="group_name" property="groupName"/>-->
+        <!--        <result column="group_name" property="groupName"/>-->
         <result column="sell_time" property="sellTime"/>
         <result column="order_status" property="sellStatus"/>
         <result column="remark" property="sellOrderRemark"/>
@@ -36,17 +36,22 @@
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
-        insert into sell_order_group (group_name, sell_time, remark, order_type, customer_id)
-        values (#{groupName}, #{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId});
+        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id)
+        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId});
 
         set @group_id = last_insert_id();
 
         # 插入到销售记录 sell_order表中
         insert into sell_order (sell_unit_price, sell_number, goods_id, group_id)
         values
-        <foreach collection="list" item="sellOrders" separator=",">
-            (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId}, @group_id)
+        <foreach collection="sellOrders" item="order" separator=",">
+            (#{order.sellUnitPrice}, #{order.sellNumber}, #{order.sellGoodsId}, @group_id)
         </foreach>
+
+        <selectKey resultType="SellOrderGroup" order="AFTER">
+            select @group_id;
+        </selectKey>
+
     </insert>
 
     <update id="updateSellOrderGroup" parameterType="SellOrderGroup">
@@ -54,9 +59,6 @@
         <set>
             <if test="sellStatus != null">
                 order_status = #{sellStatus},
-            </if>
-            <if test="sellUnitPrice != null and sellUnitPrice != ''">
-                sell_unit_price = #{sellUnitPrice},
             </if>
             <if test="sellTime != null and sellTime != ''">
                 sell_time = #{sellTime},
@@ -68,7 +70,7 @@
                 customer_id = #{customerId},
             </if>
         </set>
-        where out_id = #{sellOrderId};
+        where group_id = #{sellOrderGroupId};
     </update>
 
     <select id="querySellOrderGroup" parameterType="SellOrderGroup" resultMap="sellOrderGroupMap">
@@ -77,7 +79,7 @@
         customer c,
         sell_order so,
         goods g,
-             warehouse w
+        warehouse w
         <where>
             so.group_id = sog.group_id
             and c.customer_id = sog.customer_id
@@ -86,12 +88,14 @@
             <if test="sellOrderGroupId != null">
                 and group_id = #{sellOrderGroupId}
             </if>
-            # 到底有没有warehouseId？
             <if test="customerId != null">
                 and customer_id = #{customerId}
             </if>
             <if test="sellStatus != null">
                 and order_status = #{sellStatus}
+            </if>
+            <if test="sellOrderType != null">
+                and order_type = #{sellOrderType}
             </if>
             <if test="sellOrderRemark != null and sellOrderRemark != ''">
                 and remark like #{sellOrderRemark}

@@ -42,7 +42,7 @@
                     location.reload();
                 },
                 error: function () {
-                    alert("审核失败！");
+                    alert("审核失败！您可能无权审核销售单。");
                 }
             })
         }
@@ -53,24 +53,63 @@
             type: "GET",
             url: "/sellOrder/getAllSellOrderUnderCheck",
             dataType:"json",
-            success: function (list) {
-                if (list !== null){
-                    for(var i = 0; i < list.length; i++){
-                        var id = list[i].sellOrderId;
-                        var goodsId = list[i].sellGoodsId;
-                        var price = list[i].sellUnitPrice;
-                        var number = list[i].sellNumber;
-                        var customerId = list[i].customerId;
-                        var remark = list[i].sellOrderRemark;
-                        var insert = `<tr><td>${id}</td><td id="${'goodsId' + id}">${goodsId}</td><td id="${'price' + id}">${price}</td>
-<td id="${'number' + id}">${number}</td><td id="${'customerId' + id}">${customerId}</td><td id="${'remark' + id}">${remark}</td>
-<td><table>
-<td><button class="btn btn-xs btn-primary" onclick="changeOrder(${id})">修改订单</button></td>
-<td><button class="btn btn-xs btn-primary" onclick="deleteOrder(${id})">删除订单</button></td>
-<td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${true})">通过</button></td>
-<td><button class="btn btn-xs btn-primary" onclick="examine(${id}, ${false})">不通过</button></td></table></td></tr>`;
-                        $("#unexamined").append(insert);
+            success: function (result) {
+                console.log(result);
+                for (var order of result) {
+                    var recordLength = order.sellOrders.length;
+
+                    if (recordLength === undefined || recordLength === null) {
+                        // 不存在就记作1
+                        recordLength = 1;
                     }
+
+                    var index = 0;
+
+                    let content = ``;
+                    content += `<tr>`;
+                    content += `<td rowspan="${recordLength}">${order.sellOrderGroupId}</td>`;
+
+                    // 第一次要包住未合并的内容
+                    var record = order.sellOrders[index];
+                    content += `<td>${record.sellGoodsId}</td>`;
+                    content += `<td>${record.sellNumber}</td>`;
+                    content += `<td>${record.sellUnitPrice}</td>`;
+                    index += 1;
+
+                    content += `<td rowspan="${recordLength}">${order.customerId}</td>`;
+                    // content += `<td rowspan="${recordLength}">${order.sellTime}</td>`;
+                    var orderType = '批发';
+                    if (order.sellOrderType === 1) {
+                        orderType = '零售';
+                    }
+                    content += `<td rowspan="${recordLength}">${orderType}</td>`;
+                    var orderStatus = '未付款';
+                    content += `<td rowspan="${recordLength}">${orderStatus}</td>`;
+                    content += `<td rowspan="${recordLength}">${order.sellOrderRemark}</td>`;
+                    content += `<td rowspan="${recordLength}">${order.profit}</td><td rowspan="${recordLength}">${order.salary}</td>`;
+
+                    content +=
+                        `<td rowspan="${recordLength}">
+<button class="btn btn-xs btn-primary" onclick="changeOrder(${order.sellOrderGroupId})">修改订单</button>
+<button class="btn btn-xs btn-primary btn-danger" onclick="deleteOrder('${order.sellOrderGroupId}')">删除订单</button>
+<button class="btn btn-xs btn-primary btn-success" onclick="examine('${order.sellOrderGroupId}', ${true})">通过</button>
+<button class="btn btn-xs btn-primary btn-secondary" onclick="examine('${order.sellOrderGroupId}', ${false})">不通过</button>
+</td>`;
+
+                    content += `</tr>`;
+
+                    while (index < recordLength) {
+                        // 当index比长度小的时候进行循环，这些自己加上tr标签
+                        record = order.sellOrders[index];
+                        content += `<tr>`;
+                        content += `<td>${record.sellGoodsId}</td>`;
+                        content += `<td>${record.sellNumber}</td>`;
+                        content += `<td>${record.sellUnitPrice}</td>`;
+                        content += `</tr>`;
+                        index += 1;
+                    }
+
+                    $('#order-table').append(content);
                 }
             },
             error: function () {
@@ -432,26 +471,25 @@
 
             <!-- ############ PAGE START-->
             <div class="row-col b-b">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="padding">
                         <div class="margin">
                             <h5 class="m-b-0 _300">欢迎回来！</h5>
                         </div>
                         <div class="box-header">
-                            <h2>未审核订单</h2>
+                            <h2>待审核订单</h2>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table table-striped b-t b-b">
-                                <thead>
-                                <tr><th>ID</th><th>商品ID</th><th>单价</th><th>数量</th><th>顾客ID</th><th>备注</th><th>操作</th></tr>
-                                </thead>
-                                <tbody id="unexamined">
-                                </tbody>
-                            </table>
-                        </div>
+                        <!--                        从这里修改-->
+                        <table class="table table-striped b-t b-b">
+                            <thead>
+                            <tr><th>销售单ID</th><th>商品ID</th><th>数量</th><th>单价</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
+                            </thead>
+                            <tbody id="order-table">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="col-md-6" id="changeArea1"></div>
+                <!--                <div class="col-md-3" id="changeArea"></div>-->
             </div>
 
             <div class="modal fade inactive" id="chat" data-backdrop="false">
