@@ -139,12 +139,8 @@ public class SellOrderController {
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public boolean checkOrder(HttpSession req, int sellOrderId, boolean opinion){
-    int userStatus = (int) req.getAttribute("userStatus");
-    if(userStatus==0||userStatus==1) {
-      return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
-    }
-    return false;
+  public boolean checkOrder(int sellOrderId, boolean opinion){
+    return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
   }
 
   /**
@@ -165,12 +161,8 @@ public class SellOrderController {
    */
   @RequestMapping("/refund")
   @ResponseBody
-  public boolean refundSellOrder(int sellOrderId, HttpSession req){
-    int userStatus = (int) req.getAttribute("userStatus");
-    if(userStatus==0) {
-      return sellOrderService.refundSellOrder(sellOrderId);
-    }
-    return false;
+  public boolean refundSellOrder(int sellOrderId){
+    return sellOrderService.refundSellOrder(sellOrderId);
   }
 
 }
