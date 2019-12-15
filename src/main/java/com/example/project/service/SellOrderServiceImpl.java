@@ -46,6 +46,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSellStatus(0);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
+        sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
         // 新建进货单
         sellOrderGroupMapper.insertSellOrderGroup(sellOrderGroup);
         // sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);

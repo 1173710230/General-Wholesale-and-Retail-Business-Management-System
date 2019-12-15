@@ -36,17 +36,22 @@
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
-        insert into sell_order_group (group_name, sell_time, remark, order_type, customer_id)
-        values (#{groupName}, #{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId});
+        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id)
+        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId});
 
         set @group_id = last_insert_id();
 
         # 插入到销售记录 sell_order表中
         insert into sell_order (sell_unit_price, sell_number, goods_id, group_id)
         values
-        <foreach collection="list" item="sellOrders" separator=",">
-            (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId}, @group_id)
+        <foreach collection="sellOrders" item="order" separator=",">
+            (#{order.sellUnitPrice}, #{order.sellNumber}, #{order.sellGoodsId}, @group_id)
         </foreach>
+
+        <selectKey resultType="SellOrderGroup" order="AFTER">
+            select @group_id;
+        </selectKey>
+
     </insert>
 
     <update id="updateSellOrderGroup" parameterType="SellOrderGroup">

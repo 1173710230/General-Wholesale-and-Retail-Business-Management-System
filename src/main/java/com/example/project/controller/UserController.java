@@ -30,11 +30,8 @@ public class UserController {
    */
   @RequestMapping(value = "/login")
   @ResponseBody
-  public boolean login(HttpServletRequest req, int userId, String password){
+  public boolean login(int userId, String password){
     //登录
-    HttpSession session = req.getSession();
-    int userStatus = userService.getUserById(userId).getStatus();
-    session.setAttribute("userStatus", userStatus);
     return userService.login(userId, password);
   }
 

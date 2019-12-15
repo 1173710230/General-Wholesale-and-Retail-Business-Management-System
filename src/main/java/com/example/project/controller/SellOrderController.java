@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -44,13 +46,25 @@ public class SellOrderController {
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
   public boolean addSellOrderGroup(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
-                                   int[] goodsId, double[] sellUnitPrice, double[] goodsNumber){
+                                   String goodsId, String sellUnitPrice,String goodsNumber){
     List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
-    for(int i = 0; i< goodsId.length; i++){
-      allSellOrderInGroup.add(new SellOrder(-1, goodsNumber[i], sellUnitPrice[i], goodsId[i]));
+    System.out.println("goodsId"+ (goodsId));
+
+    String[] goodsIds = goodsId.split(",");
+    String[] sellUnitPrices = sellUnitPrice.split(",");
+    String[] goodsNumbers = goodsNumber.split(",");
+
+    System.out.println(Arrays.toString(goodsIds));
+
+
+    for(int i = 0; i< goodsIds.length; i++){
+      allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
     }
+    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    String time  = (format.format(new Date(System.currentTimeMillis())));
+    System.out.println(time);
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
-    return sellOrderService.addSellOrder(new SellOrderGroup(-1, new Date(System.currentTimeMillis()).toLocaleString(),
+    return sellOrderService.addSellOrder(new SellOrderGroup(-1, time,
         sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
   }
 
@@ -125,12 +139,8 @@ public class SellOrderController {
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public boolean checkOrder(HttpSession req, int sellOrderId, boolean opinion){
-    int userStatus = (int) req.getAttribute("userStatus");
-    if(userStatus==0||userStatus==1) {
-      return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
-    }
-    return false;
+  public boolean checkOrder(int sellOrderId, boolean opinion){
+    return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
   }
 
   /**
@@ -151,12 +161,8 @@ public class SellOrderController {
    */
   @RequestMapping("/refund")
   @ResponseBody
-  public boolean refundSellOrder(int sellOrderId, HttpSession req){
-    int userStatus = (int) req.getAttribute("userStatus");
-    if(userStatus==0) {
-      return sellOrderService.refundSellOrder(sellOrderId);
-    }
-    return false;
+  public boolean refundSellOrder(int sellOrderId){
+    return sellOrderService.refundSellOrder(sellOrderId);
   }
 
 }
