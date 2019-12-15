@@ -32,28 +32,30 @@
     <!--    开销售单：上交服务器-->
     <script>
         function addOver() {
-            var status = $("input[name='radio1']:checked").val();
+            var status = $("input[name='typeRadio']:checked").val();
             var wareId = $("#wareId").val();
             var customerId = $("#customerId").val();
             var remark = $("#remark").val();
+            alert(status);
             var goodsId = '';
             var price = '';
             var number = '';
             for(var i = 1;i<6;i++){
-                goodsId += $("goodid" + i).val();
+                goodsId += $("#goodid" + i).val();
                 goodsId += ",";
                 price += $("#price" + i).val();
                 price += ",";
                 number += $("#number" + i).val();
                 number += ",";
             }
-
+            console.log(price);
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/add",
                 dataType: "json",
                 data: {warehouseId: wareId, sellOrderType: status, sellOrderRemark: remark,
                     customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number},
+                traditional: true,
                 success: function (bool) {
                     if (bool) {
                         alert("添加成功！");
