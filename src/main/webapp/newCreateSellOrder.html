@@ -32,7 +32,7 @@
     <!--    开销售单：上交服务器-->
     <script>
         function addOver() {
-            var status = $("#status").val();
+            var status = $("input[name='radio1']:checked").val();
             var wareId = $("#wareId").val();
             var customerId = $("#customerId").val();
             var remark = $("#remark").val();
@@ -56,7 +56,6 @@
                     } else {
                         alert("添加失败，出现错误！");
                     }
-
                     window.location.href="main.html"
                 },
                 error: function () {
@@ -334,8 +333,8 @@
                         <div class="tab-pane active" id="tab-1">
                             <form role="form" class="p-a-md col-md-6">
                                 <div class="form-group">
-                                    <label for="status">销售单类型</label>
-                                    <input type="text" class="form-control" id="status">
+                                    <input type="radio" id="status1" value="0" name="typeRadio">批发
+                                    <input type="radio" id="status2" value="1" name="typeRadio">零售
                                 </div>
                                 <div class="form-group">
                                     <label for="wareId">仓库ID</label>
