@@ -47,6 +47,11 @@
         <foreach collection="sellOrders" item="order" separator=",">
             (#{order.sellUnitPrice}, #{order.sellNumber}, #{order.sellGoodsId}, @group_id)
         </foreach>
+
+        <selectKey resultType="SellOrderGroup" order="AFTER">
+            select @group_id;
+        </selectKey>
+
     </insert>
 
     <update id="updateSellOrderGroup" parameterType="SellOrderGroup">
