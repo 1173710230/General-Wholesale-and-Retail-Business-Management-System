@@ -48,6 +48,7 @@ public class GoodsServiceImpl implements GoodsService{
             goodsMapper.deleteGoodsById(goodsId);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }
@@ -63,6 +64,7 @@ public class GoodsServiceImpl implements GoodsService{
             goodsMapper.updateGoods(goods);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

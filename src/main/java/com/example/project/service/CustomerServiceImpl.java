@@ -54,6 +54,7 @@ public class CustomerServiceImpl implements CustomerService{
             customerMapper.setTelById(customerId, tel);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }

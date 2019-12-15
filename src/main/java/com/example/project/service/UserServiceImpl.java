@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService{
             this.userMapper.updateUser(user);
             return true;
         } catch (DataAccessException ex){
+            ex.printStackTrace();
             return false;
         }
 

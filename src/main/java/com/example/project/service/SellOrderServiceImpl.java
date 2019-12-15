@@ -71,6 +71,7 @@ public class SellOrderServiceImpl implements SellOrderService {
             return true;
         } catch (DataAccessException ex) {
             // 不存在这一订货单
+            ex.printStackTrace();
             return false;
         }
     }
@@ -111,7 +112,8 @@ public class SellOrderServiceImpl implements SellOrderService {
             }
             return true;
         } catch (DataAccessException ex) {
-            //销售单不再数据库中
+            //
+            ex.printStackTrace();
             return false;
         }
     }

@@ -76,6 +76,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             wareHouseMapper.addGoodsToWarehouse(goods);
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }
@@ -137,6 +138,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             }
             return true;
         } catch (DataAccessException ex) {
+            ex.printStackTrace();
             return false;
         }
     }
@@ -147,6 +149,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             wareHouseMapper.insert(warehouseName);
             return true;
         } catch(DataAccessException ex){
+            ex.printStackTrace();
             return false;
         }
     }
@@ -157,6 +160,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             this.wareHouseMapper.updateWarehouseNameById(warehouseId, newName);
             return true;
         } catch(DataAccessException ex){
+            ex.printStackTrace();
             return false;
         }
     }
@@ -170,6 +174,7 @@ public class WarehouseServiceImpl implements WarehouseService{
             } else
                 return false;
         } catch (DataAccessException ex){
+            ex.printStackTrace();
             return false;
         }
     }
