@@ -112,6 +112,41 @@
             }
         })
     </script>
+<!--    <script>-->
+<!--        function get(){-->
+<!--            $.ajax({-->
+<!--                type: "GET",-->
+<!--                url: "/customer/allCustomers",-->
+<!--                dataType:"json",-->
+<!--                success: function (list) {-->
+<!--                    if (list !== null){-->
+<!--                        for(var i = 0; i < list.length; i++){-->
+<!--                            var id = list[i].customerId;-->
+<!--                            var name = list[i].customerName;-->
+<!--                            var tel = list[i].customerTel;-->
+<!--                            var sellOrders = list[i].historySellOrderId;-->
+<!--                            let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'tel' + id}">${tel}</td><td>`;-->
+<!--                            if(sellOrders !== null){-->
+<!--                                insert += `<table>`;-->
+<!--                                for (var j = 0; j <sellOrders.length; j++){-->
+<!--                                    insert += `<tr><td>${sellOrders.get(j)}</td></tr>`;-->
+<!--                                }-->
+<!--                                insert += `</table></td>`-->
+<!--                            }-->
+
+<!--                            insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改资料</button>-->
+<!--<button type="button" class="btn btn-primary btn-xs" onclick="deleteCustomer(${id})">删除用户</button></td></tr>`;-->
+<!--                            $("#table").append(insert);-->
+<!--                        }-->
+<!--                    }-->
+<!--                },-->
+<!--                error: function () {-->
+<!--                    alert("获取失败！");-->
+<!--                }-->
+<!--            })-->
+<!--        }-->
+
+<!--    </script>-->
     <!--    删除客户函数-->
     <script>
         function deleteCustomer(id) {
@@ -131,7 +166,7 @@
         }
     </script>
 </head>
-<body>
+<body onload="get()">
 <div class="app" id="app">
 
     <!-- ############ LAYOUT START-->
@@ -295,6 +330,32 @@
                     </i>
                   </span>
                                 <span class="nav-text">库存统计查询</span>
+                            </a>
+                        </li>
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">仓库管理</small>
+                        </li>
+                        <li>
+                            <a href="newWarehouseManage.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe1b8;
+                      <span ui-include="'assets/images/i_8.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">仓库管理</span>
+                            </a>
+                        </li>
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">收银台</small>
+                        </li>
+                        <li>
+                            <a href="checkoutCounter.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe896;
+                      <span ui-include="'assets/images/i_7.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">收银台</span>
                             </a>
                         </li>
                     </ul>

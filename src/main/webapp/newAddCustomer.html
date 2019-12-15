@@ -35,10 +35,16 @@
         function addOver() {
             var name = $("#customerName1").val();
             var tel = $("#address").val();
+            var status = $("#status").val();
+            if(status==='零售'){
+                status = 1
+            } else {
+                status = 0
+            }
             $.ajax({
                 type:"GET",
-                url : "/src/java/com.example.project/controller/CustomersController/customer/add",
-                data: {name: name, tel: tel},
+                url : "/customer/add",
+                data: {name: name, tel: tel, status: status},
                 success: function (list) {
                     alert("添加成功！");
                     //此处可能加true参数表示重新获取网页
@@ -217,6 +223,32 @@
                                 <span class="nav-text">库存统计查询</span>
                             </a>
                         </li>
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">仓库管理</small>
+                        </li>
+                        <li>
+                            <a href="newWarehouseManage.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe1b8;
+                      <span ui-include="'assets/images/i_8.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">仓库管理</span>
+                            </a>
+                        </li>
+                        <li class="nav-header hidden-folded">
+                            <small class="text-muted">收银台</small>
+                        </li>
+                        <li>
+                            <a href="checkoutCounter.html" >
+                  <span class="nav-icon">
+                    <i class="material-icons">&#xe896;
+                      <span ui-include="'assets/images/i_7.svg'"></span>
+                    </i>
+                  </span>
+                                <span class="nav-text">收银台</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -300,7 +332,10 @@
                                     <label>联系方式</label>
                                     <input type="text" class="form-control" id="address">
                                 </div>
-
+                                <div class="form-group">
+                                    <label>状态</label>
+                                    <input type="text" class="form-control" id="status">
+                                </div>
                                 <button type="button" class="btn btn-info m-t" onclick="addOver()">提交</button>
                             </form>
                         </div>
