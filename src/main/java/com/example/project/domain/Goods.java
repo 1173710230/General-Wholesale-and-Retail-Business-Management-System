@@ -57,8 +57,9 @@ public class Goods {
 
     @Override
     public int hashCode() {
-        return Objects.hash(goodsId);
+        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouseId, goodsNumber);
     }
+
 
     public Integer getWarehouseId() {
         return warehouseId;
@@ -74,5 +75,16 @@ public class Goods {
 
     public void setGoodsNumber(Double goodsNumber) {
         this.goodsNumber = goodsNumber;
+    }
+
+    @Override
+    public String toString() {
+        return "Goods{" +
+                "goodsId=" + goodsId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsSpecification='" + goodsSpecification + '\'' +
+                ", warehouseId=" + warehouseId +
+                ", goodsNumber=" + goodsNumber +
+                '}';
     }
 }
