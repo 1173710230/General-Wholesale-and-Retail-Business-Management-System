@@ -55,9 +55,10 @@
             dataType:"json",
             success: function (result) {
                 console.log(result);
+
                 for (var order of result) {
                     var recordLength = order.sellOrders.length;
-
+                    var id = order.sellOrderGroupId;
                     if (recordLength === undefined || recordLength === null) {
                         // 不存在就记作1
                         recordLength = 1;
@@ -71,21 +72,22 @@
 
                     // 第一次要包住未合并的内容
                     var record = order.sellOrders[index];
-                    content += `<td>${record.sellGoodsId}</td>`;
-                    content += `<td>${record.sellNumber}</td>`;
-                    content += `<td>${record.sellUnitPrice}</td>`;
+                    content += `<td id=${"goodsId0" + id}>${record.sellGoodsId}</td>`;
+                    content += `<td id=${'wareId' + id}>${order.warehouseId}</td>`;
+                    content += `<td id=${"number0" + id}>${record.sellNumber}</td>`;
+                    content += `<td id=${'price0' + id}>${record.sellUnitPrice}</td>`;
                     index += 1;
 
-                    content += `<td rowspan="${recordLength}">${order.customerId}</td>`;
+                    content += `<td rowspan="${recordLength}" id=${"customerId" + id}>${order.customerId}</td>`;
                     // content += `<td rowspan="${recordLength}">${order.sellTime}</td>`;
                     var orderType = '批发';
                     if (order.sellOrderType === 1) {
                         orderType = '零售';
                     }
-                    content += `<td rowspan="${recordLength}">${orderType}</td>`;
+                    content += `<td rowspan="${recordLength}" id=${'type' + id}>${orderType}</td>`;
                     var orderStatus = '未付款';
                     content += `<td rowspan="${recordLength}">${orderStatus}</td>`;
-                    content += `<td rowspan="${recordLength}">${order.sellOrderRemark}</td>`;
+                    content += `<td rowspan="${recordLength}" id=${'remark' + id}>${order.sellOrderRemark}</td>`;
                     content += `<td rowspan="${recordLength}">${order.profit}</td><td rowspan="${recordLength}">${order.salary}</td>`;
 
                     content +=
@@ -102,13 +104,12 @@
                         // 当index比长度小的时候进行循环，这些自己加上tr标签
                         record = order.sellOrders[index];
                         content += `<tr>`;
-                        content += `<td>${record.sellGoodsId}</td>`;
-                        content += `<td>${record.sellNumber}</td>`;
-                        content += `<td>${record.sellUnitPrice}</td>`;
+                        content += `<td id=${'goodsId' + index + id}>${record.sellGoodsId}</td>`;
+                        content += `<td id=${'number' + index + id}>${record.sellNumber}</td>`;
+                        content += `<td id=${'price' + index + id}>${record.sellUnitPrice}</td>`;
                         content += `</tr>`;
                         index += 1;
                     }
-
                     $('#order-table').append(content);
                 }
             },
@@ -119,24 +120,34 @@
     </script>
     <!--    修改订单-->
     <script>
+        var unexaminedCount = 0;
         function changeOrder(id){
             $("#changeOrder").remove();
             let insertHTML = `<div class="panel panel-default" id="changeOrder">
                     <div class="panel-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="goodsId">商品ID</label>
-                                <input type="text" class="form-control" id="goodsId" placeholder="${$('#goodsId' + id).html()}">
-                            </div>
-                            <div class="form-group">
-                                <label for="price">商品ID</label>
-                                <input type="text" class="form-control" id="price" placeholder="${$('#price' + id).html()}">
-                            </div>
-                            <div class="form-group">
-                                <label for="number">数量</label>
-                                <input type="text" class="form-control" id="number" placeholder="${$('#number' + id).html()}">
-                            </div>
-                            <div class="form-group">
+                        <form><table><tr><th>商品ID</th><th>单价</th><th>数量</th></tr>`;
+            var goodsId = $("#goodsId" + unexaminedCount + id).html();
+            var price = $("#price" + unexaminedCount + id).html();
+            var number = $("#number" + unexaminedCount + id).html();
+            while (goodsId !== undefined || price !== undefined || number !== undefined){
+                insertHTML += `<td><div class="form-group">
+                                <input type="text" class="form-control" id=${"goodsId" + unexaminedCount}
+                                placeholder="${goodsId}">
+                            </div></td>
+                            <td><div class="form-group">
+                                <input type="text" class="form-control" id=${"price" + unexaminedCount}
+                                placeholder="${price}">
+                            </div></td>
+                            <td><div class="form-group">
+                                <input type="text" class="form-control" id=${"number" + unexaminedCount}
+                                placeholder="${number}">
+                            </div></td>`;
+                unexaminedCount++;
+                goodsId = $("#goodsId" + unexaminedCount + id).html();
+                price = $("#price" + unexaminedCount + id).html();
+                number = $("#number" + unexaminedCount + id).html();
+            }
+            insertHTML +=  `</table><div class="form-group">
                                 <label for="customerId">客户ID</label>
                                 <input type="text" class="form-control" id="customerId" placeholder="${$('#customerId' + id).html()}">
                             </div>
@@ -148,26 +159,38 @@
                         </form>
                     </div>
                 </div>`;
-            $("#changeArea1").append(insertHTML);
+            $("#changeArea").append(insertHTML);
         }
     </script>
     <!--    提交更改-->
     <script>
         function changeOver(id) {
-            var goodsId = $("#goodsId").val();
-            var price = $("#price").val();
-            var number = $("#number").val();
+            var goodsId = '';
+            var price = '';
+            var number = '';
+            console.log("price" + $("#price0").val() +"asdasdasd");
+            for (var i = 0;i<unexaminedCount;i++){
+                if ($("#goodsId" + i).val() === '') {
+                    goodsId += $("#goodsId" + i + id).html() + ',';
+
+                } else {
+                    goodsId += $("#goodsId" + i).val() + ',';
+                }
+                if ($("#price" + i).val() === ''){
+
+                    price += $("#price" + i + id).html() + ',';
+                } else {
+                    price += $("#price" + i).val() + ',';
+                }
+                if ($("#number" + i).val() === ''){
+
+                    number += $("#number" + i + id).html() + ',';
+                } else {
+                    number += $("#number" + i).val() + ',';
+                }
+            }
             var customerId = $("#customerId").val();
             var remark = $("#remark").val();
-            if (goodsId.length === 0) {
-                goodsId = $('#goodsId' + id).html();
-            }
-            if (price.length === 0) {
-                price = $('#price' + id).html();
-            }
-            if (number.length === 0) {
-                number = $('#number' + id).html();
-            }
             if (customerId.length === 0) {
                 customerId = $('#customerId' + id).html();
             }
@@ -175,11 +198,27 @@
                 remark = $('#remark' + id).html();
             }
 
+            var wareId = $("#wareId" + id).html();
+            var type = $("#type" + id).html();
+            if(type==='零售'){
+                type = 1;
+            } else {
+                type = 0;
+            }
+            // console.log(unexaminedCount);
+            // console.log(goodsId);
+            // console.log(price);
+            // console.log(number);
+            // console.log(type);
+            // console.log(remark);
+            // console.log(wareId);
+            // console.log(customerId);
             $.ajax({
                 type:"GET",
-                url : "/sellOrder/update",
+                url : "/sellOrder/updateSellOrder",
                 dataType: "json",
-                data: {goodsNumber: number, sellUnitPrice: price, remark: remark, goodsId: goodsId, customerId: customerId},
+                data: {warehouseId:wareId, sellOrderType: type, sellOrderRemark: remark,
+                    customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number},
                 success: function (bool) {
                     if (bool) {
                         alert("修改成功！");
@@ -482,16 +521,16 @@
                         <!--                        从这里修改-->
                         <table class="table table-striped b-t b-b">
                             <thead>
-                            <tr><th>销售单ID</th><th>商品ID</th><th>数量</th><th>单价</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
+                            <tr><th>销售单ID</th><th>商品ID</th><th>仓库ID</th><th>数量</th><th>单价</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
                             </thead>
                             <tbody id="order-table">
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!--                <div class="col-md-3" id="changeArea"></div>-->
-            </div>
 
+            </div>
+            <div class="col-md-6" id="changeArea"></div>
             <div class="modal fade inactive" id="chat" data-backdrop="false">
                 <div class="right w-xxl grey lt b-l">
                     <div ui-include="'../views/blocks/modal.chat.html'"></div>
