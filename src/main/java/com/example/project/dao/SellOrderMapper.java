@@ -10,7 +10,7 @@ import java.util.List;
 public interface SellOrderMapper {
 
     /**
-     * 增加一个销售记录。
+     * 增加一个销售记录。/
      *
      * @param sellOrder 新增加的销售记录对象，这个sellOrder对象不需要有ID
      */

@@ -59,6 +59,7 @@ public class GoodsServiceImpl implements GoodsService{
         goods.setGoodsName(goodsName);
         goods.setGoodsSpecification(spec);
         goods.setGoodsId(goodsId);
+        System.out.println("asdasdasdasdsadasd" + goodsId);
         try {
             //修改货物表中货物信息（按id查询所需）
             goodsMapper.updateGoods(goods);

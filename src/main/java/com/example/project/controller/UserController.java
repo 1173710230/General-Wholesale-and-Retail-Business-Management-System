@@ -7,13 +7,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 //这个是用户的controller，处理用户的数据
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class UserController extends HttpServlet {
   @Autowired
   private final UserService userService;
 
@@ -21,18 +25,31 @@ public class UserController {
     this.userService = userService;
   }
 
-
   /**
-   * 用户登录  //todo: 尚未完成拦截器
-   * @param userId 用户id
-   * @param password 用户的密码
-   * @return 登录是否成功
+   * 处理请求，并实现登录功能，并将数据存储在session中
+   * @param request 前端向controller传参
+   * @param response  controller向前端处理
+   * @throws IOException IOException
    */
-  @RequestMapping(value = "/login")
-  @ResponseBody
-  public boolean login(int userId, String password){
-    //登录
-    return userService.login(userId, password);
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
+     request.setCharacterEncoding("utf-8");
+     //接收参数
+     int userId = Integer.parseInt(request.getParameter("userId"));
+     String userPassword = request.getParameter("userPassword");
+     boolean loginSuccess = userService.login(userId, userPassword);
+     if(loginSuccess){
+       HttpSession session = request.getSession();
+       session.setAttribute("userId", userId);
+       session.setAttribute("userPassword", userPassword);
+       response.sendRedirect("/index.html");  //登录成功重定向到主页
+     }else {  //登录失败，我这是重定向登录页面，要有修改告知我（ps: 这个页面暂时没有）。
+       response.sendRedirect("/login.html");
+     }
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
   }
 
   /**
