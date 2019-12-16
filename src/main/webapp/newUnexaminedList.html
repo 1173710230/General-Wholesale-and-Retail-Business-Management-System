@@ -37,9 +37,14 @@
                 url : "/sellOrder/checkOrder",
                 dataType: "json",
                 data: {sellOrderId: id, opinion: boolean},
-                success: function () {
-                    alert("操作成功！");
-                    location.reload();
+                success: function (flag) {
+                    if(flag){
+                        alert("操作成功！");
+                        location.reload();
+                    } else {
+                        alert("操作失败！");
+                    }
+
                 },
                 error: function () {
                     alert("审核失败！您可能无权审核销售单。");

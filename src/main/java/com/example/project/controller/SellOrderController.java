@@ -159,7 +159,8 @@ public class SellOrderController{
   @ResponseBody
   public boolean checkOrder(HttpSession httpSession, int sellOrderId, boolean opinion){
     int userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
-    if(userStatus==0|userStatus==1){ //只允许经理，店长check
+    System.out.println(userStatus);
+    if(userStatus==0||userStatus==1){ //只允许经理，店长check
       return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
     }else{ //不允许店员check
       return false;
