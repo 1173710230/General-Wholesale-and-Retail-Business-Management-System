@@ -18,18 +18,18 @@
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">
-        SELECT customer_id, customer_name, customer_tel
+        SELECT *
         FROM customer
     </select>
 
     <select id="searchByCustomerName" parameterType="String" resultMap="customers">
-        SELECT customer_id, customer_name, customer_tel
+        SELECT *
         FROM customer
         WHERE customer.customer_name like concat('%', #{customerName}, '%')
     </select>
 
     <select id="searchById" parameterType="int" resultType="Customer">
-        SELECT customer_id , customer_name , customer_tel
+        SELECT *
         FROM customer c
         WHERE c.customer_id = #{customerId}
     </select>
