@@ -2,6 +2,7 @@ package com.example.project.dao;
 
 import com.example.project.domain.SellOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface SellOrderMapper {
      *
      * @param sellOrder 新增加的销售记录对象，这个sellOrder对象不需要有ID
      */
-    void addSellOrder(SellOrder sellOrder);
+    void addSellOrder(@Param("sellOrder") SellOrder sellOrder, @Param("groupId") Integer groupId);
 
     /**
      * 根据传入的对象修改销售记录。
