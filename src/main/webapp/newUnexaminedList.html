@@ -124,6 +124,9 @@
         var unexaminedCount = 0;
         function changeOrder(id){
             $("#changeArea").html('');
+            $("#change1").remove();
+            $("#change2").remove();
+            $("#change3").remove();
             let insertHTML = `<div class="panel panel-default" id="changeOrder">
                     <div class="panel-body">
                         <form><table><tr><th>商品ID</th><th>单价</th><th>数量</th></tr>`;
@@ -131,7 +134,7 @@
             var price = $("#price" + unexaminedCount + id).html();
             var number = $("#number" + unexaminedCount + id).html();
             while (goodsId !== undefined || price !== undefined || number !== undefined){
-                insertHTML += `<td><div class="form-group">
+                insertHTML += `<tr><td><div class="form-group">
                                 <input type="text" class="form-control" id=${"goodsId" + unexaminedCount}
                                 placeholder="${goodsId}">
                             </div></td>
@@ -142,24 +145,24 @@
                             <td><div class="form-group">
                                 <input type="text" class="form-control" id=${"number" + unexaminedCount}
                                 placeholder="${number}">
-                            </div></td><br/>`;
+                            </div></td></tr>`;
                 unexaminedCount++;
                 goodsId = $("#goodsId" + unexaminedCount + id).html();
                 price = $("#price" + unexaminedCount + id).html();
                 number = $("#number" + unexaminedCount + id).html();
             }
-            insertHTML +=  `</table><div class="form-group">
+            insertHTML +=  `</table><div class="form-group" id="change1">
                                 <label for="customerId">客户ID</label>
                                 <input type="text" class="form-control" id="customerId" placeholder="${$('#customerId' + id).html()}">
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="change2">
                                 <label for="remark">备注</label>
                                 <input type="text" class="form-control" id="remark" placeholder="${$('#remark' + id).html()}">
                             </div>
-                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
+                            <button class="btn btn-default" id="change3" type="button" onclick="changeOver(${id})">提交</button>
                         </form>
                     </div>
-                </div>`;
+                </div></tr>`;
             $("#changeArea").append(insertHTML);
         }
     </script>
@@ -531,7 +534,9 @@
                 </div>
 
             </div>
-            <div class="col-md-6" id="changeArea"></div>
+            <div class="col-md-6" id="changeArea">
+
+            </div>
             <div class="modal fade inactive" id="chat" data-backdrop="false">
                 <div class="right w-xxl grey lt b-l">
                     <div ui-include="'../views/blocks/modal.chat.html'"></div>
