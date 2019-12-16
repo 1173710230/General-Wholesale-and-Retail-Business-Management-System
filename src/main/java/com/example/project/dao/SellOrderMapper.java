@@ -47,4 +47,11 @@ public interface SellOrderMapper {
      */
     List<SellOrder> querySellOrder(SellOrder sellOrder);
 
+    /**
+     * 根据groupID删除sellOrder，也就是删除一个销售单中所有的记录。
+     *
+     * @param groupId 待删除的groupId
+     */
+    void deleteSellOrderByGroupId(int groupId);
+
 }

@@ -153,8 +153,11 @@ public class SellOrderServiceImpl implements SellOrderService {
                 double sellNumber = sellOrder.getSellNumber();
                 // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
                 Integer goodsId = sellOrder.getSellGoodsId();
+
                 Goods goods = new Goods();
                 goods.setGoodsId(goodsId);
+                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
+
                 List<Goods> goodsList = goodsMapper.queryGoods(goods);
                 if (goodsList != null && goodsList.size() > 0) {
                     // 查询到了这个货物的信息
@@ -172,6 +175,8 @@ public class SellOrderServiceImpl implements SellOrderService {
                 Integer goodsId = sellOrder.getSellGoodsId();
                 Goods goods = new Goods();
                 goods.setGoodsId(goodsId);
+                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
+
                 List<Goods> goodsList = goodsMapper.queryGoods(goods);
                 if (goodsList != null && goodsList.size() > 0) {
                     // 查询到了这个货物的信息
