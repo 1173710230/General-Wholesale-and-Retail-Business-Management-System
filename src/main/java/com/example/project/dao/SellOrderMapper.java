@@ -2,6 +2,7 @@ package com.example.project.dao;
 
 import com.example.project.domain.SellOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface SellOrderMapper {
      *
      * @param sellOrder 新增加的销售记录对象，这个sellOrder对象不需要有ID
      */
-    void addSellOrder(SellOrder sellOrder);
+    void addSellOrder(@Param("sellOrder") SellOrder sellOrder, @Param("groupId") Integer groupId);
 
     /**
      * 根据传入的对象修改销售记录。
@@ -46,5 +47,12 @@ public interface SellOrderMapper {
      * @return 满足sellOrder所有非空属性的销售记录列表
      */
     List<SellOrder> querySellOrder(SellOrder sellOrder);
+
+    /**
+     * 根据groupID删除sellOrder，也就是删除一个销售单中所有的记录。
+     *
+     * @param groupId 待删除的groupId
+     */
+    void deleteSellOrderByGroupId(int groupId);
 
 }
