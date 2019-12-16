@@ -35,12 +35,12 @@ public class UserController extends HttpServlet {
       throws IOException {
      request.setCharacterEncoding("utf-8");
      //接收参数
-     int userId = Integer.parseInt(request.getParameter("userId"));
+     String userName = request.getParameter("userName");
      String userPassword = request.getParameter("userPassword");
-     boolean loginSuccess = userService.login(userId, userPassword);
+     boolean loginSuccess = userService.login(userName, userPassword);
      if(loginSuccess){
        HttpSession session = request.getSession();
-       session.setAttribute("userId", userId);
+       session.setAttribute("userName", userName);
        session.setAttribute("userPassword", userPassword);
        response.sendRedirect("/index.html");  //登录成功重定向到主页
      }else {  //登录失败，我这是重定向登录页面，要有修改告知我（ps: 这个页面暂时没有）。

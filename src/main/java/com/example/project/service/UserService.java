@@ -8,7 +8,7 @@ public interface UserService {
 
     /**
      * 用户登录验证
-     * @param userId  用户账号
+     * @param name  用户账号
      * @param password  用户密码
      * @return   如果用户输入的密码匹配成功返回true， 否则返回false
      */
