@@ -33,6 +33,7 @@ public class ImportOrderController {
   @RequestMapping("/addNewImportOrder")
   @ResponseBody
   public boolean addNewImportOrder(double goodsNumber, double inputUnitPrice, int goodsId, String remark, int warehouseId){
+    System.out.println(warehouseId);
     return goodsNumber>0 && inputOrderService.addNewInputOrder(goodsNumber, inputUnitPrice, goodsId, new Date(System.currentTimeMillis()),remark, warehouseId);
   }
 

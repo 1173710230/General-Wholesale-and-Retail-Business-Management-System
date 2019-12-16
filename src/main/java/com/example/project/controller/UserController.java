@@ -4,6 +4,7 @@ import com.example.project.domain.User;
 import com.example.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,7 +18,7 @@ import java.io.IOException;
 //这个是用户的controller，处理用户的数据
 @Controller
 @RequestMapping("/user")
-public class UserController extends HttpServlet {
+public class UserController {
   @Autowired
   private final UserService userService;
 
@@ -32,6 +33,8 @@ public class UserController extends HttpServlet {
    * @param response  controller向前端处理
    * @throws IOException IOException
    */
+  @PostMapping(value = "/login")
+  @ResponseBody
   public void doGet(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
      request.setCharacterEncoding("utf-8");
@@ -49,9 +52,7 @@ public class UserController extends HttpServlet {
      }
   }
 
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doGet(request, response);
-  }
+
 
   /**
    * 注册一个新用户

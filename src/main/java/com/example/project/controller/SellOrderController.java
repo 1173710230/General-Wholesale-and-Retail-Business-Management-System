@@ -105,6 +105,7 @@ public class SellOrderController extends HttpServlet{
 
   /**
    * 更新一个销售单的信息（商品单id和销售单的状态不改变）
+   * @param sellOrderGroupId 要修改销售单的id
    * @param warehouseId 销售单的仓库id
    * @param sellOrderType 销售单的类型 //0批发，1零售
    * @param sellOrderRemark 销售单的备注
@@ -116,7 +117,7 @@ public class SellOrderController extends HttpServlet{
    */
   @RequestMapping(value = "/updateSellOrder", method = RequestMethod.GET)
   @ResponseBody
-  public boolean update(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
+  public boolean update(int sellOrderGroupId, int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
                         String goodsId, String sellUnitPrice,String goodsNumber){
     List<SellOrder> allSellOrderInGroup = new ArrayList<>();
 
@@ -124,15 +125,20 @@ public class SellOrderController extends HttpServlet{
     String[] sellUnitPrices = sellUnitPrice.split(",");
     String[] goodsNumbers = goodsNumber.split(",");
 
+    System.out.println(goodsId);
+    System.out.println(sellUnitPrice);
+    System.out.println(goodsNumber);
     for(int i = 0; i< goodsIds.length; i++){
-      allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
+      System.out.println(new SellOrder(null, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])).toString());
+      allSellOrderInGroup.add(new SellOrder(null, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
     }
 
     Date date = new Date(System.currentTimeMillis());
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
-    return sellOrderService.modifySellOrder(new SellOrderGroup(-1, format.format(date),
-        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
+    System.out.println(new SellOrderGroup(-1, format.format(date),
+            sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0).toString());
+    return sellOrderService.modifySellOrder(new SellOrderGroup(sellOrderGroupId, format.format(date),
+        sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
   }
 
   /**

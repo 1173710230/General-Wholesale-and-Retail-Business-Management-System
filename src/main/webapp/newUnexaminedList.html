@@ -73,10 +73,11 @@
                     // 第一次要包住未合并的内容
                     var record = order.sellOrders[index];
                     content += `<td id=${"goodsId0" + id}>${record.sellGoodsId}</td>`;
-                    content += `<td id=${'wareId' + id}>${order.warehouseId}</td>`;
+
                     content += `<td id=${"number0" + id}>${record.sellNumber}</td>`;
                     content += `<td id=${'price0' + id}>${record.sellUnitPrice}</td>`;
                     index += 1;
+                    content += `<td id=${'wareId' + id}>${order.warehouseId}</td>`;
 
                     content += `<td rowspan="${recordLength}" id=${"customerId" + id}>${order.customerId}</td>`;
                     // content += `<td rowspan="${recordLength}">${order.sellTime}</td>`;
@@ -122,7 +123,7 @@
     <script>
         var unexaminedCount = 0;
         function changeOrder(id){
-            $("#changeOrder").remove();
+            $("#changeArea").html('');
             let insertHTML = `<div class="panel panel-default" id="changeOrder">
                     <div class="panel-body">
                         <form><table><tr><th>商品ID</th><th>单价</th><th>数量</th></tr>`;
@@ -141,7 +142,7 @@
                             <td><div class="form-group">
                                 <input type="text" class="form-control" id=${"number" + unexaminedCount}
                                 placeholder="${number}">
-                            </div></td>`;
+                            </div></td><br/>`;
                 unexaminedCount++;
                 goodsId = $("#goodsId" + unexaminedCount + id).html();
                 price = $("#price" + unexaminedCount + id).html();
@@ -217,7 +218,7 @@
                 type:"GET",
                 url : "/sellOrder/updateSellOrder",
                 dataType: "json",
-                data: {warehouseId:wareId, sellOrderType: type, sellOrderRemark: remark,
+                data: {sellOrderGroupId: id, warehouseId:wareId, sellOrderType: type, sellOrderRemark: remark,
                     customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number},
                 success: function (bool) {
                     if (bool) {
@@ -278,17 +279,17 @@
                         </li>
 
                         <li>
-                            <a href="newGoodsList.html" >
-                  <span class="nav-icon">
-                    <i class="material-icons">&#xe5c3;
-                      <span ui-include="'assets/images/i_1.svg'"></span>
-                    </i>
-                  </span>
+                            <a onclick="location.href='newGoodsList.html'">
+                                <span class="nav-icon">
+                                    <i class="material-icons">&#xe5c3;
+                                        <span ui-include="'assets/images/i_1.svg'"></span>
+                                    </i>
+                                </span>
                                 <span class="nav-text">货品列表</span>
                             </a>
                         </li>
                         <li>
-                            <a href="newAddGoods.html" >
+                            <a onclick="location.href='newAddGoods.html'"  >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe5c3;
                       <span ui-include="'assets/images/i_1.svg'"></span>
@@ -298,7 +299,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newQueryGoods.html" >
+                            <a onclick='location.href="newQueryGoods.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe5c3;
                       <span ui-include="'assets/images/i_1.svg'"></span>
@@ -312,7 +313,7 @@
                             <small class="text-muted">客户资料维护</small>
                         </li>
                         <li>
-                            <a href="newCustomerList.html" >
+                            <a onclick='location.href="newCustomerList.html"'>
                   <span class="nav-icon">
                     <i class="material-icons">&#xe3e8;
                       <span ui-include="'assets/images/i_5.svg'"></span>
@@ -322,7 +323,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newAddCustomer.html" >
+                            <a onclick='location.href="newAddCustomer.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe3e8;
                       <span ui-include="'assets/images/i_5.svg'"></span>
@@ -332,7 +333,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newQueryCustomer.html" >
+                            <a onclick='location.href="newQueryCustomer.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe3e8;
                       <span ui-include="'assets/images/i_5.svg'"></span>
@@ -346,7 +347,7 @@
                             <small class="text-muted">销售业务管理</small>
                         </li>
                         <li>
-                            <a href="newCreateSellOrder.html" >
+                            <a onclick='location.href="newCreateSellOrder.html"'>
                   <span class="nav-icon">
                     <i class="material-icons">&#xe39e;
                       <span ui-include="'assets/images/i_6.svg'"></span>
@@ -356,7 +357,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newUnexaminedList.html" >
+                            <a onclick='location.href="newUnexaminedList.html"'>
                   <span class="nav-icon">
                     <i class="material-icons">&#xe39e;
                       <span ui-include="'assets/images/i_6.svg'"></span>
@@ -366,7 +367,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newUnpaidList.html" >
+                            <a onclick='location.href="newUnpaidList.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe39e;
                       <span ui-include="'assets/images/i_6.svg'"></span>
@@ -376,7 +377,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newPaidList.html" >
+                            <a onclick='location.href="newPaidList.html"'>
                   <span class="nav-icon">
                     <i class="material-icons">&#xe39e;
                       <span ui-include="'assets/images/i_6.svg'"></span>
@@ -390,7 +391,7 @@
                             <small class="text-muted">库存管理</small>
                         </li>
                         <li>
-                            <a href="newJinHuo.html" >
+                            <a onclick='location.href="newJinHuo.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>
@@ -400,7 +401,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="index.html" >
+                            <a onclick='location.href="index.html"'>
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>
@@ -410,7 +411,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="newStockQuery.html" >
+                            <a onclick='location.href="newStockQuery.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe429;
                       <span ui-include="'assets/images/i_4.svg'"></span>
@@ -423,7 +424,7 @@
                             <small class="text-muted">仓库管理</small>
                         </li>
                         <li>
-                            <a href="newWarehouseManage.html" >
+                            <a onclick='location.href="newWarehouseManage.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe1b8;
                       <span ui-include="'assets/images/i_8.svg'"></span>
@@ -436,7 +437,7 @@
                             <small class="text-muted">收银台</small>
                         </li>
                         <li>
-                            <a href="checkoutCounter.html" >
+                            <a onclick='location.href="checkoutCounter.html"' >
                   <span class="nav-icon">
                     <i class="material-icons">&#xe896;
                       <span ui-include="'assets/images/i_7.svg'"></span>
@@ -521,7 +522,7 @@
                         <!--                        从这里修改-->
                         <table class="table table-striped b-t b-b">
                             <thead>
-                            <tr><th>销售单ID</th><th>商品ID</th><th>仓库ID</th><th>数量</th><th>单价</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
+                            <tr><th>销售单ID</th><th>商品ID</th><th>数量</th><th>单价</th><th>仓库ID</th><th>顾客ID</th><th>类型</th><th>状态</th><th>备注</th><th>毛利</th><th>销售额</th><th>操作</th></tr>
                             </thead>
                             <tbody id="order-table">
                             </tbody>
