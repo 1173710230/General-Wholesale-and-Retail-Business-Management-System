@@ -16,10 +16,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean login(Integer userId, String password) {
+    public boolean login(String name, String password) {
        // User user = this.userMapper.searchUserByUserId(userId);
-        User user = userMapper.queryUser(new User(userId,null,null,null)).get(0);
-        System.out.println(userId);
+        User user = userMapper.queryUser(new User(null,name,null,null)).get(0);
+        // System.out.println(userId);
         System.out.println(password);
         if (user != null && user.getUserPassword().equals(password))
             return true;
