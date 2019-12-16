@@ -49,7 +49,7 @@ public class SellOrderController extends HttpServlet{
     response.setContentType("text/html;charset=UTF-8");
     request.setCharacterEncoding("UTF-8");
     HttpSession httpSession = request.getSession();
-    userStatus = userService.getUserById((Integer) httpSession.getAttribute("userId")).getStatus();
+    userStatus = userService.getUserById((Integer) httpSession.getAttribute("userName")).getStatus();
   }
 
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
