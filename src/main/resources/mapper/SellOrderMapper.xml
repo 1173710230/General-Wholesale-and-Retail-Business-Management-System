@@ -43,6 +43,12 @@
         where out_id = #{sellOrderId};
     </delete>
 
+    <delete id="deleteSellOrderByGroupId" parameterType="int">
+        delete
+        from sell_order
+        where group_id = #{groupId};
+    </delete>
+
     <select id="getSellOrderById" parameterType="int" resultMap="sellOrderMap">
         select *
         from sell_order
