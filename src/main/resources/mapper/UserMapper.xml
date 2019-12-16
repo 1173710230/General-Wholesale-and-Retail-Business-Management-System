@@ -32,7 +32,7 @@
             </if>
             <if test="userName != null and userName != ''">
                 # 用户名改成了模糊搜索
-                and user_name like #{userName}
+                and user_name = #{userName}
             </if>
             <if test="userPassword != null and userPassword != ''">
                 and user_password = #{userPassword}
