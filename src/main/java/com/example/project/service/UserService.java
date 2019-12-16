@@ -32,4 +32,9 @@ public interface UserService {
      * 按id查询用户
      */
     public User getUserById(int userId);
+
+    /**
+     * 按name查询用户
+     */
+    public User getUserByName(String name);
 }
