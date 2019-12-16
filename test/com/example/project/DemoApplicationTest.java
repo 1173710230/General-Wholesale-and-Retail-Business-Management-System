@@ -3,7 +3,14 @@ package com.example.project.service;
 
 import com.example.project.dao.SellOrderGroupMapper;
 import com.example.project.dao.SellOrderMapper;
+<<<<<<< HEAD
 import com.example.project.domain.*;
+=======
+import com.example.project.domain.Customer;
+import com.example.project.domain.SellOrder;
+import com.example.project.domain.SellOrderGroup;
+import com.example.project.domain.User;
+>>>>>>> 56f959838769e1226907818ec6d725f23431c65d
 import com.example.project.service.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +21,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,6 +48,9 @@ public class DemoApplicationTest {
     @Autowired
     private SellOrderGroupMapper sellOrderGroupMapper;
 
+    @Autowired
+    private UserService userService;
+
 
     @Test
     public void context(){
@@ -47,21 +58,22 @@ public class DemoApplicationTest {
     }
     @Test
     public void testCustomers() {
-        Customer customer = new Customer();
-        customer.setCustomerTel("10086");
-        customer.setCustomerName("中国移动");
-        Customer customer1 = new Customer();
-        customer1.setCustomerTel("10010");
-        customer1.setCustomerName("中国联通");
-        customerService.addCustomer("lbw", "17cards");
-        System.out.println(customerService.queryCustomerByName("中国移动"));
+        System.out.println(customerService.getallCustomers());
+        System.out.println(customerService.addCustomer("卢本伟","CCTV"));
+        System.out.println(customerService.queryCustomerByName("卢本伟"));
+        System.out.println(customerService.deleteCustomer(7));
+        System.out.println(customerService.modifyCustomer(11,"FBI","911"));
     }
 
     @Test
     public void testInputOrder() {
         Date date = new Date(System.currentTimeMillis());
         System.out.println(date);
+<<<<<<< HEAD
        // inputOrderService.addNewInputOrder(100, 1.2, 1, date, "just Test");
+=======
+        System.out.println(inputOrderService.addNewInputOrder(100.0, 1.2, 1, date, "just Test",1));
+>>>>>>> 56f959838769e1226907818ec6d725f23431c65d
     }
 
     @Test
@@ -77,20 +89,62 @@ public class DemoApplicationTest {
         System.out.println("2:" + parse);
 
 
+<<<<<<< HEAD
 //        sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
+=======
+        //sellOrderService.addSellOrder(parse, 1, 1.5, 80.0, 2, "Cheap");
+>>>>>>> 56f959838769e1226907818ec6d725f23431c65d
 
     }
 
     @Test
     public void testGoods() {
-
+       // System.out.println(goodsService.getAllWarehouseGoods());
+        //System.out.println(goodsService.deleteGoodsById(2));
+        //System.out.println(goodsService.modifyGoodsById(7,"朱业琪","pa"));
+        System.out.println(goodsService.queryGoodsByName("朱业琪"));
 
     }
 
     @Test
-    public void testCollection() {
-        SellOrderGroup group = sellOrderGroupMapper.getSellOrderGroupById(1);
-        System.out.println(group);
+    public void testSellOrder() {
+        SellOrderGroup sellOrderGroup = new SellOrderGroup();
+        sellOrderGroup.setSellOrderType(0);
+        sellOrderGroup.setSellOrderRemark("test");
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sellOrderGroup.setSellTime(format.format(date));
+        sellOrderGroup.setCustomerId(11);
+        sellOrderGroup.setWarehouseId(1);
+        List<SellOrder>  sellOrderList = new ArrayList<>();
+        sellOrderList.add(new SellOrder(null,50.0,201.0,11));
+        sellOrderList.add(new SellOrder(null,50.0,201.0,12));
+        sellOrderList.add(new SellOrder(null,50.0,201.0,13));
+        sellOrderGroup.setSellOrders(sellOrderList);
+        sellOrderService.addSellOrder(sellOrderGroup);
+    }
+
+    @Test
+    public void testSellOder(){
+        SellOrderGroup sellOrderGroup = new SellOrderGroup();
+        sellOrderGroup.setSellOrderType(0);
+        sellOrderGroup.setSellOrderRemark("test for double");
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        sellOrderGroup.setSellTime(format.format(date));
+        sellOrderGroup.setCustomerId(12);
+        sellOrderGroup.setWarehouseId(2);
+        sellOrderGroup.setSellStatus(1);
+        List<SellOrder>  sellOrderList = new ArrayList<>();
+        sellOrderList.add(new SellOrder(null,50.0,101.0,12));
+        sellOrderList.add(new SellOrder(null,50.0,101.0,12));
+        sellOrderList.add(new SellOrder(null,100.0,201.0,13));
+        sellOrderList.add(new SellOrder(null,50.0,201.0,9));
+        sellOrderGroup.setSellOrders(sellOrderList);
+        sellOrderGroup.setSellOrderGroupId(7);
+        System.out.println("1");
+        sellOrderService.modifySellOrder(sellOrderGroup);
+
     }
 
 //    @Test
@@ -131,6 +185,7 @@ public class DemoApplicationTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testQueryGoodsFromCurrentWarehouseByName(){
         String name = "梨子";
         Integer id = 1;
@@ -205,9 +260,18 @@ public class DemoApplicationTest {
         for (Goods g : goods){
             System.out.println(g.toString());
         }
+=======
+    public void testUser(){
+        //System.out.println(userService.getUserById(1));
+        System.out.println(userService.login(1,"43962"));
+        System.out.println(userService.login(1,"123456"));
+        //User user = new User(1,"滑天下之大稽","123456",2);
+        //userService.updateUserMessage(user);
+>>>>>>> 56f959838769e1226907818ec6d725f23431c65d
     }
 
     @Test
+<<<<<<< HEAD
     public void testAddWarehouse(){
         List<Warehouse> warehouses;
         warehouses = this.warehouseService.getAllWarehouses();
@@ -222,6 +286,10 @@ public class DemoApplicationTest {
             System.out.println(w.toString());
         }
 
+=======
+    public void testWarehouseQuery() {
+        //log.info(warehouseService.queryGoodsByName("苹果"));
+>>>>>>> 56f959838769e1226907818ec6d725f23431c65d
     }
 
     @Test

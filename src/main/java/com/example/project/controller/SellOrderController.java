@@ -3,12 +3,19 @@ package com.example.project.controller;
 import com.example.project.domain.SellOrder ;
 import com.example.project.domain.SellOrderGroup;
 import com.example.project.service.SellOrderService;
+import com.example.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,14 +27,35 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/sellOrder")
-public class SellOrderController {
+public class SellOrderController extends HttpServlet{
 
   private final SellOrderService sellOrderService;
+  private final UserService userService;
+  private int userStatus = -1;
 
   @Autowired
-  public SellOrderController(SellOrderService sellOrderService) {
+  public SellOrderController(SellOrderService sellOrderService, UserService userService) {
     this.sellOrderService = sellOrderService;
+    this.userService = userService;
   }
+
+  /**
+   *取出session中存储的userStatus（用户身份）
+   * @param request 前端传递数据
+   * @param response 传回给前端数据
+   * @throws IOException IOException
+   */
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("text/html;charset=UTF-8");
+    request.setCharacterEncoding("UTF-8");
+    HttpSession httpSession = request.getSession();
+    userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
+  }
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    doGet(request, response);
+  }
+
 
   /**
    * 将构造一个新销售单传递给后台
@@ -146,7 +174,11 @@ public class SellOrderController {
   @RequestMapping("/checkOrder")
   @ResponseBody
   public boolean checkOrder(int sellOrderId, boolean opinion){
-    return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
+    if(userStatus==0|userStatus==1){ //只允许经理，店长check
+      return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
+    }else{ //不允许店员check
+      return false;
+    }
   }
 
   /**
@@ -168,7 +200,10 @@ public class SellOrderController {
   @RequestMapping("/refund")
   @ResponseBody
   public boolean refundSellOrder(int sellOrderId){
-    return sellOrderService.refundSellOrder(sellOrderId);
+    if(userStatus==0){//只允许经理退款
+      return sellOrderService.refundSellOrder(sellOrderId);
+    }else { //不允许店长，店员退款
+      return false;
+    }
   }
-
 }

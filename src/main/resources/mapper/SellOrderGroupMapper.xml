@@ -36,8 +36,8 @@
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
-        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id)
-        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId});
+        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id, order_status)
+        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId}, #{sellStatus});
 
         set @group_id = last_insert_id();
 

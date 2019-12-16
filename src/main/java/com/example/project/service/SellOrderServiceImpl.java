@@ -64,10 +64,24 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public boolean modifySellOrder(SellOrderGroup sellOrderGroup) {
+        if(sellOrderGroup.getSellStatus() != 1)
+            return false;
+        if(sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroup.getSellOrderGroupId()) == null )
+            return false;
+        //判断订单状态
         try {
             // 传入动态定义对象更新信息
             mergeSimilarGoods(sellOrderGroup);
+            // sellOrderGroupMapper.updateSellOrderGroup(sellOrderGroup);
+            List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
             sellOrderGroupMapper.updateSellOrderGroup(sellOrderGroup);
+            //删除订单项
+            sellOrderMapper.deleteSellOrderByGroupId(sellOrderGroup.getSellOrderGroupId());
+            // 添加订单项
+            for(SellOrder sellOrder: sellOrderList){
+                sellOrder.setGroupId(sellOrderGroup.getSellOrderGroupId());
+                sellOrderMapper.addSellOrder(sellOrder);
+            }
             return true;
         } catch (DataAccessException ex) {
             // 不存在这一订货单
@@ -301,7 +315,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         for (SellOrder sellOrder : sellOrderList) {
             boolean flag = false; //重复标志位
             for (SellOrder order : newSellOrderList) {
-                if (order == sellOrder) {
+                if (order.getSellGoodsId() == sellOrder.getSellGoodsId()) {
                     // 处理重复情况
                     double temp = order.getSellNumber();
                     order.setSellNumber(temp + sellOrder.getSellNumber());

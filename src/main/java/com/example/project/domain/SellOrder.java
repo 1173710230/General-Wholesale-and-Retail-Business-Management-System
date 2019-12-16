@@ -9,6 +9,7 @@ public class SellOrder {
     private Double sellNumber;//卖掉的数量save
     private Double sellUnitPrice;//save
     private Integer sellGoodsId;//save
+    private Integer groupId;
 
     @Override
     public String toString() {
@@ -61,6 +62,14 @@ public class SellOrder {
 
     public void setSellGoodsId(Integer sellGoodsId) {
         this.sellGoodsId = sellGoodsId;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     @Override

@@ -8,11 +8,11 @@ public interface UserService {
 
     /**
      * 用户登录验证
-     * @param userId  用户账号
+     * @param name  用户账号
      * @param password  用户密码
      * @return   如果用户输入的密码匹配成功返回true， 否则返回false
      */
-    public boolean login(Integer userId, String password);
+    public boolean login(String name, String password);
 
     /**
      * 新用户注册
@@ -32,4 +32,9 @@ public interface UserService {
      * 按id查询用户
      */
     public User getUserById(int userId);
+
+    /**
+     * 按name查询用户
+     */
+    public User getUserByName(String name);
 }
