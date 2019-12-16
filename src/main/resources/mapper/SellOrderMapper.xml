@@ -17,8 +17,8 @@
 
     <insert id="addSellOrder" parameterType="SellOrder">
         # 插入数据到销售记录表
-        insert into sell_order (sell_unit_price, sell_number, goods_id)
-        values (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId});
+        insert into sell_order (sell_unit_price, sell_number, goods_id, group_id)
+        values (#{sellUnitPrice}, #{sellNumber}, #{sellGoodsId}, #{groupId});
         <selectKey keyProperty="sellOrderId" order="AFTER" resultType="int">
             select last_insert_id()
         </selectKey>
@@ -41,6 +41,12 @@
         delete
         from sell_order
         where out_id = #{sellOrderId};
+    </delete>
+
+    <delete id="deleteSellOrderByGroupId" parameterType="int">
+        delete
+        from sell_order
+        where group_id = #{groupId};
     </delete>
 
     <select id="getSellOrderById" parameterType="int" resultMap="sellOrderMap">
