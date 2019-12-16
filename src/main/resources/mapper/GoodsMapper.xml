@@ -21,8 +21,6 @@
         <selectKey order="AFTER" resultType="int" keyProperty="goodsId">
             select last_insert_id();
         </selectKey>
-#         insert into goods_warehouse_relation (goods_id, warehouse_id, number)
-#         values (last_insert_id(), #{warehouseId}, #{goodsNumber});
     </insert>
 
     <insert id="addGoodsWarehouseRelation" parameterType="Goods">

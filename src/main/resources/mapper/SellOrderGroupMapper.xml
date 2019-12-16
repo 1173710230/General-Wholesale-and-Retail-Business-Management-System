@@ -48,7 +48,7 @@
             (#{order.sellUnitPrice}, #{order.sellNumber}, #{order.sellGoodsId}, @group_id)
         </foreach>
 
-        <selectKey resultType="SellOrderGroup" order="AFTER">
+        <selectKey resultType="int" order="AFTER" keyProperty="sellOrderGroupId">
             select @group_id;
         </selectKey>
 

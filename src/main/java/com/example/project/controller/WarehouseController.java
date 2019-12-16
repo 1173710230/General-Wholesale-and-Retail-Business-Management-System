@@ -81,6 +81,10 @@ public class WarehouseController {
   @RequestMapping(value = "/addNewGoodsToWarehouse")
   @ResponseBody
   public boolean addNewGoods(double goodsNumber, String goodsName, String spec, int warehouseId){
+    System.out.println("66666666666");
+    System.out.println(goodsName);
+    System.out.println(goodsNumber);
+    System.out.println(warehouseId);
     return warehouseService.addNewGoods(goodsNumber, goodsName, spec, warehouseId);
   }
 
