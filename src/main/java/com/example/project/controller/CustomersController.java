@@ -69,7 +69,7 @@ public class CustomersController {
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
   @ResponseBody
-  public List<Customer> update(int customerId, String name, String tel, int status){
+  public List<Customer> update(int customerId, String name, String tel){
     customerService.modifyCustomer(customerId, name, tel);
     return customerService.getallCustomers();
   }
