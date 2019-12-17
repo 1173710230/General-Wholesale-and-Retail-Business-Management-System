@@ -6,6 +6,7 @@ import com.example.project.service.SellOrderService;
 import com.example.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,33 +28,15 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/sellOrder")
-public class SellOrderController extends HttpServlet{
+public class SellOrderController{
 
   private final SellOrderService sellOrderService;
   private final UserService userService;
-  private int userStatus = -1;
 
   @Autowired
   public SellOrderController(SellOrderService sellOrderService, UserService userService) {
     this.sellOrderService = sellOrderService;
     this.userService = userService;
-  }
-
-  /**
-   *取出session中存储的userStatus（用户身份）
-   * @param request 前端传递数据
-   * @param response 传回给前端数据
-   * @throws IOException IOException
-   */
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;charset=UTF-8");
-    request.setCharacterEncoding("UTF-8");
-    HttpSession httpSession = request.getSession();
-    userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
-  }
-
-  public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    doGet(request, response);
   }
 
 
@@ -125,18 +108,12 @@ public class SellOrderController extends HttpServlet{
     String[] sellUnitPrices = sellUnitPrice.split(",");
     String[] goodsNumbers = goodsNumber.split(",");
 
-    System.out.println(goodsId);
-    System.out.println(sellUnitPrice);
-    System.out.println(goodsNumber);
     for(int i = 0; i< goodsIds.length; i++){
-      System.out.println(new SellOrder(null, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])).toString());
       allSellOrderInGroup.add(new SellOrder(null, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
     }
 
     Date date = new Date(System.currentTimeMillis());
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    System.out.println(new SellOrderGroup(-1, format.format(date),
-            sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0).toString());
     return sellOrderService.modifySellOrder(new SellOrderGroup(sellOrderGroupId, format.format(date),
         sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
   }
@@ -174,13 +151,16 @@ public class SellOrderController extends HttpServlet{
   /**
    * 审核一个销售单是否通过审核（只允许经理，店长check，不允许店员check）
    * @param sellOrderId 需要审核的销售单
+   * @param httpSession session对象前端自动传递
    * @param opinion 审核通过传入true，反之，传入false
    * @return 只要opinion和内部审核时有一个没通过返回false
    */
   @RequestMapping("/checkOrder")
   @ResponseBody
-  public boolean checkOrder(int sellOrderId, boolean opinion){
-    if(userStatus==0|userStatus==1){ //只允许经理，店长check
+  public boolean checkOrder(HttpSession httpSession, int sellOrderId, boolean opinion){
+    int userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
+    System.out.println(userStatus);
+    if(userStatus==0||userStatus==1){ //只允许经理，店长check
       return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
     }else{ //不允许店员check
       return false;
@@ -200,12 +180,14 @@ public class SellOrderController extends HttpServlet{
 
   /**
    * 对销售单进行退款(只允许经理退款，不允许店长，店员退款）
+   * @param httpSession session对象前端自动传递
    * @param sellOrderId 需要退款的销售单
    * @return 退款成功返回true， 反之返回false
    */
   @RequestMapping("/refund")
   @ResponseBody
-  public boolean refundSellOrder(int sellOrderId){
+  public boolean refundSellOrder(HttpSession httpSession, int sellOrderId){
+    int userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
     if(userStatus==0){//只允许经理退款
       return sellOrderService.refundSellOrder(sellOrderId);
     }else { //不允许店长，店员退款

@@ -44,7 +44,30 @@
                                 <label for="address">联系方式</label>
                                 <input type="text" class="form-control" id="address2" placeholder="${$('#tel' + id).html()}">
                             </div>
-                            <button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
+                           `;
+            if($("#status" + id).html() === '批发'){
+                insertHTML += `<p><label class="radio radio-inline m-a-0 ui-check ui-check-color ui-check-md" data-value="{primary:'primary', accent:'accent', warn:'warn'}">
+            <input type="radio" name="status" value="0" checked>
+            <i class="primary"></i>批发
+          </label>
+          <label class="radio radio-inline m-a-0 ui-check ui-check-color ui-check-md" data-value="{primary:'accent', accent:'cyan', warn:'warn'}">
+            <input type="radio" name="status" value="1" >
+            <i class="primary"></i>零售
+          </label>
+        </p>`;
+            } else {
+                insertHTML += `<p><label class="radio radio-inline m-a-0 ui-check ui-check-color ui-check-md" data-value="{primary:'primary', accent:'accent', warn:'warn'}">
+            <input type="radio" name="status" value="0">
+            <i class="primary"></i>批发
+          </label>
+          <label class="radio radio-inline m-a-0 ui-check ui-check-color ui-check-md" data-value="{primary:'accent', accent:'cyan', warn:'warn'}">
+            <input type="radio" name="status" value="1" checked>
+            <i class="primary"></i>零售
+          </label>
+        </p>`;
+            }
+
+                insertHTML += `<button class="btn btn-default" type="button" onclick="changeOver(${id})">提交</button>
                         </form>
                     </div>
                 </div>`;
@@ -57,6 +80,7 @@
             var customerId = id;
             var name = $("#customerName2").val();
             var tel = $("#address2").val();
+            var status = $("input[name='status']:checked").val();
             if (name.length === 0) {
                 name = $('#name' + id).html();
             }
@@ -68,7 +92,7 @@
                 type:"GET",
                 url : "/customer/update",
                 dataType: "json",
-                data: {customerId: customerId, name: name, tel: tel},
+                data: {customerId: customerId, name: name, tel: tel, status: status},
                 success: function (list) {
                     alert("修改成功！");
                     location.reload();
@@ -92,7 +116,15 @@
                         var name = list[i].customerName;
                         var tel = list[i].customerTel;
                         var sellOrders = list[i].historySellOrderId;
-                        let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'tel' + id}">${tel}</td><td>`;
+                        var status = list[i].status;
+                        if (status === 0) {
+                            var printStatus = '批发';
+                        } else {
+                            var printStatus = '零售';
+                        }
+
+                        let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'tel' + id}">${tel}</td>
+                            <td id="${'status' + id}">${printStatus}</td><td>`;
                         if(sellOrders !== null){
                             insert += `<table>`;
                             for (var j = 0; j <sellOrders.length; j++){
@@ -112,41 +144,6 @@
             }
         })
     </script>
-<!--    <script>-->
-<!--        function get(){-->
-<!--            $.ajax({-->
-<!--                type: "GET",-->
-<!--                url: "/customer/allCustomers",-->
-<!--                dataType:"json",-->
-<!--                success: function (list) {-->
-<!--                    if (list !== null){-->
-<!--                        for(var i = 0; i < list.length; i++){-->
-<!--                            var id = list[i].customerId;-->
-<!--                            var name = list[i].customerName;-->
-<!--                            var tel = list[i].customerTel;-->
-<!--                            var sellOrders = list[i].historySellOrderId;-->
-<!--                            let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'tel' + id}">${tel}</td><td>`;-->
-<!--                            if(sellOrders !== null){-->
-<!--                                insert += `<table>`;-->
-<!--                                for (var j = 0; j <sellOrders.length; j++){-->
-<!--                                    insert += `<tr><td>${sellOrders.get(j)}</td></tr>`;-->
-<!--                                }-->
-<!--                                insert += `</table></td>`-->
-<!--                            }-->
-
-<!--                            insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改资料</button>-->
-<!--<button type="button" class="btn btn-primary btn-xs" onclick="deleteCustomer(${id})">删除用户</button></td></tr>`;-->
-<!--                            $("#table").append(insert);-->
-<!--                        }-->
-<!--                    }-->
-<!--                },-->
-<!--                error: function () {-->
-<!--                    alert("获取失败！");-->
-<!--                }-->
-<!--            })-->
-<!--        }-->
-
-<!--    </script>-->
     <!--    删除客户函数-->
     <script>
         function deleteCustomer(id) {
@@ -166,7 +163,7 @@
         }
     </script>
 </head>
-<body onload="get()">
+<body>
 <div class="app" id="app">
 
     <!-- ############ LAYOUT START-->
@@ -434,7 +431,7 @@
                         <div class="table-responsive">
                             <table class="table table-striped b-t b-b">
                                 <thead>
-                                <tr><th>客户姓名</th><th>联系方式</th><th>购买历史信息</th><th>操作</th></tr>
+                                <tr><th>客户姓名</th><th>联系方式</th><th>状态</th><th>购买历史信息</th><th>操作</th></tr>
                                 </thead>
                                 <tbody id="table">
                                 </tbody>

@@ -184,9 +184,13 @@
                 url : "/sellOrder/refund",
                 dataType: "json",
                 data: {sellOrderId: id},
-                success: function () {
-                    alert("退款成功！");
-                    location.reload();
+                success: function (flag) {
+                    if(flag) {
+                        alert("退款成功！");
+                        location.reload();
+                    } else {
+                        alert("退款失败！");
+                    }
                 },
                 error: function () {
                     alert("退款失败！您可能无权执行退款操作。");
