@@ -80,7 +80,7 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public boolean modifyGoodsPriceById(int goodsId, double warehousePrice, double retailPrice) {
+    public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice) {
         return false;
     }
 }
