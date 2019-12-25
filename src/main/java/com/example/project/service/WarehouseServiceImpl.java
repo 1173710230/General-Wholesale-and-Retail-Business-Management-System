@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.io.Console;
 import java.util.List;
 
 @Service
@@ -112,6 +113,10 @@ public class WarehouseServiceImpl implements WarehouseService{
 
     @Override
     public boolean warehouseTransfer(int goodsId, int oldWarehouseId, int newWarehouseId, double goodsNumber){
+        if(goodsNumber <= 0){
+            System.out.println("输入的货物数量小等于0");
+            return false;
+        }
         Goods goods = new Goods();
         goods.setGoodsId(goodsId);
         goods.setWarehouseId(oldWarehouseId);
@@ -180,6 +185,18 @@ public class WarehouseServiceImpl implements WarehouseService{
     @Override
     public List<Warehouse> getAllWarehouses(){
         return wareHouseMapper.getAllWareHouse();
+    }
+
+    @Override
+    public List<Goods> displayTheStockQuantityOfEachWarehouse() {
+        //ToDo
+        return null;
+    }
+
+    @Override
+    public List<Goods> displayTheBacklogOfFundsForEachItem() {
+        //ToDo
+        return null;
     }
 
 }

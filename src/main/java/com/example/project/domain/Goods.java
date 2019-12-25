@@ -11,6 +11,8 @@ public class Goods {
     private String goodsSpecification;
     private Integer warehouseId;
     private Double goodsNumber = 0.0;
+    private Double wholesalePrice = 0.0;
+    private Double retailPrice = 0.0;
 
     public Goods(Integer goodsId, String goodsName, String goodsSpecification, Integer warehouseId, Double goodsNumber) {
         this.goodsId = goodsId;
@@ -47,6 +49,22 @@ public class Goods {
         this.goodsSpecification = goodsSpecification;
     }
 
+    public Double getWholesalePrice() {
+        return wholesalePrice;
+    }
+
+    public void setWholesalePrice(Double wholesalePrice) {
+        this.wholesalePrice = wholesalePrice;
+    }
+
+    public Double getRetailPrice() {
+        return retailPrice;
+    }
+
+    public void setRetailPrice(Double retailPrice) {
+        this.retailPrice = retailPrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -55,10 +73,6 @@ public class Goods {
         return Objects.equals(goodsId.intValue(), goods.goodsId.intValue());
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouseId, goodsNumber);
-    }
 
 
     public Integer getWarehouseId() {
@@ -78,6 +92,11 @@ public class Goods {
     }
 
     @Override
+    public int hashCode() {
+        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouseId, goodsNumber, wholesalePrice, retailPrice);
+    }
+
+    @Override
     public String toString() {
         return "Goods{" +
                 "goodsId=" + goodsId +
@@ -85,6 +104,8 @@ public class Goods {
                 ", goodsSpecification='" + goodsSpecification + '\'' +
                 ", warehouseId=" + warehouseId +
                 ", goodsNumber=" + goodsNumber +
+                ", wholesalePrice=" + wholesalePrice +
+                ", retailPrice=" + retailPrice +
                 '}';
     }
 }

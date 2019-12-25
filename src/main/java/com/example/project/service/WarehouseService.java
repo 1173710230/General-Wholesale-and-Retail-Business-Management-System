@@ -82,4 +82,14 @@ public interface WarehouseService {
      */
     List<Warehouse> getAllWarehouses();
 
+    /**
+     * 库存统计：每个仓库的库存量，已排序
+     */
+    List<Goods> displayTheStockQuantityOfEachWarehouse();
+
+    /**
+     * 库存统计：每个货品的积压资金额
+     */
+    List<Goods> displayTheBacklogOfFundsForEachItem();
+
 }
