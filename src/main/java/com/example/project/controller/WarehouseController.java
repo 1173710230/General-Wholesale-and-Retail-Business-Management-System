@@ -159,4 +159,25 @@ public class WarehouseController {
   public boolean deleteWarehouse(int warehouseId){
     return  warehouseService.deleteWarehouse(warehouseId);
   }
+
+  /**
+   * 库存统计：每个仓库的库存量（注：需要显示的东西和数据由前端计算）
+   * @return 所有仓库商品的列表
+   */
+  @RequestMapping(value = "/displayTheStock")
+  @ResponseBody
+  public List<Goods> displayTheStockQuantityOfEachWarehouse(){
+    return warehouseService.displayTheStockQuantityOfEachWarehouse();
+  }
+
+  /**
+   * 库存统计：每个货品的积压资金额（注：需要显示的东西和数据由前端计算）
+   * @return 所有仓库商品的列表
+   */
+  @RequestMapping(value = "/displayTheBacklogOfFunds")
+  @ResponseBody
+  public List<Goods> displayTheBacklogOfFundsForEachItem(){
+   return warehouseService.displayTheBacklogOfFundsForEachItem();
+  }
+
 }
