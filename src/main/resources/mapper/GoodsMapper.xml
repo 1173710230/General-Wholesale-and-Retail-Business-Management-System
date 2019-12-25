@@ -109,6 +109,12 @@
             <if test="goodsSpecification != null and goodsSpecification != ''">
                 specification = #{goodsSpecification},
             </if>
+            <if test="wholesalePrice != null">
+                default_pifa_unit_price = #{wholesalePrice},
+            </if>
+            <if test="retailPrice != null">
+                default_retail_unit_price = #{retailPrice},
+            </if>
         </set>
         where goods_id = #{goodsId};
     </update>
