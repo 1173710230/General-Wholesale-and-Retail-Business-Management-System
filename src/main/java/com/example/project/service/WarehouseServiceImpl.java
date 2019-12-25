@@ -187,4 +187,16 @@ public class WarehouseServiceImpl implements WarehouseService{
         return wareHouseMapper.getAllWareHouse();
     }
 
+    @Override
+    public List<Goods> displayTheStockQuantityOfEachWarehouse() {
+        //ToDo
+        return null;
+    }
+
+    @Override
+    public List<Goods> displayTheBacklogOfFundsForEachItem() {
+        //ToDo
+        return null;
+    }
+
 }

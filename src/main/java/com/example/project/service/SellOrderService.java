@@ -94,4 +94,15 @@ public interface SellOrderService {
      * 获取全部零售单
      */
     List<SellOrderGroup> getAllRetailOrder();
+
+    /**
+     * 以货品等为索引，统计销售情况
+     */
+    List<SellOrderGroup>  statisticsSalesByGoodsId(int GoodsId);
+
+    /**
+     * 以客户等为索引，统计销售情况
+     */
+    List<SellOrderGroup>  statisticsSalesByCustomerId(int CustomerId);
+
 }

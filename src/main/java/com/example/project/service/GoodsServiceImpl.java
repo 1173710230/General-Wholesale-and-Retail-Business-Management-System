@@ -59,7 +59,7 @@ public class GoodsServiceImpl implements GoodsService{
         goods.setGoodsName(goodsName);
         goods.setGoodsSpecification(spec);
         goods.setGoodsId(goodsId);
-        System.out.println("asdasdasdasdsadasd" + goodsId);
+        // System.out.println("asdasdasdasdsadasd" + goodsId);
         try {
             //修改货物表中货物信息（按id查询所需）
             goodsMapper.updateGoods(goods);
@@ -77,5 +77,10 @@ public class GoodsServiceImpl implements GoodsService{
         // 按名字查询货物货物信息（仓库中）
         return goodsMapper.queryGoods(goods);
 
+    }
+
+    @Override
+    public boolean modifyGoodsPriceById(int goodsId, double warehousePrice, double retailPrice) {
+        return false;
     }
 }

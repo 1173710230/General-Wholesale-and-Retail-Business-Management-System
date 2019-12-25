@@ -104,6 +104,18 @@ public class SellOrderServiceImpl implements SellOrderService {
         return sellOrderGroupMapper.querySellOrderGroup(uncheckedOrder);
     }
 
+    @Override
+    public List<SellOrderGroup> statisticsSalesByGoodsId(int GoodsId) {
+        //ToDo
+        return null;
+    }
+
+    @Override
+    public List<SellOrderGroup> statisticsSalesByCustomerId(int CustomerId) {
+        //ToDo
+        return null;
+    }
+
 
     @Override
     public boolean deleteSellOrder(int sellOrderGroupId) {
@@ -332,4 +344,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSellOrders(newSellOrderList);
         return sellOrderGroup;
     }
+
+
+
 }

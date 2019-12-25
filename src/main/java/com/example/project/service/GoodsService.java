@@ -22,7 +22,7 @@ public interface GoodsService {
     boolean deleteGoodsById(int GoodsId);
 
     /**
-     * 根据id将x修改为一个Goods
+     * 根据id将x修改为一个Goods（不包含价格信息）
      *
      */
     boolean modifyGoodsById(int goodsId, String goodsName, String spec);
@@ -33,8 +33,10 @@ public interface GoodsService {
      */
     List<Goods> queryGoodsByName(String name);
 
-
-
+    /**
+     *  修改货物批发价与零售价
+     */
+    boolean modifyGoodsPriceById(int goodsId, double warehousePrice, double retailPrice);
 
 
 }
