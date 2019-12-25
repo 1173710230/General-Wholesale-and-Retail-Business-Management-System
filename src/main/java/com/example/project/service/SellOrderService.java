@@ -98,11 +98,11 @@ public interface SellOrderService {
     /**
      * 以货品等为索引，统计销售情况
      */
-    List<SellOrderGroup>  statisticsSalesByGoodsId(int GoodsId);
+    List<SellOrderGroup>  statisticsSalesByGoodsId(int goodsId);
 
     /**
      * 以客户等为索引，统计销售情况
      */
-    List<SellOrderGroup>  statisticsSalesByCustomerId(int CustomerId);
+    List<SellOrderGroup>  statisticsSalesByCustomerId(int customerId);
 
 }
