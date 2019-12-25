@@ -84,4 +84,17 @@ public class GoodsController {
   public List<Goods> queryGoodsByName(String name){
     return goodsService.queryGoodsByName(name);
   }
+
+  /**
+   * 按照商品id修改其零售价和批发价
+   * @param goodsId 需要修改的商品id
+   * @param wholesalePrice 商品的新批发价
+   * @param retailPrice 商品的新零售价
+   * @return 修改成功，返回true；反正，返回false
+   */
+  @RequestMapping("/modifyGoodsPrice")
+  @ResponseBody
+  public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice){
+    return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, retailPrice);
+  }
 }
