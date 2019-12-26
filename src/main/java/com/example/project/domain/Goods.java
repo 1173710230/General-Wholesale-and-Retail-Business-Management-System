@@ -11,6 +11,7 @@ public class Goods {
     private String goodsSpecification;
     private Integer warehouseId;
     private Double goodsNumber = 0.0;
+    private Double warehousePrice = 0.0;
     private Double wholesalePrice = 0.0;
     private Double retailPrice = 0.0;
 
@@ -65,6 +66,14 @@ public class Goods {
         this.retailPrice = retailPrice;
     }
 
+    public Double getWarehousePrice() {
+        return warehousePrice;
+    }
+
+    public void setWarehousePrice(Double warehousePrice) {
+        this.warehousePrice = warehousePrice;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,7 +102,7 @@ public class Goods {
 
     @Override
     public int hashCode() {
-        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouseId, goodsNumber, wholesalePrice, retailPrice);
+        return Objects.hash(goodsId, goodsName, goodsSpecification, warehouseId, goodsNumber, warehousePrice, wholesalePrice, retailPrice);
     }
 
     @Override
@@ -104,6 +113,7 @@ public class Goods {
                 ", goodsSpecification='" + goodsSpecification + '\'' +
                 ", warehouseId=" + warehouseId +
                 ", goodsNumber=" + goodsNumber +
+                ", warehousePrice=" + warehousePrice +
                 ", wholesalePrice=" + wholesalePrice +
                 ", retailPrice=" + retailPrice +
                 '}';
