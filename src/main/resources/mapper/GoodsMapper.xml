@@ -143,7 +143,7 @@
           and warehouse_id = #{warehouseId};
     </update>
 
-    <select id="queryImportUnitPrice" resultType="Integer">
+    <select id="queryImportUnitPrice" resultType="Double">
         select unit_price
         from import_order
         where goods_id = #{goodsId}
