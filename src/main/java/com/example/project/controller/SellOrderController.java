@@ -160,7 +160,7 @@ public class SellOrderController{
   public boolean checkOrder(HttpSession httpSession, int sellOrderId, boolean opinion){
     int userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
     System.out.println(userStatus);
-    if(userStatus==0||userStatus==1){ //只允许经理，店长check
+    if(userStatus==0||  userStatus==1){ //只允许经理，店长check
       return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
     }else{ //不允许店员check
       return false;
@@ -194,4 +194,27 @@ public class SellOrderController{
       return false;
     }
   }
+
+  /**
+   * 按照商品的id进行统计销售情况
+   * @param goodsId 商品id
+   * @return 包含该商品id的所有销售单
+   */
+  @RequestMapping("/statisticsSalesByGoodsId")
+  @ResponseBody
+  public List<SellOrderGroup>  statisticsSalesByGoodsId(int goodsId){
+    return sellOrderService.statisticsSalesByGoodsId(goodsId);
+  }
+
+  /**
+   * 按照顾客的id进行统计销售情况
+   * @param customerId 顾客的id
+   * @return 该顾客消费的所有订单
+   */
+  @RequestMapping("/statisticsSalesByCustomerId")
+  @ResponseBody
+  public List<SellOrderGroup>  statisticsSalesByCustomerId(int customerId){
+    return sellOrderService.statisticsSalesByCustomerId(customerId);
+  }
+
 }

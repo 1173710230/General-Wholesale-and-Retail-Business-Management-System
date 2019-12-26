@@ -1,13 +1,17 @@
 package com.example.project.service;
 
 import com.example.project.dao.*;
+import com.example.project.domain.Good;
 import com.example.project.domain.Goods;
 import com.example.project.domain.Warehouse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.io.Console;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -189,14 +193,52 @@ public class WarehouseServiceImpl implements WarehouseService{
 
     @Override
     public List<Goods> displayTheStockQuantityOfEachWarehouse() {
-        //ToDo
-        return null;
+        List<Goods> goods = goodsMapper.queryGoods(new Goods());
+        if(CollectionUtils.isEmpty(goods)){
+            return null;
+        }
+        //对list排序
+        Collections.sort(goods,new Comparator<Goods>(){
+            @Override
+            public int compare(Goods goods1,Goods goods2){
+                //升序排列
+                if(goods1.getWarehouseId()!=null||goods2.getWarehouseId()!=null){
+                    if(goods1.getWarehouseId() == goods2.getWarehouseId())
+                        return goods1.getGoodsId().compareTo(goods2.getGoodsId());
+                    else
+                        return goods1.getWarehouseId().compareTo(goods2.getWarehouseId());
+                }else {
+                    return -1;
+                }
+            }
+
+        });
+        return goods;
     }
 
     @Override
     public List<Goods> displayTheBacklogOfFundsForEachItem() {
-        //ToDo
-        return null;
+        List<Goods> goods = goodsMapper.queryGoods(new Goods());
+        if(CollectionUtils.isEmpty(goods)){
+            return null;
+        }
+        //对list排序
+        Collections.sort(goods,new Comparator<Goods>(){
+            @Override
+            public int compare(Goods goods1,Goods goods2){
+                //升序排列
+                if(goods1.getGoodsId()!=null||goods2.getGoodsId()!=null){
+                    if(goods1.getGoodsId() == goods2.getGoodsId())
+                        return goods1.getWarehouseId().compareTo(goods2.getWarehouseId());
+                    else
+                        return goods1.getGoodsId().compareTo(goods2.getGoodsId());
+                }else {
+                    return -1;
+                }
+            }
+
+        });
+        return goods;
     }
 
 }

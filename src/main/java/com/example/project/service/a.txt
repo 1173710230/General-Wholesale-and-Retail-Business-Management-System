@@ -1,0 +1,10 @@
+1. GoodsMapper
+方法：
+1）addGoods: 新建一个新的货物种类
+作用goods表，传入包含新建Goods的名字或内容的对象。
+2）addGoodsWarehouseRelation：向仓库中存入商品
+作用goods_warehouse_relation表，传入包含货物id，仓库id，数量的对象
+3）deleteGoodsById：按货品id删除所有仓库中货品
+作用goods_warehouse_relation表,传入货物id
+4）queryGoods：万能查询方法（按货物id，货物名字，货物spec，仓库id）
+作用goods_warehouse_relation

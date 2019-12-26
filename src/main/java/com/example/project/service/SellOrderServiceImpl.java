@@ -3,17 +3,17 @@ package com.example.project.service;
 import com.example.project.dao.GoodsMapper;
 import com.example.project.dao.SellOrderGroupMapper;
 import com.example.project.dao.SellOrderMapper;
+import com.example.project.domain.Good;
 import com.example.project.domain.Goods;
 import com.example.project.domain.SellOrder;
 import com.example.project.domain.SellOrderGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class SellOrderServiceImpl implements SellOrderService {
@@ -105,15 +105,66 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public List<SellOrderGroup> statisticsSalesByGoodsId(int GoodsId) {
-        //ToDo
-        return null;
+    public List<SellOrderGroup> statisticsSalesByGoodsId(int goodsId) {
+        List<SellOrderGroup> sellOrderGroups = sellOrderGroupMapper.querySellOrderGroup(new SellOrderGroup());
+        for(int i = 0; i < sellOrderGroups.size(); i++){
+            boolean flag = false;
+            for(SellOrder sellOrder: sellOrderGroups.get(i).getSellOrders()){
+                if(sellOrder.getSellGoodsId() == goodsId){
+                    //销售单项 找到 此货物
+                    flag = true;
+                    break;
+                }
+            }
+            if(!flag){
+                // 如果销售单不包含此货物，在list中去除这一项，下标前移
+                sellOrderGroups.remove(i);
+                i = i - 1;
+            }
+        }
+        if(CollectionUtils.isEmpty(sellOrderGroups)){
+            return null;
+        }
+        //对list排序
+        Collections.sort(sellOrderGroups,new Comparator<SellOrderGroup>(){
+            @Override
+            public int compare(SellOrderGroup sellOrderGroup1,SellOrderGroup sellOrderGroup2){
+                //升序排列
+                if(sellOrderGroup1.getSellOrderGroupId()!=null||sellOrderGroup2.getSellOrderGroupId()!=null){
+                    return sellOrderGroup1.getSellOrderGroupId().compareTo(sellOrderGroup2.getSellOrderGroupId());
+                }else {
+                    return -1;
+                }
+            }
+
+        });
+        return sellOrderGroups;
     }
 
     @Override
-    public List<SellOrderGroup> statisticsSalesByCustomerId(int CustomerId) {
-        //ToDo
-        return null;
+    public List<SellOrderGroup> statisticsSalesByCustomerId(int customerId) {
+        //按顾客id取出所有销售单
+        SellOrderGroup sellOrderGroup = new SellOrderGroup();
+        sellOrderGroup.setCustomerId(customerId);
+        List<SellOrderGroup> sellOrderGroups = sellOrderGroupMapper.querySellOrderGroup(sellOrderGroup);
+        //按照销售单id排序
+        if(CollectionUtils.isEmpty(sellOrderGroups)){
+            return null;
+        }
+        //对list排序
+        Collections.sort(sellOrderGroups,new Comparator<SellOrderGroup>(){
+            @Override
+            public int compare(SellOrderGroup sellOrderGroup1,SellOrderGroup sellOrderGroup2){
+                //升序排列
+                if(sellOrderGroup1.getSellOrderGroupId()!=null||sellOrderGroup2.getSellOrderGroupId()!=null){
+                    return sellOrderGroup1.getSellOrderGroupId().compareTo(sellOrderGroup2.getSellOrderGroupId());
+                }else {
+                    return -1;
+                }
+            }
+
+        });
+        return sellOrderGroups;
     }
 
 

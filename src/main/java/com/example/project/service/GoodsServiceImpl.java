@@ -80,7 +80,19 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public boolean modifyGoodsPriceById(int goodsId, double warehousePrice, double retailPrice) {
-        return false;
+    public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice) {
+        Goods goods = new Goods();
+        goods.setWholesalePrice(wholesalePrice);
+        goods.setRetailPrice(retailPrice);
+        goods.setGoodsId(goodsId);
+        // System.out.println("asdasdasdasdsadasd" + goodsId);
+        try {
+            //修改货物表中货物信息（按id查询所需）
+            goodsMapper.updateGoods(goods);
+            return true;
+        } catch (DataAccessException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }
