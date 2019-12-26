@@ -151,6 +151,16 @@
         limit 1
     </select>
 
+    <select id="queryDefaultPifaUnitPriceByGoodsId" resultType="Double">
+        select default_pifa_unit_price
+        from goods where goods_id = #{goodsId};
+    </select>
+
+    <select id="queryDefaultRetailUnitPriceByGoodsId" resultType="Double">
+        select default_retail_unit_price
+        from goods where goods_id = #{goodsId};
+    </select>
+
 </mapper>
 
 

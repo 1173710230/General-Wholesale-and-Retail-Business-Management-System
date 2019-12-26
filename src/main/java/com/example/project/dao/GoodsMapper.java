@@ -106,5 +106,18 @@ public interface GoodsMapper {
      */
     Double queryImportUnitPrice(int goodsId);
 
+    /**
+     * 获得默认批发价。
+     * @param goodsId
+     * @return
+     */
+    Double queryDefaultPifaUnitPriceByGoodsId(int goodsId);
+
+    /**
+     * 查询默认零售价
+     * @param goodsId
+     * @return
+     */
+    Double queryDefaultRetailUnitPriceByGoodsId(int goodsId);
 
 }
