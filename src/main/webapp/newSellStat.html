@@ -28,146 +28,86 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="assets/styles/font.css" type="text/css" />
     <script src="libs/jquery/jquery/dist/jquery.js"></script>
-    <!--    库存盘点加载-->
-    <script>
-        $.ajax({
-            type:"GET",
-            url : "/warehouseController/getAllGoods",
-            success: function (list) {
-                for(var i = 0; i < list.length; i++){
-                    var id = list[i].goodsId;
-                    var name = list[i].goodsName;
-                    var spec = list[i].goodsSpecification;
-                    var wareId = list[i].warehouseId;
-                    var number = list[i].goodsNumber;
-                    let insert = `<tr ><td id="${'goodsId' + id + wareId}">${id}</td><td id="${'name' + id + wareId}">${name}</td>
-<td id="${'number' + id + wareId}">${number}</td><td id="${'spec' + id + wareId}">${spec}</td><td id="${'wareId' + id + wareId}">${wareId}</td>
-<td><button type="button" class="btn btn-primary btn-sm" onclick="trans(${id}, ${wareId})">调拨</button></td></tr>`;
-                    $("#goods").append(insert);
-                }
-            },
-            error: function () {
-                alert("获取失败！");
-            }
-        })
-    </script>
-    <script>
-        function trans(id, wareId) {
-            $("#transArea").html('');
-            let insertHTML = `<div class="panel panel-default" id="addCustomer">
 
-                    <div class="panel-body">
-                    <h3>修改</h3>
-                       <div class="form-group">
-                                <p>货物ID:${$("#goodsId" + id + wareId).html()}</p>
-                                <p>货物名称:${$("#name" + id + wareId).html()}</p>
-                                <p>货物规格:${$("#spec" + id + wareId).html()}</p>
-                             <div class="form-group">
-                                <label for="wareId1">转交到的仓库ID</label>
-                                <input type="text" class="form-control" id="wareIdTrans"}">
-                            </div>
-                             <div class="form-group">
-                                <label for="goodsNumber1">要调拨的货物数量</label>
-                                <input type="text" class="form-control" id="numberTrans" placeholder="${$('#number' + id + wareId).html()}">
-                            </div>
-                            <button class="btn btn-default" type="button" onclick="transOver(${id}, ${wareId})">提交</button>
-                        </form>
-                    </div>
-                </div>`;
-            $("#transArea").append(insertHTML);
-        }
-    </script>
+    <!--    查找货品函数：货品-->
     <script>
-        function transOver(id, wareId) {
-            var goodsId = id;
-            var oldWareId = wareId;
-            var newWareId = $("#wareIdTrans").val();
-            var number = $("#numberTrans").val();
-            if(number.length===0){
-                number = $("#number" + id + wareId).html();
-            }
+        function newQuerySellOrdersByGoods(goodsId){
+            $("#sellOrderByGoods").html('');
             $.ajax({
                 type: "GET",
-                dataType: 'json',
-                url: '/warehouseController/warehouseTransfer',
-                data: {goodsId: goodsId, oldWarehouseId: oldWareId, newWarehouseId: newWareId, goodsNumber: number},
-                success: function (flag) {
-                    if(flag){
-                        alert('调拨成功！');
+                url: "/sellOrder/statisticsSalesByGoodsId",
+                dataType: "json",
+                data:{goodsId: goodsId},
+                success:function (list) {
+                    console.log(list);
+                    let insert = `<tr><th>ID</th><th>时间</th><th>备注</th><th>类型</th><th>客户ID</th>
+<th>仓库ID</th><th>利润</th></tr>`;
+                    if (list !== null){
+                        for(var i = 0; i < list.length; i++){
+                            var id = list[i].sellOrderGroupId;
+                            var sellTime = list[i].sellTime;
+                            var sellOrderRemark = list[i].sellOrderRemark;
+                            var type = '';
+                            if (list[i].sellOrderType === 1) {
+                                type = '零售';
+                            } else {
+                                type = '批发';
+                            }
+                            var customerId = list[i].customerId;
+                            var profit = list[i].profit;
+                            var wareId = list[i].warehouseId;
+                            insert += `<tr><td>${id}</td><td>${sellTime}</td><td>${sellOrderRemark}</td>
+<td>${type}</td><td>${customerId}</td><td>${wareId}</td><td>${profit}</td></tr>`;
 
-                    } else {
-                        alert('调拨失败！');
+                        }
                     }
-                    location.reload();
-
+                    $("#sellOrderByGoods").append(insert);
                 },
                 error: function () {
-                    alert("调拨错误！");
+                    alert("查找失败！");
                 }
             })
         }
     </script>
+    <!--    查找货品函数:客户-->
     <script>
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/warehouseController/displayTheStock",
-            success: function (list) {
-                var res = {};
-                var insertHTML = ``;
-                for (var i = 0;i<list.length;i++){
-                    var flag = 0;
-                    for (var item in res){
-                        if (item === list[i].warehouseId){
-                            res[list[i].warehouseId] = res[list[i].warehouseId] + list[i].goodsNumber;
-                            flag = 1;
-                            break;
+        function newQuerySellOrdersByCustomer(customerId){
+            $("#sellOrderByCustomer").html('');
+            $.ajax({
+                type: "GET",
+                url: "/sellOrder/statisticsSalesByCustomerId",
+                dataType: "json",
+                data:{customerId: customerId},
+                success:function (list) {
+                    console.log(list);
+                    let insert = `<tr><th>ID</th><th>时间</th><th>备注</th><th>类型</th><th>客户ID</th>
+<th>仓库ID</th><th>利润</th></tr>`;
+                    if (list !== null){
+                        for(var i = 0; i < list.length; i++){
+                            var id = list[i].sellOrderGroupId;
+                            var sellTime = list[i].sellTime;
+                            var sellOrderRemark = list[i].sellOrderRemark;
+                            var type = '';
+                            if (list[i].sellOrderType === 1) {
+                                type = '零售';
+                            } else {
+                                type = '批发';
+                            }
+                            var customerId = list[i].customerId;
+                            var profit = list[i].profit;
+                            var wareId = list[i].warehouseId;
+                            insert += `<tr><td>${id}</td><td>${sellTime}</td><td>${sellOrderRemark}</td>
+<td>${type}</td><td>${customerId}</td><td>${wareId}</td><td>${profit}</td></tr>`;
+
                         }
                     }
-                    if (flag === 0){
-                        res[list[i].warehouseId] = list[i].goodsNumber;
-                    }
+                    $("#sellOrderByCustomer").append(insert);
+                },
+                error: function () {
+                    alert("查找失败！");
                 }
-                for (var item in res){
-                    insertHTML += `<tr><td>${item}</td><td>${res[item]}</td></tr>`
-                }
-                $("#wareStockNumber").append();
-            },
-            error: function () {
-                alert("获取库存数失败！")
-            }
-        })
-    </script>
-    <script>
-        $.ajax({
-            type: "GET",
-            dataType: "json",
-            url: "/warehouseController/displayTheBacklogOfFunds",
-            success: function (list) {
-                var res = {};
-                var insertHTML = ``;
-                for (var i = 0;i<list.length;i++){
-                    var flag = 0;
-                    for (var item in res){
-                        if (item === list[i].warehouseId){
-                            res[list[i].warehouseId] = res[list[i].warehouseId] + list[i].goodsNumber * list[i].warehousePrice;
-                            flag = 1;
-                            break;
-                        }
-                    }
-                    if (flag === 0){
-                        res[list[i].warehouseId] = list[i].goodsNumber * list[i].warehousePrice;
-                    }
-                }
-                for (var item in res){
-                    insertHTML += `<tr><td>${item}</td><td>${res[item]}</td></tr>`
-                }
-                $("#wareStockPrice").append();
-            },
-            error: function () {
-                alert("获取库存数失败！")
-            }
-        })
+            })
+        }
     </script>
 </head>
 <body>
@@ -427,41 +367,45 @@
 
             <!-- ############ PAGE START-->
             <div class="row-col b-b">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="padding">
                         <div class="margin">
                             <h5 class="m-b-0 _300">欢迎回来！</h5>
                         </div>
                         <div class="box-header">
-                            <h2>库存盘点</h2>
+                            <h2>货物列表</h2>
                         </div>
-                        <div class="tab-pane active" id="tab-1">
-                            <table class="table table-hover" id="goods">
-                                <tr><th>货物ID</th><th>货品名称</th><th>数量</th><th>规格</th><td>仓库ID</td><td>操作</td></tr>
+                        <!--                        从这里修改-->
+                        <div class="col-md-6">
+                            <form action="#" class="m-b-md">
+                                <div class="input-group input-group-lg">
+                                    <input type="text" class="form-control" placeholder="货物ID" id="goodsQueryID">
+                                    <span class="input-group-btn">
+        <button class="btn b-a no-shadow white" type="button" onclick="newQuerySellOrdersByGoods($('#goodsQueryID').val())">查询</button>
+      </span>
+                                </div>
+                            </form>
+                            <table class="table table-striped b-t b-b" id="sellOrderByGoods">
+
                             </table>
                         </div>
-                    </div>
-                    <div class="padding">
-                        <table class="table table-hover" id="wareStockNumber">
-                            <tr><td>仓库ID</td><td>库存量</td></tr>
-                        </table>
-                    </div>
-                    <div class="padding">
-                        <table class="table table-hover" id="wareStockPrice">
-                            <tr><td>仓库ID</td><td>积压资金额</td></tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="padding">
-                        <div class="margin" id="transArea">
+                        <div class="col-md-6">
+                            <form action="#" class="m-b-md">
+                                <div class="input-group input-group-lg">
+                                    <input type="text" class="form-control" placeholder="顾客ID" id="customerQueryID">
+                                    <span class="input-group-btn">
+        <button class="btn b-a no-shadow white" type="button" onclick="newQuerySellOrdersByCustomer($('#customerQueryID').val())">查询</button>
+      </span>
+                                </div>
+                            </form>
+                            <table class="table table-striped b-t b-b" id="sellOrderByCustomer">
 
+                            </table>
                         </div>
+
                     </div>
                 </div>
-
             </div>
-
             <div class="modal fade inactive" id="chat" data-backdrop="false">
                 <div class="right w-xxl grey lt b-l">
                     <div ui-include="'../views/blocks/modal.chat.html'"></div>
