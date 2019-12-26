@@ -38,5 +38,14 @@ public interface GoodsService {
      */
     boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice);
 
+    /**
+     * 获取批发价
+     */
+    double getWholeSalePrice(int goodsId);
+
+    /**
+     * 获取零售价
+     */
+    double getRetailPrice(int goodsId);
 
 }
