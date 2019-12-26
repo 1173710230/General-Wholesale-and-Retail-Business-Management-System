@@ -86,10 +86,10 @@
             and so.goods_id = g.goods_id
             and w.wh_id = sog.warehouse_id
             <if test="sellOrderGroupId != null">
-                and group_id = #{sellOrderGroupId}
+                and sog.group_id = #{sellOrderGroupId}
             </if>
             <if test="customerId != null">
-                and customer_id = #{customerId}
+                and sog.customer_id = #{customerId}
             </if>
             <if test="sellStatus != null">
                 and order_status = #{sellStatus}

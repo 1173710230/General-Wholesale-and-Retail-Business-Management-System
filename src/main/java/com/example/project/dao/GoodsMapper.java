@@ -99,6 +99,12 @@ public interface GoodsMapper {
      */
     void reduceNumber(@Param("goodsId") int goodsId, @Param("reduceNumber") double reduceNumber, @Param("warehouseId") int warehouseId);
 
+    /**
+     * 查询最新的进货单价.
+     * @param goodsId   货物ID
+     * @return  最新的进货单价
+     */
+    Double queryImportUnitPrice(int goodsId);
 
 
 }
