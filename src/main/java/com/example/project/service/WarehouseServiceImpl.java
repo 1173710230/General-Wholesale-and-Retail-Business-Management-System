@@ -195,7 +195,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     public List<Goods> displayTheStockQuantityOfEachWarehouse() {
         List<Goods> goods = goodsMapper.queryGoods(new Goods());
         for(Goods goods1:goods){
-            double warehousePrice = goodsMapper.queryImportUnitPrice(goods1.getGoodsId());
+            Double warehousePrice = goodsMapper.queryImportUnitPrice(goods1.getGoodsId());
             goods1.setWarehousePrice(warehousePrice);
         }
         if(CollectionUtils.isEmpty(goods)){
@@ -224,7 +224,7 @@ public class WarehouseServiceImpl implements WarehouseService{
     public List<Goods> displayTheBacklogOfFundsForEachItem() {
         List<Goods> goods = goodsMapper.queryGoods(new Goods());
         for(Goods goods1:goods){
-            double warehousePrice = goodsMapper.queryImportUnitPrice(goods1.getGoodsId());
+            Double warehousePrice = goodsMapper.queryImportUnitPrice(goods1.getGoodsId());
             goods1.setWarehousePrice(warehousePrice);
         }
         if(CollectionUtils.isEmpty(goods)){

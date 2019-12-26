@@ -48,7 +48,7 @@ public class UserController {
        session.setAttribute("userPassword", userPassword);
        response.sendRedirect("/index.html");  //登录成功重定向到主页
      }else {  //登录失败，我这是重定向登录页面，要有修改告知我（ps: 这个页面暂时没有）。
-       response.sendRedirect("/login.html");
+       response.sendRedirect("/signup.html");
      }
   }
 
