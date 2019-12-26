@@ -97,4 +97,27 @@ public class GoodsController {
   public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice){
     return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, retailPrice);
   }
+
+  /**
+   * 根据商品的id获取批发价
+   * @param goodsId 商品的id
+   * @return 商品的批发价
+   */
+  @RequestMapping("/getWholeSalePrice")
+  @ResponseBody
+  public double getWholeSalePrice(int goodsId){
+    return goodsService.getWholeSalePrice(goodsId);
+  }
+
+  /**
+   * 根据商品的id获取零售价
+   * @param goodsId 商品的id
+   * @return 该商品的零售价
+   */
+  @RequestMapping("/getRetailPrice")
+  @ResponseBody
+  public double getRetailPrice(int goodsId){
+    return goodsService.getRetailPrice(goodsId);
+  }
+
 }
