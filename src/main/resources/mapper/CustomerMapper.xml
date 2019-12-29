@@ -10,18 +10,19 @@
         <result column="customer_name" property="customerName"/>
         <result column="customer_tel" property="customerTel"/>
         <result column="customer_character" property="status"/>
-<!--        <result column="customer_credits" property="credits"/>-->
-<!--        <result column="customer_deposit" property="deposit"/>-->
+        <result column="customer_credits" property="customerIntegral"/>
+        <result column="customer_deposit" property="preDeposit"/>
+        <result column="customer_debt" property="debt"/>
     </resultMap>
 
     <insert id="insertCustomer" parameterType="Customer">
-        INSERT INTO customer(customer_name, customer_tel)
-        VALUES (#{customerName}, #{customerTel})
+        INSERT INTO customer(customer_name, customer_tel, customer_character)
+        VALUES (#{customerName}, #{customerTel}, #{status})
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">
         SELECT *
-        FROM customer
+        from customer
     </select>
 
     <select id="searchByCustomerName" parameterType="String" resultMap="customers">
@@ -90,5 +91,12 @@
         where customer_id = #{id}
     </select>
 
+    <select id="getDebtById" parameterType="int">
+        select sum(sog.sum_money)
+        from sell_order_group sog,
+             customer c
+        where sog.customer_id = c.customer_id
+          and sog.order_status = 2;
+    </select>
 
 </mapper>
