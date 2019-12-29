@@ -131,7 +131,7 @@
                 for (var item in res){
                     insertHTML += `<tr><td>${item}</td><td>${res[item]}</td></tr>`
                 }
-                $("#wareStockNumber").append();
+                $("#wareStockNumber").append(insertHTML);
             },
             error: function () {
                 alert("获取库存数失败！")
@@ -162,7 +162,7 @@
                 for (var item in res){
                     insertHTML += `<tr><td>${item}</td><td>${res[item]}</td></tr>`
                 }
-                $("#wareStockPrice").append();
+                $("#wareStockPrice").append(insertHTML);
             },
             error: function () {
                 alert("获取库存数失败！")
@@ -447,8 +447,7 @@
                         </table>
                     </div>
                     <div class="padding">
-                        <table class="table table-hover" id="wareStockPrice">
-                            <tr><td>仓库ID</td><td>积压资金额</td></tr>
+、                            <tr><td>仓库ID</td><td>积压资金额</td></tr>
                         </table>
                     </div>
                 </div>

@@ -95,6 +95,8 @@ public class GoodsController {
   @RequestMapping("/modifyGoodsPrice")
   @ResponseBody
   public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice){
+    System.out.println(wholesalePrice);
+    System.out.println(retailPrice);
     return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, retailPrice);
   }
 
@@ -111,9 +113,11 @@ public class GoodsController {
     assert priceKind<=1;  //priceKind 只能为0或1
     if (priceKind==0) {
       if(goodsService.getWholeSalePrice(goodsId)==-1){return 0;}
+      System.out.println(goodsService.getWholeSalePrice(goodsId));
       return goodsService.getWholeSalePrice(goodsId);
     }else {
       if(goodsService.getRetailPrice(goodsId)==-1){return 0; }
+      System.out.println(goodsService.getRetailPrice(goodsId));
       return goodsService.getRetailPrice(goodsId);
     }
   }

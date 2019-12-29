@@ -70,6 +70,24 @@
             })
         }
     </script>
+    <script>
+        function getDefault(id) {
+            var goodId = $("#goodid" + id).val();
+            var status = $("input[name='typeRadio']:checked").val();
+            $.ajax({
+                type: "GET",
+                url: "/goods/getWholeSalePriceOrRetailPrice",
+                dataType: "json",
+                data: {goodsId: goodId, priceKind: status},
+                success: function (number) {
+                    $("#price" + id).val(number);
+                },
+                error: function () {
+                    alert("查找错误！");
+                }
+            })
+        }
+    </script>
 </head>
 <body>
 <div class="app" id="app">
@@ -344,7 +362,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="wareId">仓库ID</label>
-                                    <input type="text" class="form-control" id="wareId">
+                                    <input type="text" class="form-control" id="wareId" onchange="alert('1111')">
                                 </div>
                                 <div class="form-group">
                                     <label for="customerId">顾客ID</label>
@@ -361,7 +379,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <input type="text" class="form-control" id="goodid1">
+                                            <input type="text" class="form-control" id="goodid1" onchange="getDefault(1)">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="price1">
@@ -372,7 +390,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="form-control" id="goodid2">
+                                            <input type="text" class="form-control" id="goodid2" onchange="getDefault(2)">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="price2">
@@ -383,7 +401,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="form-control" id="goodid3">
+                                            <input type="text" class="form-control" id="goodid3" onchange="getDefault(3)">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="price3">
@@ -394,7 +412,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="form-control" id="goodid4">
+                                            <input type="text" class="form-control" id="goodid4" onchange="getDefault(4)">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="price4">
@@ -405,7 +423,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <input type="text" class="form-control" id="goodid5">
+                                            <input type="text" class="form-control" id="goodid5" onchange="getDefault(5)">
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="price5">
