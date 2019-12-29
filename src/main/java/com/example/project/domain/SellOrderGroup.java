@@ -31,6 +31,8 @@ public class SellOrderGroup {
 
     private Double discount = 1.0;
 
+    private Integer payType = 0;  //0说明使用账户付款，1说明使用现金付款
+
     private void checkRep(){
         assert discount <= 1.0 && discount >= 0.0;
     }
@@ -153,6 +155,14 @@ public class SellOrderGroup {
 
     public void setDiscount(Double discount) {
         this.discount = discount;
+    }
+
+    public void setPayType(Integer payType) {
+        this.payType = payType;
+    }
+
+    public Integer getPayType() {
+        return payType;
     }
 
     @Override

@@ -170,12 +170,13 @@ public class SellOrderController{
   /**
    * 对销售单进行收款
    * @param sellOrderId 需要收款的销售单
+   * @param payType 收款方式
    * @return 收款是否成功
    */
   @RequestMapping("/receipt")
   @ResponseBody
-  public boolean receiptSellOrder(int sellOrderId){
-    return sellOrderService.paySellOrder(sellOrderId);
+  public boolean receiptSellOrder(int sellOrderId, int payType){
+    return sellOrderService.paySellOrder(sellOrderId, payType);
   }
 
   /**

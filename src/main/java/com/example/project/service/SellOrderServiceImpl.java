@@ -63,7 +63,7 @@ public class SellOrderServiceImpl implements SellOrderService {
                 sellOrderGroupMapper.deleteSellOrderGroupById(sellOrderGroup.getSellOrderGroupId());
                 return false;
             }
-            paySellOrder(sellOrderGroup.getSellOrderGroupId());
+            //todo: 删除pay方法
         }
         return true;
     }
@@ -282,16 +282,30 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean paySellOrder(int sellOrderGroupId) {
-
+    public boolean paySellOrder(int sellOrderGroupId, int payType) {
+        //todo： 未写积分变化功能
+        assert payType>=0;
+        assert payType<=1;
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
-
+        sellOrderGroup.setPayType(payType);
+        if (payType==0){  //账户付款
+            Customer customer = customerMapper.searchById(sellOrderGroup.getCustomerId());
+            double preDeposit = customer.getPreDeposit();
+            double totalPrice = sellOrderGroup.getSalary();
+            if (preDeposit-totalPrice>=0){
+                customer.setPreDeposit(preDeposit-totalPrice);
+                return true;
+            }else { //预存款不足
+                return false;
+            }
+        }else{  //现金付款
         //判断销售单的类型
         //if(sellOrderGroup.getSellOrderType() == 1)
         //    return false;
 
-        return changeStatus(sellOrderGroupId, 4);
+            return changeStatus(sellOrderGroupId, 4);
+        }
     }
 
     @Override
