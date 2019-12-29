@@ -173,6 +173,16 @@ public class SellOrderServiceImpl implements SellOrderService {
         return sellOrderGroups;
     }
 
+    @Override
+    public boolean changeIntegralRatio(double integralRatio) {
+        if(integralRatio<0 || integralRatio>100)
+            return false;
+        else{
+            Host.setIntegralRatio(integralRatio);
+            return true;
+        }
+    }
+
 
     @Override
     public boolean deleteSellOrder(int sellOrderGroupId) {

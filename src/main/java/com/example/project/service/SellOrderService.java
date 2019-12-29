@@ -105,5 +105,13 @@ public interface SellOrderService {
      */
     List<SellOrderGroup>  statisticsSalesByCustomerId(int customerId);
 
+    /**
+     * 修改积分规则
+     *
+     * @param integralRatio 每消费1元换多少积分
+     * @return 草早是否成功
+     */
+    boolean changeIntegralRatio(double integralRatio);
+
 
 }

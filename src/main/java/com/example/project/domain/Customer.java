@@ -14,7 +14,7 @@ public class Customer {
     // 0为批发， 1 为零售
     private Double customerIntegral = 0.0;
     private Double preDeposit = 0.0;
-    private Double deft = 0.0;
+    private Double debt = 0.0;
 
 
     public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId, Integer status) {
@@ -78,12 +78,12 @@ public class Customer {
         this.preDeposit = preDeposit;
     }
 
-    public Double getDeft() {
-        return deft;
+    public Double getDebt() {
+        return debt;
     }
 
-    public void setDeft(Double deft) {
-        this.deft = deft;
+    public void setDebt(Double deft) {
+        this.debt = deft;
     }
 
     public Integer getStatus() {
@@ -104,7 +104,7 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, customerName, customerTel, historySellOrderId, status, customerIntegral, preDeposit, deft);
+        return Objects.hash(customerId, customerName, customerTel, historySellOrderId, status, customerIntegral, preDeposit, debt);
     }
 
     @Override
@@ -117,7 +117,7 @@ public class Customer {
                 ", status=" + status +
                 ", customerIntegral=" + customerIntegral +
                 ", preDeposit=" + preDeposit +
-                ", deft=" + deft +
+                ", deft=" + debt +
                 '}';
     }
 }
