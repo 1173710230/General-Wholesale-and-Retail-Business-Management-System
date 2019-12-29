@@ -49,6 +49,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
         sellOrderGroup.setSellStatus(1);
+        sellOrderGroup.setDiscount(newSellOrderGroup.getDiscount());
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
@@ -63,7 +64,6 @@ public class SellOrderServiceImpl implements SellOrderService {
                 sellOrderGroupMapper.deleteSellOrderGroupById(sellOrderGroup.getSellOrderGroupId());
                 return false;
             }
-            //todo: 删除pay方法
         }
         return true;
     }
@@ -181,6 +181,15 @@ public class SellOrderServiceImpl implements SellOrderService {
             Host.setIntegralRatio(integralRatio);
             return true;
         }
+    }
+
+    @Override
+    public List<SellOrderGroup> getUnpaidRetailOrder() {
+        SellOrderGroup order = new SellOrderGroup();
+        //判断销售单的类型
+        order.setSellOrderType(1);
+        order.setSellStatus(2);
+        return sellOrderGroupMapper.querySellOrderGroup(order);
     }
 
 
@@ -328,10 +337,12 @@ public class SellOrderServiceImpl implements SellOrderService {
             //判断销售单的类型
             if(order.getSellOrderType() == 1)
                 return false;
-            if(order.getPayType()==0){ //从账户付的款,金额退回 //todo：未处理积分
-                Customer customer = customerMapper.searchById(order.getCustomerId());
-                customer.setPreDeposit(customer.getPreDeposit()+order.getSalary());
-                return changeStatus(sellOrderGroupId, 5);
+
+            double totalPrice = order.getSalary();
+            //退还消费产生的积分
+            customerMapper.reduceCredit(totalPrice * Host.getIntegralRatio(), order.getCustomerId());
+            if(order.getPayType()==0){ //从账户付的款,金额退回
+                customerMapper.addDeposit(totalPrice, order.getCustomerId());
             }
             List<SellOrder> sellOrderList = order.getSellOrders();
             for (SellOrder sellOrder : sellOrderList) {
@@ -352,6 +363,8 @@ public class SellOrderServiceImpl implements SellOrderService {
         order.setSellStatus(2);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
+
+
 
     @Override
     public List<SellOrderGroup> getUnRefundOrder() {

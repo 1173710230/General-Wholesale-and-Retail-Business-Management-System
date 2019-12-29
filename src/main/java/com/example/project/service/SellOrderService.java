@@ -115,5 +115,9 @@ public interface SellOrderService {
      */
     boolean changeIntegralRatio(double integralRatio);
 
+    /**
+     * 获取未付款的零售单
+     */
+    List<SellOrderGroup>  getUnpaidRetailOrder();
 
 }

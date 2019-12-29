@@ -74,4 +74,13 @@ public class CustomerServiceImpl implements CustomerService{
         customerMapper.exchangeCreditToDeposit(integral * 100, customerId);
         return true;
     }
+
+    @Override
+    public boolean addPreDeposit(double deposit, int customerId) {
+        Customer customer = customerMapper.searchById(customerId);
+        if(customer == null)
+            return false;
+        customerMapper.addDeposit(deposit,customerId);
+        return true;
+    }
 }
