@@ -1,12 +1,10 @@
 package com.example.project.service;
 
+import com.example.project.dao.CustomerMapper;
 import com.example.project.dao.GoodsMapper;
 import com.example.project.dao.SellOrderGroupMapper;
 import com.example.project.dao.SellOrderMapper;
-import com.example.project.domain.Good;
-import com.example.project.domain.Goods;
-import com.example.project.domain.SellOrder;
-import com.example.project.domain.SellOrderGroup;
+import com.example.project.domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -24,18 +22,26 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     private final SellOrderGroupMapper sellOrderGroupMapper;
 
+    private final CustomerMapper customerMapper;
+
     @Autowired
-    public SellOrderServiceImpl(SellOrderMapper sellOrderMapper, GoodsMapper goodsMapper, SellOrderGroupMapper sellOrderGroupMapper) {
+    public SellOrderServiceImpl(SellOrderMapper sellOrderMapper, GoodsMapper goodsMapper, SellOrderGroupMapper sellOrderGroupMapper, CustomerMapper customerMapper) {
         this.sellOrderMapper = sellOrderMapper;
         this.goodsMapper = goodsMapper;
         this.sellOrderGroupMapper = sellOrderGroupMapper;
+        this.customerMapper = customerMapper;
     }
 
     @Override
     public boolean addSellOrder(SellOrderGroup newSellOrderGroup) {
         //sellOrder.setSellTime(new SimpleDateFormat().format(date));
         mergeSimilarGoods(newSellOrderGroup);
-
+        // 对应客户只能开对应类型的销售单
+        Customer customer = customerMapper.searchById(newSellOrderGroup.getCustomerId());
+        System.out.println("customer.getStatus()="+customer.getStatus());
+        System.out.println("newSellOrderGroup.getSellOrderType() ="+newSellOrderGroup.getSellOrderType());
+        if(!customer.getStatus().equals(newSellOrderGroup.getSellOrderType()))
+            return false;
         SellOrderGroup sellOrderGroup = new SellOrderGroup();
         sellOrderGroup.setSellOrderRemark(newSellOrderGroup.getSellOrderRemark());
         sellOrderGroup.setCustomerId(newSellOrderGroup.getCustomerId());
@@ -176,20 +182,20 @@ public class SellOrderServiceImpl implements SellOrderService {
             //判断销售单的类型
             if(sellOrderGroup.getSellOrderType() == 1)
                 return false;
-            if(sellOrderGroup.getSellStatus() == 2 || sellOrderGroup .getSellStatus() == 4)
+            if(sellOrderGroup.getSellStatus() == 1)
             {
                 List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
                 for(int i = 0; i<sellOrderList.size(); i++){
-                    //货物回库
-                    goodsMapper.addNumber(sellOrderList.get(i).getSellGoodsId(), sellOrderList.get(i).getSellNumber(), sellOrderGroup.getWarehouseId());
+                    //货物回库// goodsMapper.addNumber(sellOrderList.get(i).getSellGoodsId(), sellOrderList.get(i).getSellNumber(), sellOrderGroup.getWarehouseId());
                    //删除销售单
                     sellOrderMapper.deleteSellOrder(sellOrderList.get(i).getSellOrderId());
                 }
                 sellOrderGroupMapper.deleteSellOrderGroupById(sellOrderGroupId);
+                System.out.println("1234567435678654578654578675789");
+                return true;
             }
-            return true;
+            return false;
         } catch (DataAccessException ex) {
-            //
             ex.printStackTrace();
             return false;
         }
@@ -378,7 +384,9 @@ public class SellOrderServiceImpl implements SellOrderService {
         for (SellOrder sellOrder : sellOrderList) {
             boolean flag = false; //重复标志位
             for (SellOrder order : newSellOrderList) {
-                if (order.getSellGoodsId() == sellOrder.getSellGoodsId()) {
+                System.out.println("order.getSellUnitPrice() = "+order.getSellUnitPrice());
+                System.out.println("sellOrder.getSellUnitPrice() = "+sellOrder.getSellUnitPrice());
+                if ((order.getSellGoodsId() == sellOrder.getSellGoodsId()) && (order.getSellUnitPrice() == sellOrder.getSellUnitPrice())) {
                     // 处理重复情况
                     double temp = order.getSellNumber();
                     order.setSellNumber(temp + sellOrder.getSellNumber());
