@@ -97,4 +97,25 @@ public class GoodsController {
   public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice){
     return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, retailPrice);
   }
+
+  /**
+   * 根据商品的id获取批发价或者零售价
+   * @param goodsId 商品的id
+   * @param priceKind 价格的种类（0：获取批发价；1：获取零售价）
+   * @return 商品的批发价或者零售价(如果查询到的值为-1（出错或者没找到），返回0)
+   */
+  @RequestMapping("/getWholeSalePriceOrRetailPrice")
+  @ResponseBody
+  public double getWholeSalePrice(int goodsId, int priceKind){
+    assert priceKind>=0;
+    assert priceKind<=1;  //priceKind 只能为0或1
+    if (priceKind==0) {
+      if(goodsService.getWholeSalePrice(goodsId)==-1){return 0;}
+      return goodsService.getWholeSalePrice(goodsId);
+    }else {
+      if(goodsService.getRetailPrice(goodsId)==-1){return 0; }
+      return goodsService.getRetailPrice(goodsId);
+    }
+  }
+
 }

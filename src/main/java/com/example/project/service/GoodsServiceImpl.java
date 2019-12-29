@@ -95,4 +95,20 @@ public class GoodsServiceImpl implements GoodsService{
             return false;
         }
     }
+
+    @Override
+    public double getWholeSalePrice(int goodsId) {
+        if(goodsMapper.queryDefaultPifaUnitPriceByGoodsId(goodsId) == null)
+            return -1;
+        else
+            return goodsMapper.queryDefaultPifaUnitPriceByGoodsId(goodsId);
+    }
+
+    @Override
+    public double getRetailPrice(int goodsId) {
+        if(goodsMapper.queryDefaultRetailUnitPriceByGoodsId(goodsId) == null)
+            return -1;
+        else
+            return goodsMapper.queryDefaultRetailUnitPriceByGoodsId(goodsId);
+    }
 }
