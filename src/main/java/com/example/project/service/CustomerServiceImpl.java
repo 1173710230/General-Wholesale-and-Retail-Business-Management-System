@@ -64,4 +64,23 @@ public class CustomerServiceImpl implements CustomerService{
         // 调用按名字查询方法
         return customerMapper.searchByCustomerName(name);
     }
+
+    @Override
+    public boolean exchangeIntegral(int customerId) {
+        Customer customer = customerMapper.searchById(customerId);
+        if(customer == null)
+            return false;
+        double integral = customer.getCustomerIntegral() / 100;
+        customerMapper.exchangeCreditToDeposit(integral * 100, customerId);
+        return true;
+    }
+
+    @Override
+    public boolean addPreDeposit(double deposit, int customerId) {
+        Customer customer = customerMapper.searchById(customerId);
+        if(customer == null)
+            return false;
+        customerMapper.addDeposit(deposit,customerId);
+        return true;
+    }
 }

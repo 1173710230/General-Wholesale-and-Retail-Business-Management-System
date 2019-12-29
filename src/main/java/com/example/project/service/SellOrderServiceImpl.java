@@ -49,6 +49,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
         sellOrderGroup.setSellStatus(1);
+        sellOrderGroup.setDiscount(newSellOrderGroup.getDiscount());
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
@@ -63,7 +64,6 @@ public class SellOrderServiceImpl implements SellOrderService {
                 sellOrderGroupMapper.deleteSellOrderGroupById(sellOrderGroup.getSellOrderGroupId());
                 return false;
             }
-            paySellOrder(sellOrderGroup.getSellOrderGroupId());
         }
         return true;
     }
@@ -183,6 +183,15 @@ public class SellOrderServiceImpl implements SellOrderService {
         }
     }
 
+    @Override
+    public List<SellOrderGroup> getUnpaidRetailOrder() {
+        SellOrderGroup order = new SellOrderGroup();
+        //判断销售单的类型
+        order.setSellOrderType(1);
+        order.setSellStatus(2);
+        return sellOrderGroupMapper.querySellOrderGroup(order);
+    }
+
 
     @Override
     public boolean deleteSellOrder(int sellOrderGroupId) {
@@ -292,16 +301,31 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean paySellOrder(int sellOrderGroupId) {
-
+    public boolean paySellOrder(int sellOrderGroupId, int payType) {
+        assert payType>=0;
+        assert payType<=1;
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
+        sellOrderGroup.setPayType(payType);
 
+        Customer customer = customerMapper.searchById(sellOrderGroup.getCustomerId());
+        double totalPrice = sellOrderGroup.getSalary();
+        if (payType==0){  //账户付款
+            double preDeposit = customer.getPreDeposit();
+            if (preDeposit-totalPrice>=0){
+                customerMapper.reduceDeposit(totalPrice, sellOrderGroup.getCustomerId());
+                customerMapper.addCredit(totalPrice * Host.getIntegralRatio(), sellOrderGroup.getCustomerId());
+                return changeStatus(sellOrderGroupId, 4);
+            }else { //预存款不足
+                return false;
+            }
+        }else{  //现金付款
         //判断销售单的类型
         //if(sellOrderGroup.getSellOrderType() == 1)
         //    return false;
-
-        return changeStatus(sellOrderGroupId, 4);
+            customerMapper.addCredit(totalPrice * Host.getIntegralRatio(), sellOrderGroup.getCustomerId());
+            return changeStatus(sellOrderGroupId, 4);
+        }
     }
 
     @Override
@@ -314,6 +338,12 @@ public class SellOrderServiceImpl implements SellOrderService {
             if(order.getSellOrderType() == 1)
                 return false;
 
+            double totalPrice = order.getSalary();
+            //退还消费产生的积分
+            customerMapper.reduceCredit(totalPrice * Host.getIntegralRatio(), order.getCustomerId());
+            if(order.getPayType()==0){ //从账户付的款,金额退回
+                customerMapper.addDeposit(totalPrice, order.getCustomerId());
+            }
             List<SellOrder> sellOrderList = order.getSellOrders();
             for (SellOrder sellOrder : sellOrderList) {
                 goodsMapper.addNumber(sellOrder.getSellGoodsId(), sellOrder.getSellNumber(), order.getWarehouseId());
@@ -333,6 +363,8 @@ public class SellOrderServiceImpl implements SellOrderService {
         order.setSellStatus(2);
         return sellOrderGroupMapper.querySellOrderGroup(order);
     }
+
+
 
     @Override
     public List<SellOrderGroup> getUnRefundOrder() {

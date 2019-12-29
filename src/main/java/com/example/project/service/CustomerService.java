@@ -42,4 +42,16 @@ public interface CustomerService {
      *
      */
     List<Customer> queryCustomerByName(String name);
+
+
+    /**
+     *
+     * 积分兑换功能
+     */
+    boolean exchangeIntegral(int customerId);
+
+    /**
+     * 充值渔村额
+     */
+    boolean addPreDeposit(double deposit, int customerId);
 }

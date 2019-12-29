@@ -13,7 +13,7 @@ public class Customer {
     private Integer status;
     // 0为批发， 1 为零售
     private Double customerIntegral = 0.0;
-    private Double preDeposit = 0.0;
+    private Double preDeposit = 0.0;  //预存款
     private Double debt = 0.0;
 
 

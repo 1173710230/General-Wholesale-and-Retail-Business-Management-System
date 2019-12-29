@@ -48,10 +48,12 @@ public interface SellOrderService {
 
 
     /**
-     * 付款
-     *
+     * 销售单付款
+     * @param sellOrderId 销售单的id
+     * @param payType 销售的付款方式， 0账户付款，1现金付款
+     * @return 付款是否成功
      */
-    boolean paySellOrder(int sellOrderId);
+    boolean paySellOrder(int sellOrderId, int payType);
 
 
     /**
@@ -113,5 +115,9 @@ public interface SellOrderService {
      */
     boolean changeIntegralRatio(double integralRatio);
 
+    /**
+     * 获取未付款的零售单
+     */
+    List<SellOrderGroup>  getUnpaidRetailOrder();
 
 }
