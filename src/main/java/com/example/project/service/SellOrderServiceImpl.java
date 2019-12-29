@@ -244,6 +244,8 @@ public class SellOrderServiceImpl implements SellOrderService {
                     double stock = result.getGoodsNumber(); // 库存
                     if (stock < sellNumber)
                         return false; // 数量不足
+                } else {
+                    return false;
                 }
             }
 
