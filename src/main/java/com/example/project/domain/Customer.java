@@ -12,6 +12,9 @@ public class Customer {
     private List<Integer> historySellOrderId;
     private Integer status;
     // 0为批发， 1 为零售
+    private Double customerIntegral = 0.0;
+    private Double preDeposit = 0.0;
+    private Double deft = 0.0;
 
 
     public Customer(Integer customerId, String customerName, String customerTel, List<Integer> historySellOrderId, Integer status) {
@@ -59,6 +62,30 @@ public class Customer {
         this.historySellOrderId = historySellOrderId;
     }
 
+    public Double getCustomerIntegral() {
+        return customerIntegral;
+    }
+
+    public void setCustomerIntegral(Double customerIntegral) {
+        this.customerIntegral = customerIntegral;
+    }
+
+    public Double getPreDeposit() {
+        return preDeposit;
+    }
+
+    public void setPreDeposit(Double preDeposit) {
+        this.preDeposit = preDeposit;
+    }
+
+    public Double getDeft() {
+        return deft;
+    }
+
+    public void setDeft(Double deft) {
+        this.deft = deft;
+    }
+
     public Integer getStatus() {
         return status;
     }
@@ -77,7 +104,7 @@ public class Customer {
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerId, customerName, customerTel, historySellOrderId);
+        return Objects.hash(customerId, customerName, customerTel, historySellOrderId, status, customerIntegral, preDeposit, deft);
     }
 
     @Override
@@ -87,6 +114,10 @@ public class Customer {
                 ", customerName='" + customerName + '\'' +
                 ", customerTel='" + customerTel + '\'' +
                 ", historySellOrderId=" + historySellOrderId +
+                ", status=" + status +
+                ", customerIntegral=" + customerIntegral +
+                ", preDeposit=" + preDeposit +
+                ", deft=" + deft +
                 '}';
     }
 }
