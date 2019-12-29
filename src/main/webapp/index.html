@@ -118,13 +118,13 @@
                 for (var i = 0;i<list.length;i++){
                     var flag = 0;
                     for (var item in res){
-                        if (item === list[i].warehouseId){
-                            res[list[i].warehouseId] = res[list[i].warehouseId] + list[i].goodsNumber;
+                        if (item == list[i].warehouseId){
+                            res[list[i].warehouseId] += list[i].goodsNumber;
                             flag = 1;
                             break;
                         }
                     }
-                    if (flag === 0){
+                    if (flag == 0){
                         res[list[i].warehouseId] = list[i].goodsNumber;
                     }
                 }
@@ -149,14 +149,17 @@
                 for (var i = 0;i<list.length;i++){
                     var flag = 0;
                     for (var item in res){
-                        if (item === list[i].warehouseId){
-                            res[list[i].warehouseId] = res[list[i].warehouseId] + list[i].goodsNumber * list[i].warehousePrice;
+                        if (item == list[i].warehouseId){
+                            var changeValue = list[i].goodsNumber * list[i].warehousePrice;
+                            res[item] += changeValue;
+                            console.log(res[list[i].warehouseId])
                             flag = 1;
                             break;
                         }
                     }
-                    if (flag === 0){
+                    if (flag == 0){
                         res[list[i].warehouseId] = list[i].goodsNumber * list[i].warehousePrice;
+                        console.log(res[list[i].warehouseId])
                     }
                 }
                 for (var item in res){
