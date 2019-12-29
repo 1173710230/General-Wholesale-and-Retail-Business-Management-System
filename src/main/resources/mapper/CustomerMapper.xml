@@ -12,6 +12,7 @@
         <result column="customer_character" property="status"/>
         <result column="customer_credits" property="customerIntegral"/>
         <result column="customer_deposit" property="preDeposit"/>
+        <result column="customer_debt" property="debt"/>
     </resultMap>
 
     <insert id="insertCustomer" parameterType="Customer">
@@ -20,7 +21,8 @@
     </insert>
 
     <select id="getAllCustomers" resultMap="customers">
-        SELECT * from customer
+        SELECT *
+        from customer
     </select>
 
     <select id="searchByCustomerName" parameterType="String" resultMap="customers">
