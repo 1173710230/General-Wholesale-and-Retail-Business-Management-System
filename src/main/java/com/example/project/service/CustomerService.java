@@ -42,4 +42,11 @@ public interface CustomerService {
      *
      */
     List<Customer> queryCustomerByName(String name);
+
+
+    /**
+     *
+     * 积分兑换功能
+     */
+    boolean exchangeIntegral(int customerId);
 }
