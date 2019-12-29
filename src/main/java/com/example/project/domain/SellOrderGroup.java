@@ -2,6 +2,7 @@ package com.example.project.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class SellOrderGroup {
 
@@ -27,6 +28,12 @@ public class SellOrderGroup {
     private Integer warehouseId;
 
     private Double profit = 0.0;
+
+    private Double discount = 1.0;
+
+    private void checkRep(){
+        assert discount <= 1.0 && discount >= 0.0;
+    }
 
     //ToDo constructor
     public SellOrderGroup() {
@@ -140,6 +147,27 @@ public class SellOrderGroup {
         return temp;
     }
 
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        SellOrderGroup that = (SellOrderGroup) o;
+        return Objects.equals(sellOrderGroupId, that.sellOrderGroupId) ;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(sellOrderGroupId, sellTime, sellOrderRemark, sellOrderType, sellStatus, sellOrders, customerId, salary, warehouseId, profit, discount);
+    }
+
     @Override
     public String toString() {
         return "SellOrderGroup{" +
@@ -153,6 +181,7 @@ public class SellOrderGroup {
                 ", salary=" + salary +
                 ", warehouseId=" + warehouseId +
                 ", profit=" + profit +
+                ", discount=" + discount +
                 '}';
     }
 }
