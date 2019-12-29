@@ -99,4 +99,11 @@
           and sog.order_status = 2;
     </select>
 
+    <update id="exchangeCreditToDeposit" parameterType="double">
+        update customer
+        set customer_credits = customer_credits - #{credit},
+            customer_deposit = customer_deposit + #{credit} / 100
+        where customer_id = #{id}
+    </update>
+
 </mapper>
