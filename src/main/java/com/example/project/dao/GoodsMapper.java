@@ -64,6 +64,12 @@ public interface GoodsMapper {
     List<Goods> queryGoods(Goods goods);
 
     /**
+     * 直接查询Goods表。
+     * @return
+     */
+    List<Goods> queryGoodsList();
+
+    /**
      * 直接修改库存。
      *
      * @param goodsId    要修改库存的货物ID

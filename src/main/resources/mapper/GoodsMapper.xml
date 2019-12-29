@@ -161,6 +161,11 @@
         from goods where goods_id = #{goodsId};
     </select>
 
+    <select id="queryGoodsList" resultMap="goodsMap">
+        select *
+        from goods;
+    </select>
+
 </mapper>
 
 

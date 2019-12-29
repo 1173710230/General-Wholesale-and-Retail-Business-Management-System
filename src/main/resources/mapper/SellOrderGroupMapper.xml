@@ -115,6 +115,10 @@
           and so.goods_id = g.goods_id
     </select>
 
+    <delete id="deleteSellOrderGroupById" parameterType="int">
+        delete from sell_order_group where group_id = #{sellOrderGroupId}
+    </delete>
+
 </mapper>
 
 
