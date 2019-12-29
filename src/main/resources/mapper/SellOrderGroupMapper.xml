@@ -13,6 +13,7 @@
         <result column="customer_id" property="customerId"/>
         <result column="order_type" property="sellOrderType"/>
         <result column="warehouse_id" property="warehouseId"/>
+        <result column="discount" property="discount"/>
 
         <!--总价还有利润-->
         <result column="profit" property="profit"/>
@@ -36,8 +37,8 @@
 
     <insert id="insertSellOrderGroup" parameterType="SellOrderGroup">
         # 先插入一条group记录
-        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id, order_status)
-        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId}, #{sellStatus});
+        insert into sell_order_group (sell_time, remark, order_type, customer_id, warehouse_id, order_status, discount)
+        values (#{sellTime}, #{sellOrderRemark}, #{sellOrderType}, #{customerId}, #{warehouseId}, #{sellStatus}, #{discount});
 
         set @group_id = last_insert_id();
 
@@ -68,6 +69,9 @@
             </if>
             <if test="customerId != null and customerId != ''">
                 customer_id = #{customerId},
+            </if>
+            <if test="discount != null">
+                discount = #{discount}
             </if>
         </set>
         where group_id = #{sellOrderGroupId};

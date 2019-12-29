@@ -108,4 +108,9 @@ public interface CustomerMapper {
      */
     double getDepositByCustomerId(int id);
 
+    /**
+     * 将积分兑换成钱钱。
+     */
+    void exchangeCreditToDeposit(@Param("credit") double useCredit, @Param("id") int customerId);
+
 }
