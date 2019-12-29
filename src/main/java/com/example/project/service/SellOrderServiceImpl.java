@@ -328,7 +328,11 @@ public class SellOrderServiceImpl implements SellOrderService {
             //判断销售单的类型
             if(order.getSellOrderType() == 1)
                 return false;
-
+            if(order.getPayType()==0){ //从账户付的款,金额退回 //todo：未处理积分
+                Customer customer = customerMapper.searchById(order.getCustomerId());
+                customer.setPreDeposit(customer.getPreDeposit()+order.getSalary());
+                return changeStatus(sellOrderGroupId, 5);
+            }
             List<SellOrder> sellOrderList = order.getSellOrders();
             for (SellOrder sellOrder : sellOrderList) {
                 goodsMapper.addNumber(sellOrder.getSellGoodsId(), sellOrder.getSellNumber(), order.getWarehouseId());
