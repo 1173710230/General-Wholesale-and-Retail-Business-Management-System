@@ -10,6 +10,8 @@
         <result column="customer_name" property="customerName"/>
         <result column="customer_tel" property="customerTel"/>
         <result column="customer_character" property="status"/>
+<!--        <result column="customer_credits" property="credits"/>-->
+<!--        <result column="customer_deposit" property="deposit"/>-->
     </resultMap>
 
     <insert id="insertCustomer" parameterType="Customer">
@@ -51,4 +53,42 @@
         FROM customer
         WHERE customer.customer_id = #{customerTel}
     </delete>
+
+    <update id="addCredit">
+        update customer
+        set customer_credits = #{credit} + customer_credits
+        where customer_id = #{customerId}
+    </update>
+
+    <update id="reduceCredit">
+        update customer
+        set customer_credits = customer_credits - #{credit}
+        where customer_id = #{customerId}
+    </update>
+
+    <select id="getCreditByCustomerId" parameterType="int">
+        select customer_credits
+        from customer
+        where customer_id = #{id}
+    </select>
+
+    <update id="addDeposit">
+        update customer
+        set customer_deposit = #{deposit} + customer_deposit
+        where customer_id = #{customerId}
+    </update>
+
+    <update id="reduceDeposit">
+        update customer
+        set customer_deposit = customer_deposit - #{deposit}
+        where customer_id = #{customerId}
+    </update>
+
+    <select id="getDepositByCustomerId" parameterType="int">
+        select customer_deposit
+        from customer
+        where customer_id = #{id}
+    </select>
+
+
 </mapper>

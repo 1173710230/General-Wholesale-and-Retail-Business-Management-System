@@ -60,4 +60,52 @@ public interface CustomerMapper {
      * @param id 客户ID
      */
     void deleteById(int id);
+
+    /**
+     * 给一个客户增加积分。
+     *
+     * @param credit     增加的积分
+     * @param customerId 客户ID
+     */
+    void addCredit(@Param("credit") double credit, @Param("customerId") int customerId);
+
+    /**
+     * 减少一个客户的积分。
+     *
+     * @param credit     减少的积分
+     * @param customerId 客户ID
+     */
+    void reduceCredit(@Param("credit") double credit, @Param("customerId") int customerId);
+
+    /**
+     * 获得一个客户的积分。
+     *
+     * @param id 客户ID
+     */
+    void getCreditByCustomerId(int id);
+
+    /**
+     * 增加一个客户的预存款。
+     *
+     * @param deposit    预存款
+     * @param customerId 客户ID
+     */
+    void addDeposit(@Param("deposit") double deposit, @Param("customerId") int customerId);
+
+    /**
+     * 减少一个客户的预存款。
+     *
+     * @param deposit    减少的预存款
+     * @param customerId 客户ID
+     */
+    void reduceDeposit(@Param("deposit") double deposit, @Param("customerId") int customerId);
+
+    /**
+     * 根据一个客户的ID获取他的剩余预存款。
+     *
+     * @param id 客户ID
+     * @return 客户的预存款余额
+     */
+    double getDepositByCustomerId(int id);
+
 }
