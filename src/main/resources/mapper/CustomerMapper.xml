@@ -28,7 +28,7 @@
         WHERE customer.customer_name like concat('%', #{customerName}, '%')
     </select>
 
-    <select id="searchById" parameterType="int" resultType="Customer">
+    <select id="searchById" parameterType="int" resultMap="customers">
         SELECT *
         FROM customer c
         WHERE c.customer_id = #{customerId}
