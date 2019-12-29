@@ -58,8 +58,10 @@ public class GoodsServiceImpl implements GoodsService{
         Goods goods = new Goods();
         goods.setGoodsName(goodsName);
         goods.setGoodsSpecification(spec);
+        goods.setRetailPrice(null);
+        goods.setWholesalePrice(null);
         goods.setGoodsId(goodsId);
-        // System.out.println("asdasdasdasdsadasd" + goodsId);
+         System.out.println("asdasdasdasdsadasd" + goods);
         try {
             //修改货物表中货物信息（按id查询所需）
             goodsMapper.updateGoods(goods);
@@ -85,7 +87,7 @@ public class GoodsServiceImpl implements GoodsService{
         goods.setWholesalePrice(wholesalePrice);
         goods.setRetailPrice(retailPrice);
         goods.setGoodsId(goodsId);
-        // System.out.println("asdasdasdasdsadasd" + goodsId);
+        System.out.println("asdasdasdasdsadasd" + goods);
         try {
             //修改货物表中货物信息（按id查询所需）
             goodsMapper.updateGoods(goods);
