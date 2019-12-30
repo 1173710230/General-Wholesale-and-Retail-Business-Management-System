@@ -21,6 +21,10 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public List<Customer> getallCustomers() {
         List<Customer> customerList = customerMapper.getAllCustomers();
+        for(Customer customer:customerList){
+            double debt = customerMapper.getDebtById(customer.getCustomerId());
+            customer.setDebt(debt);
+        }
         return customerList;
     }
 

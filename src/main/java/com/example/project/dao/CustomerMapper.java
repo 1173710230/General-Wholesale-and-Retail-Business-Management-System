@@ -109,6 +109,14 @@ public interface CustomerMapper {
     double getDepositByCustomerId(int id);
 
     /**
+     * 获得客户欠款。
+     *
+     * @param id 客户ID
+     * @return 客户欠款，如果客户没有欠款，则该值是null
+     */
+    Double getDebtById(int id);
+
+    /**
      * 将积分兑换成钱钱。
      */
     void exchangeCreditToDeposit(@Param("credit") double useCredit, @Param("id") int customerId);
