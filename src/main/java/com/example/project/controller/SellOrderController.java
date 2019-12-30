@@ -7,6 +7,7 @@ import com.example.project.service.SellOrderService;
 import com.example.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,7 @@ import java.util.List;
  * 这是一个销售单的controller模块，实现销售单的增删改查和状态变化等功能
  *
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/sellOrder")
 public class SellOrderController{

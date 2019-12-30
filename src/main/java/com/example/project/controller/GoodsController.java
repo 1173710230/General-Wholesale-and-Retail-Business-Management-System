@@ -5,6 +5,7 @@ import com.example.project.service.GoodsService;
 import com.example.project.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +15,7 @@ import java.util.List;
 /**
  * 这是一个商品的controller模块，里面主要有增删改查的控制器
  */
+@CrossOrigin
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
@@ -33,6 +35,7 @@ public class GoodsController {
   @RequestMapping("/allGoods")
   @ResponseBody
   public List<Goods> getAllGoods(){
+    System.out.println("调用allGoods");
     return goodsService.getAllWarehouseGoods();
   }
 
