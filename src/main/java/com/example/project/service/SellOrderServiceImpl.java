@@ -34,6 +34,7 @@ public class SellOrderServiceImpl implements SellOrderService {
 
     @Override
     public boolean addSellOrder(SellOrderGroup newSellOrderGroup) {
+        System.out.println(newSellOrderGroup);
         //sellOrder.setSellTime(new SimpleDateFormat().format(date));
         mergeSimilarGoods(newSellOrderGroup);
         System.out.println("12580");

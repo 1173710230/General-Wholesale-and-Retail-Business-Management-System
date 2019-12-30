@@ -78,7 +78,7 @@ public class SellOrderController{
       }
       Date date = new Date(System.currentTimeMillis());
       SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+      System.out.println("+++++++++++++++++++++++++++");
       //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
       return sellOrderService.addSellOrder(new SellOrderGroup(-1, format.format(date),
           sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, 1.0, -1.0));
@@ -223,6 +223,7 @@ public class SellOrderController{
   @RequestMapping("/receipt")
   @ResponseBody
   public boolean receiptSellOrder(int sellOrderId, int payType){
+    System.out.println(payType);
     return sellOrderService.paySellOrder(sellOrderId, payType);
   }
 

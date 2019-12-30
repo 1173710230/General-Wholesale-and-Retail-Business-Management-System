@@ -186,11 +186,15 @@
                 dataType: "json",
                 data: {sellOrderId: id, payType: 1},
                 success: function () {
-                    alert("付款成功！");
+                    if (bool) {
+                        alert("付款成功！");
+                    } else {
+                        alert("付款失败！");
+                    }
                     location.reload();
                 },
                 error: function () {
-                    alert("付款失败！");
+                    alert("付款错误！");
                 }
             })
         }
@@ -202,12 +206,17 @@
                 url : "/sellOrder/receipt",
                 dataType: "json",
                 data: {sellOrderId: id, payType: 0},
-                success: function () {
-                    alert("付款成功！");
+                success: function (bool) {
+                    if (bool) {
+                        alert("付款成功！");
+                    } else {
+                        alert("付款失败！");
+                    }
+
                     location.reload();
                 },
                 error: function () {
-                    alert("付款失败！");
+                    alert("付款错误！");
                 }
             })
         }
