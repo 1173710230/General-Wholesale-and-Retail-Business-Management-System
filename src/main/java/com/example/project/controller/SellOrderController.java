@@ -1,8 +1,7 @@
 package com.example.project.controller;
 
-import com.example.project.domain.Host;
-import com.example.project.domain.SellOrder;
-import com.example.project.domain.SellOrderGroup;
+import com.example.project.domain.*;
+import com.example.project.service.GoodsService;
 import com.example.project.service.SellOrderService;
 import com.example.project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -24,16 +24,20 @@ import java.util.List;
  */
 @CrossOrigin
 @Controller
+@RestController
 @RequestMapping("/sellOrder")
 public class SellOrderController{
 
   private final SellOrderService sellOrderService;
   private final UserService userService;
+  private final GoodsService goodsService;
+
 
   @Autowired
-  public SellOrderController(SellOrderService sellOrderService, UserService userService) {
+  public SellOrderController(SellOrderService sellOrderService, UserService userService, GoodsService goodsService) {
     this.sellOrderService = sellOrderService;
     this.userService = userService;
+    this.goodsService = goodsService;
   }
 
 
@@ -58,6 +62,27 @@ public class SellOrderController{
                                    String goodsId, String sellUnitPrice,String goodsNumber, String isFree, double discount){
     List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
 
+    if(sellUnitPrice.equals("wx")){  //微信小程序执行
+      String[] goodsIds = goodsId.split(",");
+      String[] goodsNumbers = goodsNumber.split(",");
+      if(sellOrderType==0){
+        for(int i = 0; i< goodsIds.length; i++){
+            allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]),
+                goodsService.getWholeSalePrice(Integer.parseInt(goodsIds[i])), Integer.valueOf(goodsIds[i])));
+        }
+      }else {
+        for(int i = 0; i< goodsIds.length; i++){
+          allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]),
+              goodsService.getRetailPrice(Integer.parseInt(goodsIds[i])), Integer.valueOf(goodsIds[i])));
+        }
+      }
+      Date date = new Date(System.currentTimeMillis());
+      SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+      //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
+      return sellOrderService.addSellOrder(new SellOrderGroup(-1, format.format(date),
+          sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, 1.0, -1.0));
+    }
     String[] goodsIds = goodsId.split(",");
     String[] sellUnitPrices = sellUnitPrice.split(",");
     String[] goodsNumbers = goodsNumber.split(",");
@@ -76,7 +101,7 @@ public class SellOrderController{
 
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
     return sellOrderService.addSellOrder(new SellOrderGroup(-1, format.format(date),
-        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0, discount));
+        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, discount,-1.0));
   }
 
   /**
