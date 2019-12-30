@@ -57,6 +57,7 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
+        sellOrderGroup.setPayType(newSellOrderGroup.getPayType());
         // 新建进货单
         sellOrderGroupMapper.insertSellOrderGroup(sellOrderGroup);
         // sellOrderGroupMapper.addSellOrderCustomerRelation(sellOrderGroup);
@@ -246,6 +247,7 @@ public class SellOrderServiceImpl implements SellOrderService {
 
         // 如果opinion是false，不管库存够不够，都是审核不通过的
         if (!opinion) {
+            System.out.println("审核不通过");
             return changeStatus(sellOrderGroupId, 3);    // 这里审核不通过
         } else {
             // 用户点击了通过审核
