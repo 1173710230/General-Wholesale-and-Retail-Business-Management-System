@@ -111,7 +111,7 @@ public interface SellOrderService {
      * 修改积分规则
      *
      * @param integralRatio 每消费1元换多少积分
-     * @return 草早是否成功
+     * @return 操作是否成功
      */
     boolean changeIntegralRatio(double integralRatio);
 

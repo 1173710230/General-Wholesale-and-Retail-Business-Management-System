@@ -50,20 +50,28 @@ public class SellOrderController{
    * @param goodsId 商品的id字符串，使用","分隔（有顺序）
    * @param sellUnitPrice 商品的单价数组，使用","分隔（有顺序）
    * @param goodsNumber 商品的数量数组，使用","分隔（有顺序）
+   * @param isFree 商品是否为赠品，传递一个字符串，是传递“1”，不是传递“0”，使用","分隔（有顺序）；
+   *               例：第一个是，第二个不是，第三个是赠品，传递“1,0,1”
+   * @param discount 销售单的整体折扣
    * @return 销售单添加成功返回true，反之返回false
    */
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
   public boolean addSellOrderGroup(int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
-                                   String goodsId, String sellUnitPrice,String goodsNumber){
+                                   String goodsId, String sellUnitPrice,String goodsNumber, String isFree, double discount){
     List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
 
     String[] goodsIds = goodsId.split(",");
     String[] sellUnitPrices = sellUnitPrice.split(",");
     String[] goodsNumbers = goodsNumber.split(",");
+    String[] isFrees = isFree.split(",");
 
     for(int i = 0; i< goodsIds.length; i++){
-      allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
+      if (Integer.parseInt(isFrees[i])==0){
+        allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), 0.0, Integer.valueOf(goodsIds[i])));
+      }else{
+        allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
+      }
     }
 
     Date date = new Date(System.currentTimeMillis());
@@ -71,7 +79,7 @@ public class SellOrderController{
 
     //id = -1 表示无id， status为-1 表示异常状态，就只是为了修改使用，salary，profit同理，下层不使用id和状态等进行修改，只考虑其他属性
     return sellOrderService.addSellOrder(new SellOrderGroup(-1, format.format(date),
-        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
+        sellOrderRemark, sellOrderType, -1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0, discount));
   }
 
   /**
@@ -129,13 +137,23 @@ public class SellOrderController{
   }
 
   /**
-   * 得到所有的未付款的订单
-   * @return 返回所有的未付款的订单
+   * 得到所有的未付款批发单
+   * @return 返回所有的未付款批发单
    */
   @RequestMapping("/getUnreceiptedOrder")
   @ResponseBody
   public List<SellOrderGroup> getUnreceiptedOrder(){
     return sellOrderService.getUnpaidOrder();
+  }
+
+  /**
+   * 得到所有的未付款零售单
+   * @return 返回所有的未付款零售单
+   */
+  @RequestMapping("/getUnpaidRetailOrder")
+  @ResponseBody
+  List<SellOrderGroup>  getUnpaidRetailOrder(){
+    return sellOrderService.getUnpaidRetailOrder();
   }
 
   /**
@@ -216,6 +234,17 @@ public class SellOrderController{
   @ResponseBody
   public List<SellOrderGroup>  statisticsSalesByCustomerId(int customerId){
     return sellOrderService.statisticsSalesByCustomerId(customerId);
+  }
+
+  /**
+   * 修改消费获得积分的规则
+   * @param integralRatio 每消费1元获得多少积分
+   * @return 修改是否成功
+   */
+  @RequestMapping("/changeIntegralRatio")
+  @ResponseBody
+  public boolean changeIntegralRatio(double integralRatio){
+    return sellOrderService.changeIntegralRatio(integralRatio);
   }
 
 }

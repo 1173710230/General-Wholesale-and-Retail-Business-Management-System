@@ -54,6 +54,20 @@ public class SellOrderGroup {
         this.profit = profit;
     }
 
+    public SellOrderGroup(Integer sellOrderGroupId, String sellTime, String sellOrderRemark, Integer sellOrderType, Integer sellStatus, List<SellOrder> sellOrders, Integer customerId, Double salary, Integer warehouseId, Double discount, Double profit) {
+        this.sellOrderGroupId = sellOrderGroupId;
+        this.sellTime = sellTime;
+        this.sellOrderRemark = sellOrderRemark;
+        this.sellOrderType = sellOrderType;
+        this.sellStatus = sellStatus;
+        this.sellOrders = sellOrders;
+        this.customerId = customerId;
+        this.salary = salary;
+        this.warehouseId = warehouseId;
+        this.discount = discount;
+        this.profit = profit;
+    }
+
     public Double getSalary() {
         return salary;
     }
