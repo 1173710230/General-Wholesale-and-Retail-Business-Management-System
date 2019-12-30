@@ -137,24 +137,26 @@ public class SellOrderController{
   }
 
   /**
-   * 得到所有的未付款批发单
-   * @return 返回所有的未付款批发单
+   * 得到所有的未付款销售单
+   * @return 返回所有的未付款销售单
    */
   @RequestMapping("/getUnreceiptedOrder")
   @ResponseBody
   public List<SellOrderGroup> getUnreceiptedOrder(){
-    return sellOrderService.getUnpaidOrder();
+    List<SellOrderGroup> sellOrderGroupList = sellOrderService.getUnpaidOrder();
+    sellOrderGroupList.addAll(sellOrderService.getUnpaidRetailOrder());
+    return sellOrderGroupList;
   }
 
-  /**
-   * 得到所有的未付款零售单
-   * @return 返回所有的未付款零售单
-   */
-  @RequestMapping("/getUnpaidRetailOrder")
-  @ResponseBody
-  List<SellOrderGroup>  getUnpaidRetailOrder(){
-    return sellOrderService.getUnpaidRetailOrder();
-  }
+//  /**
+//   * 得到所有的未付款零售单
+//   * @return 返回所有的未付款零售单
+//   */
+//  @RequestMapping("/getUnpaidRetailOrder")
+//  @ResponseBody
+//  List<SellOrderGroup>  getUnpaidRetailOrder(){
+//    return sellOrderService.getUnpaidRetailOrder();
+//  }
 
   /**
    * 得到所有的已付款未退款的订单
