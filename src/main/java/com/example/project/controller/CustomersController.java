@@ -44,7 +44,7 @@ public class CustomersController {
   @RequestMapping(value = "/add", method = RequestMethod.GET)
   @ResponseBody
   public List<Customer> addCustomer(String name, String tel, int status){
-    customerService.addCustomer(name, tel);
+    customerService.addCustomer(name, tel, status);
     return customerService.getallCustomers();
   }
 

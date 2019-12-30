@@ -20,7 +20,7 @@ public interface CustomerService {
      * 添加一个新客户
      *
      */
-    boolean addCustomer(String name, String tel);
+    boolean addCustomer(String name, String tel, int status);
 
 
     /**
