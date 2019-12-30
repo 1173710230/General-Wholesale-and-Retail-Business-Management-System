@@ -91,7 +91,7 @@
         where customer_id = #{id}
     </select>
 
-    <select id="getDebtById" parameterType="int">
+    <select id="getDebtById" parameterType="int" resultType="Double">
         select sum(sog.sum_money)
         from sell_order_group sog,
              customer c

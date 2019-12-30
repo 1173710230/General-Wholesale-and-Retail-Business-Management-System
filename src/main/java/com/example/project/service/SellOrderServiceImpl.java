@@ -233,7 +233,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean checkOrder(int sellOrderGroupId, boolean opinion) {
+    public synchronized boolean checkOrder(int sellOrderGroupId, boolean opinion) {
         // SellOrder order = sellOrderMapper.getSellOrderById(sellOrderId);
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);
         assert sellOrderGroup != null;   // 这个销售单必然存在，不然就是出错的
@@ -249,21 +249,30 @@ public class SellOrderServiceImpl implements SellOrderService {
             // 用户点击了通过审核
             // 先判断一下货存是否充足
             List<SellOrder> sellOrderList = sellOrderGroup.getSellOrders();
-            for (SellOrder sellOrder : sellOrderList) {
-                double sellNumber = sellOrder.getSellNumber();
-                // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
-                Integer goodsId = sellOrder.getSellGoodsId();
 
+            // 统计同一个货物ID的总销售数量
+            Map<Integer, Double> sellNumberMap = new HashMap<>();
+
+            for (SellOrder sellOrder : sellOrderList) {
+                // 统计要销售的库存
+                sellNumberMap.put(sellOrder.getSellGoodsId(), sellNumberMap.getOrDefault(sellOrderGroupId, 0.0) + sellOrder.getSellNumber());
+//                double sellNumber = sellOrder.getSellNumber();
+            }
+
+            // 查询库存够不够
+            // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
+            for (Map.Entry<Integer, Double> entry : sellNumberMap.entrySet()) {
                 Goods goods = new Goods();
-                goods.setGoodsId(goodsId);
+                goods.setGoodsId(entry.getKey());
                 goods.setWarehouseId(sellOrderGroup.getWarehouseId());
 
                 List<Goods> goodsList = goodsMapper.queryGoods(goods);
+
                 if (goodsList != null && goodsList.size() > 0) {
                     // 查询到了这个货物的信息
                     Goods result = goodsList.get(0);
-                    double stock = result.getGoodsNumber(); // 库存
-                    if (stock < sellNumber)
+                    Double stock = result.getGoodsNumber(); // 库存
+                    if (stock < entry.getValue())
                         return false; // 数量不足
                 } else {
                     return false;
@@ -275,26 +284,30 @@ public class SellOrderServiceImpl implements SellOrderService {
                 double sellNumber = sellOrder.getSellNumber();
                 // 判断一个仓库的库存够不够，如果够，才允许审核通过，不够的话不允许审核通过
                 Integer goodsId = sellOrder.getSellGoodsId();
-                Goods goods = new Goods();
-                goods.setGoodsId(goodsId);
-                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
 
-                List<Goods> goodsList = goodsMapper.queryGoods(goods);
-                if (goodsList != null && goodsList.size() > 0) {
-                    // 查询到了这个货物的信息
-                    Goods result = goodsList.get(0);
-                    double stock = result.getGoodsNumber(); // 库存
-                    if (stock >= sellNumber) {
-                        // 数量足够
-                        // 减少库存
-                        goodsMapper.reduceNumber(goodsId, sellNumber, sellOrderGroup.getWarehouseId());
-                        // 更改销售单状态
-                        // return changeStatus(sellOrderGroupId, 2);
-                    }
-                } else {
-                    // 没有这个货物的ID，正常情况下应该不会走到这里
-                    return false;
-                }
+                goodsMapper.reduceNumber(goodsId, sellNumber, sellOrderGroup.getWarehouseId());
+
+
+//                Goods goods = new Goods();
+//                goods.setGoodsId(goodsId);
+//                goods.setWarehouseId(sellOrderGroup.getWarehouseId());
+//
+//                List<Goods> goodsList = goodsMapper.queryGoods(goods);
+//                if (goodsList != null && goodsList.size() > 0) {
+//                    // 查询到了这个货物的信息
+//                    Goods result = goodsList.get(0);
+//                    double stock = result.getGoodsNumber(); // 库存
+//                    if (stock >= sellNumber) {
+//                        // 数量足够
+//                        // 减少库存
+//                        goodsMapper.reduceNumber(goodsId, sellNumber, sellOrderGroup.getWarehouseId());
+//                        // 更改销售单状态
+//                        // return changeStatus(sellOrderGroupId, 2);
+//                    }
+//                } else {
+//                    // 没有这个货物的ID，正常情况下应该不会走到这里
+//                    return false;
+//                }
             }
 
             return changeStatus(sellOrderGroupId, 2);
