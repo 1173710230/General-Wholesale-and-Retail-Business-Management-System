@@ -151,7 +151,8 @@
 
                     content +=
 `<td rowspan="${recordLength}">
-<button class="btn btn-success btn-sm" onclick="pay('${order.sellOrderGroupId}')">标记为已付款 <span class="fa fa-dollar"></span></button>
+<button class="btn btn-success btn-sm" onclick="payXIanJin('${order.sellOrderGroupId}')">使用现金结账 <span class="fa fa-dollar"></span></button>
+<button class="btn btn-success btn-sm" onclick="payYuCun('${order.sellOrderGroupId}')">使用预存款结账 <span class="fa fa-dollar"></span></button>
 </td>`;
 
                     content += `</tr>`;
@@ -178,12 +179,12 @@
 
     <!--    付款-->
     <script>
-        function pay(id) {
+        function payXIanJin(id) {
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/receipt",
                 dataType: "json",
-                data: {sellOrderId: id},
+                data: {sellOrderId: id, payType: 1},
                 success: function () {
                     alert("付款成功！");
                     location.reload();
@@ -194,7 +195,23 @@
             })
         }
     </script>
-
+    <script>
+        function payYuCun(id) {
+            $.ajax({
+                type:"GET",
+                url : "/sellOrder/receipt",
+                dataType: "json",
+                data: {sellOrderId: id, payType: 0},
+                success: function () {
+                    alert("付款成功！");
+                    location.reload();
+                },
+                error: function () {
+                    alert("付款失败！");
+                }
+            })
+        }
+    </script>
     <!--    退款-->
     <script>
         function refund(id) {

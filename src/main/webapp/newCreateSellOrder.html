@@ -39,6 +39,8 @@
             var goodsId = '';
             var price = '';
             var number = '';
+            var dazhe = '';
+            var isFree = '';
             for(var i = 1;i<6;i++){
                 goodsId += $("#goodid" + i).val();
                 goodsId += ",";
@@ -46,14 +48,18 @@
                 price += ",";
                 number += $("#number" + i).val();
                 number += ",";
+                dazhe += $("#dazhe" + i).val();
+                dazhe += ",";
+                isFree += $("input[name='status']:checked").val();
+                isFree += ",";
             }
-            console.log(price);
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/add",
                 dataType: "json",
                 data: {warehouseId: wareId, sellOrderType: status, sellOrderRemark: remark,
-                    customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number},
+                    customerId: customerId, goodsId: goodsId, sellUnitPrice: price, goodsNumber: number,
+                    isFree: isFree, discount: dazhe},
                 traditional: true,
                 success: function (bool) {
                     if (bool) {
@@ -354,7 +360,8 @@
                             <h2>开销售单</h2>
                         </div>
                         <div class="tab-pane active" id="tab-1">
-                            <form role="form" class="p-a-md col-md-6">
+                            <form role="form" class="p-a-md col-md-12">
+
                                 <div class="form-group">
                                     <input type="radio" id="status1" value="0" name="typeRadio">批发
                                     <input type="radio" id="status2" value="1" name="typeRadio">零售
@@ -373,10 +380,12 @@
                                 </div>
                                 <table class="table table-striped b-t b-b">
                                 <thead>
-                                <tr><th>商品ID</th><th>商品单价</th><th>商品数量</th></tr>
+                                <tr><th></th><th>商品ID</th><th>商品单价</th><th>商品数量</th><th>商品折扣</th><th>是否赠送</th></tr>
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td><p>商品1</p></td>
+
                                         <td>
                                             <input type="text" class="form-control" id="goodid1" onchange="getDefault(1)">
                                         </td>
@@ -386,8 +395,16 @@
                                         <td>
                                             <input type="text" class="form-control" id="number1">
                                         </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dazhe1">
+                                        </td>
+                                        <td><div class="form-group">
+                                            <input type="radio" value="0" name="zengsong1">赠送
+                                            <input type="radio" value="1" name="zengsong1" checked>非赠送
+                                        </div></td>
                                     </tr>
                                     <tr>
+                                        <td><p>商品2</p></td>
                                         <td>
                                             <input type="text" class="form-control" id="goodid2" onchange="getDefault(2)">
                                         </td>
@@ -397,8 +414,16 @@
                                         <td>
                                             <input type="text" class="form-control" id="number2">
                                         </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dazhe2">
+                                        </td>
+                                        <td><div class="form-group">
+                                            <input type="radio" value="0" name="zengsong2">赠送
+                                            <input type="radio" value="1" name="zengsong2" checked>非赠送
+                                        </div></td>
                                     </tr>
                                     <tr>
+                                        <td><p>商品3</p></td>
                                         <td>
                                             <input type="text" class="form-control" id="goodid3" onchange="getDefault(3)">
                                         </td>
@@ -408,8 +433,16 @@
                                         <td>
                                             <input type="text" class="form-control" id="number3">
                                         </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dazhe3">
+                                        </td>
+                                        <td><div class="form-group">
+                                            <input type="radio" value="0" name="zengsong3">赠送
+                                            <input type="radio" value="1" name="zengsong3" checked>非赠送
+                                        </div></td>
                                     </tr>
                                     <tr>
+                                        <td><p>商品4</p></td>
                                         <td>
                                             <input type="text" class="form-control" id="goodid4" onchange="getDefault(4)">
                                         </td>
@@ -419,8 +452,16 @@
                                         <td>
                                             <input type="text" class="form-control" id="number4">
                                         </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dazhe4">
+                                        </td>
+                                        <td><div class="form-group">
+                                            <input type="radio" value="0" name="zengsong4">赠送
+                                            <input type="radio" value="1" name="zengsong4" checked>非赠送
+                                        </div></td>
                                     </tr>
                                     <tr>
+                                        <td><p>商品5</p></td>
                                         <td>
                                             <input type="text" class="form-control" id="goodid5" onchange="getDefault(5)">
                                         </td>
@@ -430,22 +471,16 @@
                                         <td>
                                             <input type="text" class="form-control" id="number5">
                                         </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="dazhe5">
+                                        </td>
+                                        <td><div class="form-group">
+                                            <input type="radio" value="0" name="zengsong5">赠送
+                                            <input type="radio" value="1" name="zengsong5" checked>非赠送
+                                        </div></td>
                                     </tr>
                                 </tbody>
                                 </table>
-<!--                                <div class="form-group">-->
-<!--                                    <label for="goodsPrice">商品单价</label>-->
-<!--                                    <input type="text" class="form-control" id="goodsPrice">-->
-<!--                                </div>-->
-<!--                                <div class="form-group">-->
-<!--                                    <label for="goodsNumber">总数量</label>-->
-<!--                                    <input type="text" class="form-control" id="goodsNumber">-->
-<!--                                </div>-->
-<!--                                -->
-<!--                                <div class="form-group">-->
-<!--                                    <label for="remark">备注</label>-->
-<!--                                    <input type="text" class="form-control" id="remark">-->
-<!--                                </div>-->
                                 <button type="button" class="btn btn-info m-t" onclick="addOver()">提交</button>
                             </form>
                         </div>

@@ -190,7 +190,7 @@ public class SellOrderController{
   /**
    * 对销售单进行收款
    * @param sellOrderId 需要收款的销售单
-   * @param payType 收款方式
+   * @param payType 收款方式 0预存 1现金
    * @return 收款是否成功
    */
   @RequestMapping("/receipt")

@@ -117,6 +117,9 @@
                         var tel = list[i].customerTel;
                         var sellOrders = list[i].historySellOrderId;
                         var status = list[i].status;
+                        var jifen = list[i].customerIntegral;
+                        var yucunkuan = list[i].preDeposit;
+                        console.log(list[i]);
                         if (status === 0) {
                             var printStatus = '批发';
                         } else {
@@ -124,7 +127,7 @@
                         }
 
                         let insert = `<tr id="${id}"><td id="${'name' + id}">${name}</td><td id="${'tel' + id}">${tel}</td>
-                            <td id="${'status' + id}">${printStatus}</td><td>`;
+                            <td id="${'status' + id}">${printStatus}</td><td>${jifen}</td><td>${yucunkuan}</td><td>`;
                         if(sellOrders !== null){
                             insert += `<table>`;
                             for (var j = 0; j <sellOrders.length; j++){
@@ -132,9 +135,10 @@
                             }
                             insert += `</table></td>`
                         }
-
                         insert += `<td><button type="button" class="btn btn-primary btn-xs" onclick="change(${id})">修改资料</button>
-<button type="button" class="btn btn-primary btn-xs" onclick="deleteCustomer(${id})">删除用户</button></td></tr>`;
+<button type="button" class="btn btn-primary btn-xs" onclick="deleteCustomer(${id})">删除用户</button>
+<button type="button" class="btn btn-primary btn-xs" onclick="changeJIfen()">修改积分比例</button>
+<button type="button" class="btn btn-primary btn-xs" onclick="duihuan(${id})">兑换预存款</button></td></tr>`;
                         $("#table").append(insert);
                     }
                 }
@@ -158,6 +162,74 @@
                 },
                 error: function () {
                     alert("修改失败！");
+                }
+            })
+        }
+    </script>
+    <script>
+        $.ajax({
+            type: "GET",
+            url: "/sellOrder/getIntegralRatio",
+            dataType: "json",
+            success: function (number) {
+                var insert = `${number}`;
+                $("#kehujifen").append(insert);
+            },
+            error:function () {
+                alert("获取错误！");
+            }
+        })
+    </script>
+    <script>
+        function changeJIfen() {
+            $("#changeArea").html('');
+            var insert = `<form>
+                            <div class="form-group">
+                                <label for="goodsName1">1元兑换积分数</label>
+                                <input type="text" class="form-control" id="changeJifen" placeholder="${$('#kehujifen').html()}">
+                            </div>
+                           </form>`;
+            $("#changeArea").append(insert);
+        }
+    </script>
+    <script>
+        function changeJifenOver() {
+            var newJifen = $("#changeJifen").val();
+            if (newJifen.length === 0){
+                newJifen = $('#kehujifen').html();
+            }
+            $.ajax({
+                type: "GET",
+                url: "/sellOrder/changeIntegralRatio",
+                dataType: "json",
+                success:function (bool) {
+                    if (bool){
+                        alert("修改成功！");
+                    } else {
+                        alert("修改失败！");
+                    }
+                    location.reload();
+                }
+            })
+        }
+    </script>
+    <script>
+        function duihuan(id) {
+            $.ajax({
+                type: "GET",
+                url: "/customer/exchangeIntegral",
+                dataType: "json",
+                data: {customerId: id},
+                success:function (bool) {
+                    if (bool){
+                        alert("兑换成功！");
+                    } else {
+                        alert("兑换失败,或无积分可兑换！");
+                    }
+                    location.reload();
+                },
+                error:function () {
+                    alert("兑换错误！");
                 }
             })
         }
@@ -420,7 +492,7 @@
 
             <!-- ############ PAGE START-->
             <div class="row-col b-b">
-                <div class="col-md-6">
+                <div class="col-md-8">
                     <div class="padding">
                         <div class="margin">
                             <h5 class="m-b-0 _300">欢迎回来！</h5>
@@ -428,10 +500,12 @@
                         <div class="box-header">
                             <h2>客户列表</h2>
                         </div>
+                        <p>会员积分制度：</p>
+                        <p id="kehujifen"></p>
                         <div class="table-responsive">
                             <table class="table table-striped b-t b-b">
                                 <thead>
-                                <tr><th>客户姓名</th><th>联系方式</th><th>状态</th><th>购买历史信息</th><th>操作</th></tr>
+                                <tr><th>客户姓名</th><th>联系方式</th><th>状态</th><th>积分</th><th>预存款</th><th>购买历史信息</th><th>操作</th></tr>
                                 </thead>
                                 <tbody id="table">
                                 </tbody>
@@ -439,7 +513,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6" id="changeArea"></div>
+                <div class="col-md-4" id="changeArea"></div>
             </div>
 
             <div class="modal fade inactive" id="chat" data-backdrop="false">

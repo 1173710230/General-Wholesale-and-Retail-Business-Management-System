@@ -78,8 +78,9 @@ public class CustomerServiceImpl implements CustomerService{
         Customer customer = customerMapper.searchById(customerId);
         if(customer == null)
             return false;
-        double integral = customer.getCustomerIntegral() / 100;
-        customerMapper.exchangeCreditToDeposit(integral * 100, customerId);
+        int integral = (int) (customer.getCustomerIntegral() / 100);
+        System.out.println(integral);
+        customerMapper.exchangeCreditToDeposit(integral * 100.0, customerId);
         return true;
     }
 
