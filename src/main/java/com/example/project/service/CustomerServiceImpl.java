@@ -22,17 +22,21 @@ public class CustomerServiceImpl implements CustomerService{
     public List<Customer> getallCustomers() {
         List<Customer> customerList = customerMapper.getAllCustomers();
         for(Customer customer:customerList){
-            double debt = customerMapper.getDebtById(customer.getCustomerId());
-            customer.setDebt(debt);
+            Double debt = customerMapper.getDebtById(customer.getCustomerId());
+            if(debt == null)
+                customer.setDebt(0.0);
+            else
+                customer.setDebt(debt);
         }
         return customerList;
     }
 
     @Override
-    public boolean addCustomer(String name, String tel) {
+    public boolean addCustomer(String name, String tel, int status) {
         Customer customer = new Customer();
         customer.setCustomerName(name);
         customer.setCustomerTel(tel);
+        customer.setStatus(status);
         //传入包含名字和电话号码字符串的Customer对象
         customerMapper.insertCustomer(customer);
         return true;

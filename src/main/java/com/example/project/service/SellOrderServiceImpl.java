@@ -49,7 +49,9 @@ public class SellOrderServiceImpl implements SellOrderService {
         sellOrderGroup.setSalary(0.0);
         sellOrderGroup.setProfit(0.0);
         sellOrderGroup.setSellStatus(1);
+        //ToDo Changed
         sellOrderGroup.setDiscount(newSellOrderGroup.getDiscount());
+        //sellOrderGroup.setDiscount(1.0);
         sellOrderGroup.setSellOrderType(newSellOrderGroup.getSellOrderType());
         sellOrderGroup.setWarehouseId(newSellOrderGroup.getWarehouseId());
         sellOrderGroup.setSellOrders(newSellOrderGroup.getSellOrders());
