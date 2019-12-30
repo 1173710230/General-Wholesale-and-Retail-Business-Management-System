@@ -39,7 +39,7 @@
             var goodsId = '';
             var price = '';
             var number = '';
-            var dazhe = '';
+            var dazhe = $('#dazhe').val();
             var isFree = '';
             for(var i = 1;i<6;i++){
                 goodsId += $("#goodid" + i).val();
@@ -48,8 +48,6 @@
                 price += ",";
                 number += $("#number" + i).val();
                 number += ",";
-                dazhe += $("#dazhe" + i).val();
-                dazhe += ",";
                 isFree += $("input[name='status']:checked").val();
                 isFree += ",";
             }
@@ -378,9 +376,13 @@
                                     <label for="remark">备注</label>
                                     <input type="text" class="form-control" id="remark">
                                 </div>
+                                <div class="form-group">
+                                    <label for="dazhe">折扣</label>
+                                    <input type="text" class="form-control" id="dazhe">
+                                </div>
                                 <table class="table table-striped b-t b-b">
                                 <thead>
-                                <tr><th></th><th>商品ID</th><th>商品单价</th><th>商品数量</th><th>商品折扣</th><th>是否赠送</th></tr>
+                                <tr><th></th><th>商品ID</th><th>商品单价</th><th>商品数量</th><th>是否赠送</th></tr>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -394,9 +396,6 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="number1">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="dazhe1">
                                         </td>
                                         <td><div class="form-group">
                                             <input type="radio" value="0" name="zengsong1">赠送
@@ -414,9 +413,6 @@
                                         <td>
                                             <input type="text" class="form-control" id="number2">
                                         </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="dazhe2">
-                                        </td>
                                         <td><div class="form-group">
                                             <input type="radio" value="0" name="zengsong2">赠送
                                             <input type="radio" value="1" name="zengsong2" checked>非赠送
@@ -432,9 +428,6 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="number3">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="dazhe3">
                                         </td>
                                         <td><div class="form-group">
                                             <input type="radio" value="0" name="zengsong3">赠送
@@ -452,9 +445,6 @@
                                         <td>
                                             <input type="text" class="form-control" id="number4">
                                         </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="dazhe4">
-                                        </td>
                                         <td><div class="form-group">
                                             <input type="radio" value="0" name="zengsong4">赠送
                                             <input type="radio" value="1" name="zengsong4" checked>非赠送
@@ -470,9 +460,6 @@
                                         </td>
                                         <td>
                                             <input type="text" class="form-control" id="number5">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="dazhe5">
                                         </td>
                                         <td><div class="form-group">
                                             <input type="radio" value="0" name="zengsong5">赠送
