@@ -109,21 +109,26 @@ public class SellOrderController{
   @RequestMapping(value = "/updateSellOrder", method = RequestMethod.GET)
   @ResponseBody
   public boolean update(int sellOrderGroupId, int warehouseId, int sellOrderType, String sellOrderRemark, int customerId,
-                        String goodsId, String sellUnitPrice,String goodsNumber){
+                        String goodsId, String sellUnitPrice,String goodsNumber, String isFree, double discount){
     List<SellOrder> allSellOrderInGroup = new ArrayList<>();
 
     String[] goodsIds = goodsId.split(",");
     String[] sellUnitPrices = sellUnitPrice.split(",");
     String[] goodsNumbers = goodsNumber.split(",");
+    String[] isFrees = isFree.split(",");
 
     for(int i = 0; i< goodsIds.length; i++){
-      allSellOrderInGroup.add(new SellOrder(null, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
+      if (Integer.parseInt(isFrees[i])==0){
+        allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), 0.0, Integer.valueOf(goodsIds[i])));
+      }else{
+        allSellOrderInGroup.add(new SellOrder(-1, Double.valueOf(goodsNumbers[i]), Double.valueOf(sellUnitPrices[i]), Integer.valueOf(goodsIds[i])));
+      }
     }
 
     Date date = new Date(System.currentTimeMillis());
     SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     return sellOrderService.modifySellOrder(new SellOrderGroup(sellOrderGroupId, format.format(date),
-        sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0));
+        sellOrderRemark, sellOrderType, 1, allSellOrderInGroup, customerId, -1.0, warehouseId, -1.0, discount));
   }
 
   /**
