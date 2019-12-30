@@ -51,7 +51,7 @@ public interface CustomerService {
     boolean exchangeIntegral(int customerId);
 
     /**
-     * 充值渔村额
+     * 充值预存额
      */
     boolean addPreDeposit(double deposit, int customerId);
 }

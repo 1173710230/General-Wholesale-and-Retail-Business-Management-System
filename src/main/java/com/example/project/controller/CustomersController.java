@@ -61,10 +61,9 @@ public class CustomersController {
   }
 
   /**
-   * 修改一个客户的信息，参数还要修改
+   * 修改一个客户的信息
    * @param name 新的客户的名字（前端没有输入时为null）
    * @param tel 新的客户的电话（前端没有输入时为null）
-   * @param status 用户的状态  0为批发， 1 为零售
    * @return 返回当前的客户列表
    */
   @RequestMapping(value = "/update", method = RequestMethod.GET)
@@ -85,4 +84,26 @@ public class CustomersController {
     return customerService.queryCustomerByName(name);
   }
 
+  /**
+   * 将某个用户的积分兑换为预存款值（100积分兑换1元预存款，多余的全兑，不足100积分不兑换）
+   * @param customerId 需要兑换的用户账号
+   * @return 兑换是否成功
+   */
+  @RequestMapping("/exchangeIntegral")
+  @ResponseBody
+  public boolean exchangeIntegral(int customerId){
+    return customerService.exchangeIntegral(customerId);
+  }
+
+  /**
+   * 充值某个用户的预存额
+   * @param deposit 充值的预存款数量
+   * @param customerId 用户的id
+   * @return 充值是否成功
+   */
+  @RequestMapping("/addPreDeposit")
+  @ResponseBody
+  public boolean addPreDeposit(double deposit, int customerId){
+    return customerService.addPreDeposit(deposit, customerId);
+  }
 }
