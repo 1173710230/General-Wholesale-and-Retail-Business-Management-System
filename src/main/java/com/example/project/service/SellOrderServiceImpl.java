@@ -36,6 +36,8 @@ public class SellOrderServiceImpl implements SellOrderService {
     public boolean addSellOrder(SellOrderGroup newSellOrderGroup) {
         //sellOrder.setSellTime(new SimpleDateFormat().format(date));
         mergeSimilarGoods(newSellOrderGroup);
+        System.out.println("12580");
+        // System.out.println(newSellOrderGroup);
         // 对应客户只能开对应类型的销售单
         Customer customer = customerMapper.searchById(newSellOrderGroup.getCustomerId());
         System.out.println("customer.getStatus()="+customer.getStatus());
@@ -330,8 +332,10 @@ public class SellOrderServiceImpl implements SellOrderService {
             if (preDeposit-totalPrice>=0){
                 customerMapper.reduceDeposit(totalPrice, sellOrderGroup.getCustomerId());
                 customerMapper.addCredit(totalPrice * Host.getIntegralRatio(), sellOrderGroup.getCustomerId());
+                System.out.println("Here is enough pre_deposit");
                 return changeStatus(sellOrderGroupId, 4);
             }else { //预存款不足
+                System.out.println("Here is not enough pre_deposit");
                 return false;
             }
         }else{  //现金付款
@@ -443,9 +447,11 @@ public class SellOrderServiceImpl implements SellOrderService {
         for (SellOrder sellOrder : sellOrderList) {
             boolean flag = false; //重复标志位
             for (SellOrder order : newSellOrderList) {
-                System.out.println("order.getSellUnitPrice() = "+order.getSellUnitPrice());
-                System.out.println("sellOrder.getSellUnitPrice() = "+sellOrder.getSellUnitPrice());
-                if ((order.getSellGoodsId() == sellOrder.getSellGoodsId()) && (order.getSellUnitPrice() == sellOrder.getSellUnitPrice())) {
+                System.out.println("order.getSellUnitPrice(1321) = "+order.getSellUnitPrice());
+                System.out.println("test");
+                System.out.println("sellOrder.getSellUnitPrice(121312) = "+sellOrder.getSellUnitPrice());
+                System.out.println(order.getSellUnitPrice().equals(sellOrder.getSellUnitPrice()));
+                if ((order.getSellGoodsId() == sellOrder.getSellGoodsId()) && (order.getSellUnitPrice().equals(sellOrder.getSellUnitPrice()))) {
                     // 处理重复情况
                     double temp = order.getSellNumber();
                     order.setSellNumber(temp + sellOrder.getSellNumber());

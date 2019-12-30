@@ -273,6 +273,7 @@ public class SellOrderController{
   @RequestMapping("/changeIntegralRatio")
   @ResponseBody
   public boolean changeIntegralRatio(double integralRatio){
+    System.out.println(integralRatio);
     return sellOrderService.changeIntegralRatio(integralRatio);
   }
 
