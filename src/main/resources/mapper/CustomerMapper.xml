@@ -95,7 +95,8 @@
         select sum(sog.sum_money)
         from sell_order_group sog,
              customer c
-        where sog.customer_id = c.customer_id
+        where c.customer_id = #{id}
+          and sog.customer_id = c.customer_id
           and sog.order_status = 2;
     </select>
 
