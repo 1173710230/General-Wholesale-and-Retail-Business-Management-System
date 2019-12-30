@@ -183,10 +183,11 @@
     <script>
         function changeJIfen() {
             $("#changeArea").html('');
-            var insert = `<form>
+            var insert = `<form onsubmit="return false;">
                             <div class="form-group">
                                 <label for="goodsName1">1元兑换积分数</label>
                                 <input type="text" class="form-control" id="changeJifen" placeholder="${$('#kehujifen').html()}">
+                                <button type="button" onclick="changeJifenOver()" class="btn btn-primary btn-sm mt-1">确定</button>
                             </div>
                            </form>`;
             $("#changeArea").append(insert);
@@ -202,6 +203,9 @@
                 type: "GET",
                 url: "/sellOrder/changeIntegralRatio",
                 dataType: "json",
+                data: {
+                    integralRatio: newJifen,
+                },
                 success:function (bool) {
                     if (bool){
                         alert("修改成功！");
