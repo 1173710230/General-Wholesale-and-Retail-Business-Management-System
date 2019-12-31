@@ -185,7 +185,7 @@
                 url : "/sellOrder/receipt",
                 dataType: "json",
                 data: {sellOrderId: id, payType: 1},
-                success: function () {
+                success: function (bool) {
                     if (bool) {
                         alert("付款成功！");
                     } else {
