@@ -48,9 +48,12 @@
                 price += ",";
                 number += $("#number" + i).val();
                 number += ",";
-                isFree += $("input[name='status']:checked").val();
+                var nameNumber = 'zengsong' + i;
+                var xxx = 'zengsong' + i;
+                isFree += $("input[name='zengsong"+ i + "']:checked").val();
                 isFree += ",";
             }
+            console.log(isFree);
             $.ajax({
                 type:"GET",
                 url : "/sellOrder/add",
