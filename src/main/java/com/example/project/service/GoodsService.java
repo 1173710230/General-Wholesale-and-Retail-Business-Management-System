@@ -36,7 +36,7 @@ public interface GoodsService {
     /**
      *  修改货物批发价与零售价
      */
-    boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice);
+    boolean modifyGoodsPriceById(int goodsId, Double wholesalePrice, Double retailPrice);
 
     /**
      * 获取批发价

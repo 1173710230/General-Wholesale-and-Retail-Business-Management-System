@@ -82,7 +82,7 @@ public class GoodsServiceImpl implements GoodsService{
     }
 
     @Override
-    public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice) {
+    public boolean modifyGoodsPriceById(int goodsId, Double wholesalePrice, Double retailPrice) {
         Goods goods = new Goods();
         goods.setWholesalePrice(wholesalePrice);
         goods.setRetailPrice(retailPrice);

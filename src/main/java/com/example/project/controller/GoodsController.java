@@ -100,6 +100,12 @@ public class GoodsController {
   public boolean modifyGoodsPriceById(int goodsId, double wholesalePrice, double retailPrice){
     System.out.println(wholesalePrice);
     System.out.println(retailPrice);
+    if(wholesalePrice==0&&retailPrice==0){return true;}  //价格都为0直接返回true，不修改
+    else if(wholesalePrice==0){  //一个选项为0，对应为null
+      return goodsService.modifyGoodsPriceById(goodsId, null, retailPrice);
+    }else if(retailPrice==0){
+      return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, null);
+    }
     return goodsService.modifyGoodsPriceById(goodsId, wholesalePrice, retailPrice);
   }
 
