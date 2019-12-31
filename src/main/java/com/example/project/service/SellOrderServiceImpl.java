@@ -321,7 +321,7 @@ public class SellOrderServiceImpl implements SellOrderService {
     }
 
     @Override
-    public boolean paySellOrder(int sellOrderGroupId, int payType) {
+    public synchronized boolean paySellOrder(int sellOrderGroupId, int payType) {
         assert payType>=0;
         assert payType<=1;
         SellOrderGroup sellOrderGroup = sellOrderGroupMapper.getSellOrderGroupById(sellOrderGroupId);

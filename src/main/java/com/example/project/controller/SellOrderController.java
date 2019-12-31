@@ -208,7 +208,7 @@ public class SellOrderController{
     int userStatus = userService.getUserByName((String) httpSession.getAttribute("userName")).getStatus();
     System.out.println(userStatus);
     if(userStatus==0||  userStatus==1){ //只允许经理，店长check
-      return sellOrderService.checkOrder(sellOrderId, opinion) && opinion;
+      return sellOrderService.checkOrder(sellOrderId, opinion);
     }else{ //不允许店员check
       return false;
     }
