@@ -113,7 +113,7 @@
                 default_pifa_unit_price = #{wholesalePrice},
             </if>
             <if test="retailPrice != null">
-                default_retail_unit_price = #{retailPrice};
+                default_retail_unit_price = #{retailPrice}
             </if>
         </set>
         where goods_id = #{goodsId};

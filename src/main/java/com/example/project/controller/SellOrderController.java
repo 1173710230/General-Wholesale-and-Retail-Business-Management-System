@@ -63,6 +63,7 @@ public class SellOrderController{
     List<SellOrder>  allSellOrderInGroup = new ArrayList<>();
 
     if(sellUnitPrice.equals("wx")){  //微信小程序执行
+        System.out.println("小程序加销售单");
       String[] goodsIds = goodsId.split(",");
       String[] goodsNumbers = goodsNumber.split(",");
       if(sellOrderType==0){
